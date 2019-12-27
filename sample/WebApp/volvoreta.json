@@ -1,0 +1,47 @@
+{
+  "volvoreta": {
+    "roles": [
+      {
+        "name": "custodian",
+        "description": "Custodian role",
+        "enabled": true,
+        "permissions": [
+          "open.doors",
+          "close.doors"
+        ],
+        "mappings": [
+          "caretaker"
+        ],
+        "subjects": [
+          "20000"
+        ]
+      },
+      {
+        "name": "teacher",
+        "enabled": true,
+        "description": "Teacher role",
+        "permissions": [
+          "edit.grades",
+          "view.grades"
+        ],
+        "subjects": [
+          "10000"
+        ],
+        "mappings": [
+          "docent"
+        ]
+      },
+      {
+        "name": "student",
+        "description": "Student role",
+        "enabled": true,
+        "permissions": [
+          "view.grades"
+        ],
+        "mappings": [
+          "customer"
+        ]
+      }
+    ]
+  }
+}

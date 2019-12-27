@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Private area";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your personal information.</p>
+
+@foreach (var identity in User.Identities)
+{
+    <h3>Authentication scheme: @identity.AuthenticationType</h3>
+    <ul>
+        @foreach (var claim in identity.Claims)
+        {
+            <li>Claim: @claim.Type - @claim.Value</li>
+        }
+    </ul>
+}
+
+<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="OpenDoor">Open the door</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CloseDoor">Clode the door</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewGrades">View grades</a>
+        </li>
+    </ul>
+</div>

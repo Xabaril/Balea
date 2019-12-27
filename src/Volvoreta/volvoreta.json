@@ -1,0 +1,32 @@
+{
+  "volvoreta": {
+    "roles": [
+      {
+        "name": "teacher",
+        "enabled": true,
+        "description": "Teacher role",
+        "permissions": [
+          "edit.grades",
+          "view.grades"
+        ],
+        "subjects": [
+          "1",
+          "2"
+        ],
+        "mappings": [
+          "docent"
+        ]
+      },
+      {
+        "name": "student",
+        "description": "Student role",
+        "permissions": [
+          "view.grades"
+        ],
+        "mappings": [
+          "graduate"
+        ]
+      }
+    ]
+  }
+}

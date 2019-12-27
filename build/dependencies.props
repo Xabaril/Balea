@@ -1,0 +1,34 @@
+<Project>
+  <PropertyGroup Label="SDK Versions">
+    <NetStandardTargetVersion21>netstandard2.1</NetStandardTargetVersion21>
+    <NetCoreTargetVersion>netcoreapp3.1</NetCoreTargetVersion>
+    <NetTestSdk>16.4.0</NetTestSdk>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package information">
+    <PackageLicenseUrl>https://github.com/Xabaril/Volvoreta/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>http://github.com/xabaril/Volvoreta</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xabaril/Volvoreta</RepositoryUrl>
+    <Authors>Xabaril Contributors</Authors>
+    <Company>Xabaril</Company>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>true</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Volvoreta Versions">
+    <Volvoreta>1.0.0$(VersionSuffix)</Volvoreta>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Dependencies">
+
+  </PropertyGroup>
+
+  <PropertyGroup Label="Testing Dependencies">
+
+  </PropertyGroup>
+
+  <PropertyGroup Label="CLI Tools Versions">
+
+  </PropertyGroup>
+</Project>
