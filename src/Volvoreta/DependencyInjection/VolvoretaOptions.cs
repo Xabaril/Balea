@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public class VolvoretaOptions
     {
-        internal string DefaultRoleClaimType = ClaimTypes.Role;
+        public string DefaultRoleClaimType { get; internal set; } = ClaimTypes.Role;
 
         public VolvoretaOptions SetDefaultRoleClaimType(string value)
         {

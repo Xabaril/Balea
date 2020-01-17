@@ -20,15 +20,15 @@
     <Volvoreta>1.0.0$(VersionSuffix)</Volvoreta>
   </PropertyGroup>
 
-  <PropertyGroup Label="Package Dependencies">
+  <ItemGroup Label="Package Dependencies">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
+  </ItemGroup>
 
-  </PropertyGroup>
+  <ItemGroup Label="Testing Dependencies">
 
-  <PropertyGroup Label="Testing Dependencies">
+  </ItemGroup>
 
-  </PropertyGroup>
+  <ItemGroup Label="CLI Tools Versions">
 
-  <PropertyGroup Label="CLI Tools Versions">
-
-  </PropertyGroup>
+  </ItemGroup>
 </Project>

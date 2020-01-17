@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volvoreta.Configuration.Sto
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{58F16D81-1049-4D95-83E8-D773BEE31A5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "sample\WebApp\WebApp.csproj", "{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "sample\WebApp\WebApp.csproj", "{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Volvoreta.EntityFrameworkCore.Store", "src\Volvoreta.EntityFrameworkCore.Store\Volvoreta.EntityFrameworkCore.Store.csproj", "{FD5BD0F9-B78A-4052-971D-23B9B4E228AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD5BD0F9-B78A-4052-971D-23B9B4E228AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5BD0F9-B78A-4052-971D-23B9B4E228AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5BD0F9-B78A-4052-971D-23B9B4E228AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5BD0F9-B78A-4052-971D-23B9B4E228AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{F7E9D638-02DC-4D15-B5D2-4C606BB71087} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{03DB9624-F623-4CA9-B404-106D83298C98} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{56BB059A-1BB9-4BF8-B75E-E2D792BA94FE} = {58F16D81-1049-4D95-83E8-D773BEE31A5B}
+		{FD5BD0F9-B78A-4052-971D-23B9B4E228AD} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {943847A1-D097-4149-BEDC-B8541BE7D287}

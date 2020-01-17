@@ -1,12 +1,10 @@
-﻿using Volvoreta;
-
-namespace System.Security.Claims
+﻿namespace System.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
         public static string GetSubjectId(this ClaimsPrincipal principal)
         {
-            var claim = principal.FindFirst(Constants.Subject);
+            var claim = principal.FindFirst(Volvoreta.Claims.Subject);
 
             if (claim == null)
             {

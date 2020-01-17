@@ -47,5 +47,15 @@ namespace Volvoreta.Model
         {
             return _permissions;
         }
+
+        public IEnumerable<string> GetMappings()
+        {
+            return _mappings;
+        }
+
+        public IEnumerable<string> GetSubjects()
+        {
+            return _subjects;
+        }
     }
 }

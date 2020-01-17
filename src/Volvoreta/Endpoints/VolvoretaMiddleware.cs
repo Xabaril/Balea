@@ -20,13 +20,21 @@ namespace Volvoreta.Endpoints
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                var roles = await store.FindRolesAsync(context.User);
-                var enabledRoles = roles.Where(role => role.Enabled);
-                var permissions = enabledRoles.SelectMany(role => role.GetPermissions());
+                var authorization = await store.FindAsync(context.User);
+                var roles = authorization.Roles;
+                var delegation = authorization.Delegation;
+                var permissions = roles.SelectMany(role => role.GetPermissions());
 
                 var identity = new ClaimsIdentity(nameof(VolvoretaMiddleware));
-                identity.AddClaims(enabledRoles.Where(role => role.Enabled).Select(role => new Claim(options.DefaultRoleClaimType, role.Name)));
-                identity.AddClaims(permissions.Select(permission => new Claim(Constants.Permission, permission)));
+                identity.AddClaims(roles.Where(role => role.Enabled).Select(role => new Claim(options.DefaultRoleClaimType, role.Name)));
+                identity.AddClaims(permissions.Select(permission => new Claim(Claims.Permission, permission)));
+
+                if (delegation != null)
+                {
+                    identity.AddClaim(new Claim(Claims.DelegatedBy, delegation.Who));
+                    identity.AddClaim(new Claim(Claims.DelegatedFrom, delegation.From.ToString()));
+                    identity.AddClaim(new Claim(Claims.DelegatedTo, delegation.To.ToString()));
+                }
 
                 context.User.AddIdentity(identity);
             }
