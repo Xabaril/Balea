@@ -13,7 +13,6 @@ namespace Microsoft.Extensions.DependencyInjection
             var options = new VolvoretaOptions();
             configureOptions?.Invoke(options); 
 
-            services.AddAuthorization(options.ConfigureAuthorization);
             services.Configure<VolvoretaOptions>(opt =>
             {
                 opt.DefaultRoleClaimType = options.DefaultRoleClaimType;

@@ -22,17 +22,17 @@ namespace WebApp
         {
             services
                 .AddVolvoreta()
-                //.AddConfigurationStore(Configuration)
-                .AddEntityFrameworkCoreStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                    {
-                        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
-                        {
-                            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
-                        });
-                    };
-                })
+                .AddConfigurationStore(Configuration)
+                //.AddEntityFrameworkCoreStore(options =>
+                //{
+                //    options.ConfigureDbContext = builder =>
+                //    {
+                //        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
+                //        {
+                //            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
+                //        });
+                //    };
+                //})
                 .Services
                 .AddAuthentication(configureOptions =>
                 {

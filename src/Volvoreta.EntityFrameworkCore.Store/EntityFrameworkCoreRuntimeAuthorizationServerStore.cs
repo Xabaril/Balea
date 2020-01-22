@@ -19,32 +19,6 @@ namespace Volvoreta.EntityFrameworkCore.Store
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Role> FindRoleAsync(ClaimsPrincipal user)
-        {
-            var subject = user.GetSubjectId();
-            var claimRoles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
-
-            var role = await _context.Roles
-                    .Include(r => r.Mappings)
-                    .ThenInclude(rm => rm.Mapping)
-                    .Include(r => r.Subjects)
-                    .ThenInclude(rs => rs.Subject)
-                    .Include(r => r.Permissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .SingleOrDefaultAsync(role =>
-                        role.Enabled &&
-                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
-                    );
-
-            return new Role(
-                role.Name,
-                role.Description,
-                role.Subjects.Select(s => s.Subject.Sub),
-                role.Mappings.Select(m => m.Mapping.Name),
-                role.Permissions.Select(p => p.Permission.Name),
-                role.Enabled);
-        }
-
         public async Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
         {
             var claimRoles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);

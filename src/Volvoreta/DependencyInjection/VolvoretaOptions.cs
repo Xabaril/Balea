@@ -13,7 +13,5 @@ namespace Microsoft.Extensions.DependencyInjection
             DefaultRoleClaimType = value;
             return this;
         }
-
-        public Action<AuthorizationOptions> ConfigureAuthorization { get; set; }
     }
 }

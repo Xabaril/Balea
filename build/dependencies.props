@@ -2,7 +2,6 @@
   <PropertyGroup Label="SDK Versions">
     <NetStandardTargetVersion21>netstandard2.1</NetStandardTargetVersion21>
     <NetCoreTargetVersion>netcoreapp3.1</NetCoreTargetVersion>
-    <NetTestSdk>16.4.0</NetTestSdk>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
@@ -20,15 +19,25 @@
     <Volvoreta>1.0.0$(VersionSuffix)</Volvoreta>
   </PropertyGroup>
 
-  <ItemGroup Label="Package Dependencies">
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
-  </ItemGroup>
+  <PropertyGroup Label="Package Dependencies">
+    <MicrosoftExtensionsOptions>3.1.0</MicrosoftExtensionsOptions>
+    <MicrosoftEntityFrameworkCoreSqlServer>3.1.0</MicrosoftEntityFrameworkCoreSqlServer>
+    <MicrosoftEntityFrameworkCoreDesign>3.1.0</MicrosoftEntityFrameworkCoreDesign>
+    <MicrosoftEntityFrameworkCoreRelational>3.1.0</MicrosoftEntityFrameworkCoreRelational>
+  </PropertyGroup>
 
-  <ItemGroup Label="Testing Dependencies">
+  <PropertyGroup Label="Testing Dependencies">
+    <MicrosoftNETTestSdk>16.4.0</MicrosoftNETTestSdk>
+    <xunit>2.4.1</xunit>
+    <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
+    <coverletcollector>1.2.0</coverletcollector>
+    <AcheveTestHost>3.0.0</AcheveTestHost>
+    <FluentAssertions>5.10.0</FluentAssertions>
+    <MicrosoftAspNetCoreTestHost>3.1.1</MicrosoftAspNetCoreTestHost>
+  </PropertyGroup>
 
-  </ItemGroup>
+  <PropertyGroup Label="CLI Tools Versions">
 
-  <ItemGroup Label="CLI Tools Versions">
-
-  </ItemGroup>
+  </PropertyGroup>
+  
 </Project>

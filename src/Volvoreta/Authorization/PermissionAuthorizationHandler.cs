@@ -16,7 +16,7 @@ namespace Volvoreta.Authorization
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
-            if (await _store.HasPermissionAsync(context.User, requirement.Name))
+            if (context.User.Identity.IsAuthenticated && await _store.HasPermissionAsync(context.User, requirement.Name))
             {
                 context.Succeed(requirement);
             }

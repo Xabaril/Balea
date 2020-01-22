@@ -28,10 +28,10 @@ namespace WebApp.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.Name, "john"));
                     identity.AddClaim(new Claim(ClaimTypes.Role, "teacher"));
                     break;
-                case "marie":
+                case "mary":
                     identity.AddClaim(new Claim(Claims.Subject, "2"));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, "john"));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "teacher"));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, "mary"));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "substitute"));
                     break;
                 case "mark":
                     identity.AddClaim(new Claim(Claims.Subject, "3"));
@@ -41,7 +41,7 @@ namespace WebApp.Controllers
                 default:
                     identity.AddClaim(new Claim(Claims.Subject, "4"));
                     identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "graduate"));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "customer"));
                     break;
             }
 

@@ -20,15 +20,10 @@ namespace Volvoreta.Configuration.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public Task<Role> FindRoleAsync(ClaimsPrincipal user)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
         {
             var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
-            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active);
+            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
             var subject = delegation?.Who ?? user.GetSubjectId();
             var roles = _volvoreta.Roles
                     .Where(role => role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
@@ -41,14 +36,15 @@ namespace Volvoreta.Configuration.Store
 
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var subject = user.GetSubjectId();
-            var roles = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
+            var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
+            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
+            var subject = delegation?.Who ?? user.GetSubjectId();
 
             return Task.FromResult(
                 _volvoreta.Roles
                     .Where(role => 
                         role.Enabled &&
-                        (role.Subjects.Contains(subject) || role.Mappings.Any(m => roles.Contains(m)))
+                        (role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
                     )
                     .SelectMany(role => role.Permissions)
                     .Contains(permission)
@@ -57,9 +53,16 @@ namespace Volvoreta.Configuration.Store
 
         public Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
+            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
+            var subject = delegation?.Who ?? user.GetSubjectId();
+
             return Task.FromResult(
                 _volvoreta.Roles
-                    .Any(r => r.Enabled && r.Name.Equals(role, StringComparison.InvariantCultureIgnoreCase))
+                    .Any(r => 
+                        r.Enabled && 
+                        r.Name.Equals(role, StringComparison.InvariantCultureIgnoreCase) &&
+                        (r.Subjects.Contains(subject) || r.Mappings.Any(m => m.Equals(role, StringComparison.InvariantCultureIgnoreCase)))
+                    )
             );
         }
     }

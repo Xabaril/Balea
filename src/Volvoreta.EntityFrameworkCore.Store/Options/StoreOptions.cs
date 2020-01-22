@@ -39,5 +39,10 @@ namespace Volvoreta.EntityFrameworkCore.Store.Options
         /// Get or set default table configuration for Subject Id's.
         /// </summary>
         public TableConfiguration Subjects { get; set; } = new TableConfiguration(nameof(Subjects));
+
+        /// <summary>
+        /// Get or set default table configuration for Delegations.
+        /// </summary>
+        public TableConfiguration Delegations { get; set; } = new TableConfiguration(nameof(Delegations));
     }
 }
