@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
-using Volvoreta;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Volvoreta
 {
     public class VolvoretaOptions
     {
