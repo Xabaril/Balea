@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Volvoreta.Model;
 
 namespace Volvoreta.EntityFrameworkCore.Store.Entities
@@ -7,6 +10,11 @@ namespace Volvoreta.EntityFrameworkCore.Store.Entities
     {
         public static Role To(this RoleEntity role)
         {
+            if (role is null)
+            {
+                return null;
+            }
+
             return new Role(
                         role.Name,
                         role.Description,
@@ -19,12 +27,27 @@ namespace Volvoreta.EntityFrameworkCore.Store.Entities
 
         public static Delegation To(this DelegationEntity delegation)
         {
+            if (delegation is null)
+            {
+                return null;
+            }
+
             return new Delegation(
                     delegation.Who,
                     delegation.Whom,
                     delegation.From,
                     delegation.To
                 );
+        }
+
+        public static Task<DelegationEntity> GetCurrentDelegation(this DbSet<DelegationEntity> delegations, string subjectId)
+        {
+            return delegations.FirstOrDefaultAsync(d => d.Selected && d.From <= DateTime.UtcNow && d.To >= DateTime.UtcNow && d.Whom == subjectId);
+        }
+
+        public static Task<ApplicationEntity> GetByName(this DbSet<ApplicationEntity> applications, string name)
+        {
+            return applications.FirstOrDefaultAsync(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

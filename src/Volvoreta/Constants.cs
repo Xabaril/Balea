@@ -10,4 +10,9 @@
         public const string DelegatedFrom = "delegatedfrom";
         public const string DelegatedTo = "delegatedto";
     }
+
+    public class VolvoretaConstants
+    {
+        public const string DefaultApplicationName = "default";
+    }
 }

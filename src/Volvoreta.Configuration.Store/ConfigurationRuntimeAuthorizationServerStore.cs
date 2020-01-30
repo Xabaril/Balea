@@ -23,26 +23,28 @@ namespace Volvoreta.Configuration.Store
         public Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
         {
             var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
-            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
-            var subject = delegation?.Who ?? user.GetSubjectId();
-            var roles = _volvoreta.Roles
+            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
+            var roles = application.Roles
                     .Where(role => role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
                     .Select(role => role.To());
 
             var authorization = new AuthotizationResult(roles, delegation.To());
-            
+
             return Task.FromResult(authorization);
         }
 
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
             var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
-            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
-            var subject = delegation?.Who ?? user.GetSubjectId();
+            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
 
             return Task.FromResult(
-                _volvoreta.Roles
-                    .Where(role => 
+                application.Roles
+                    .Where(role =>
                         role.Enabled &&
                         (role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
                     )
@@ -51,19 +53,26 @@ namespace Volvoreta.Configuration.Store
             );
         }
 
+
         public Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var delegation = _volvoreta.Delegations.FirstOrDefault(d => d.Active && d.Whom == user.GetSubjectId());
-            var subject = delegation?.Who ?? user.GetSubjectId();
+            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
 
             return Task.FromResult(
-                _volvoreta.Roles
+                application.Roles
                     .Any(r => 
                         r.Enabled && 
                         r.Name.Equals(role, StringComparison.InvariantCultureIgnoreCase) &&
                         (r.Subjects.Contains(subject) || r.Mappings.Any(m => m.Equals(role, StringComparison.InvariantCultureIgnoreCase)))
                     )
             );
+        }
+
+        private string GetSubject(ClaimsPrincipal user, DelegationConfiguration delegation)
+        {
+            return delegation?.Who ?? user.GetSubjectId();
         }
     }
 }

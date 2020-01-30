@@ -21,12 +21,14 @@ namespace FunctionalTests.Scenarios
         [Fact]
         public async Task not_allow_to_view_grades_if_the_user_is_not_authenticated()
         {
-            var response = await fixture
-                .Server
-                .CreateRequest("api/school/grades")
-                .GetAsync();
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.GetGrades)
+                    .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+                response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+            }
         }
 
         [Fact]
@@ -35,13 +37,16 @@ namespace FunctionalTests.Scenarios
             var identity = Builders
                 .Identity
                 .Build();
-            var response = await fixture
-                .Server
-                .CreateRequest("api/school/grades")
-                .WithIdentity(identity)
-                .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.GetGrades)
+                    .WithIdentity(identity)
+                    .GetAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+            }
         }
 
         [Fact]
@@ -50,13 +55,52 @@ namespace FunctionalTests.Scenarios
             var identity = Builders
                 .Identity
                 .Teacher();
-            var response = await fixture
-                .Server
-                .CreateRequest("api/school/grades")
-                .WithIdentity(identity)
-                .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.GetGrades)
+                    .WithIdentity(identity)
+                    .GetAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            }
+        }
+
+        [Fact]
+        public async Task not_allow_to_view_grades_if_the_user_not_belongs_to_the_teacher_role()
+        {
+            var identity = Builders
+                .Identity
+                .Custodian();
+
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.GetGrades)
+                    .WithIdentity(identity)
+                    .GetAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+            }
+        }
+
+        [Fact]
+        public async Task to_edit_grades_if_the_user_belongs_to_the_teacher_role()
+        {
+            var identity = Builders
+                .Identity
+                .Teacher();
+
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.EditGrades)
+                    .WithIdentity(identity)
+                    .PutAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            }
         }
     }
 }

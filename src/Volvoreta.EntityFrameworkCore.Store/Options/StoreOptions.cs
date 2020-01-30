@@ -44,5 +44,10 @@ namespace Volvoreta.EntityFrameworkCore.Store.Options
         /// Get or set default table configuration for Delegations.
         /// </summary>
         public TableConfiguration Delegations { get; set; } = new TableConfiguration(nameof(Delegations));
+
+        /// <summary>
+        /// Get or set default table configuration for Applications.
+        /// </summary>
+        public TableConfiguration Applications { get; set; } = new TableConfiguration(nameof(Applications));
     }
 }

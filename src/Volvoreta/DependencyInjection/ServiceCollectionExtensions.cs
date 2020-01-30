@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Configure<VolvoretaOptions>(opt =>
             {
                 opt.DefaultRoleClaimType = options.DefaultRoleClaimType;
+                opt.DefaultApplicationName = options.DefaultApplicationName;
             });
             services.AddHttpContextAccessor();
             services.AddScoped(sp => sp.GetRequiredService<IOptions<VolvoretaOptions>>().Value);

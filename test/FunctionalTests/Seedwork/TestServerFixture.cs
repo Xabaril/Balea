@@ -4,14 +4,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using Volvoreta.EntityFrameworkCore.Store.DbContexts;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FunctionalTests.Seedwork
 {
     public class TestServerFixture
     {
-        private IHost _host;
-
-        public TestServer Server { get; private set; }
+        public List<TestServer> Servers { get; private set; } = new List<TestServer>();
 
         public TestServerFixture()
         {
@@ -20,26 +21,36 @@ namespace FunctionalTests.Seedwork
 
         private void InitializeTestServer()
         {
-            _host = new HostBuilder()
-                .ConfigureWebHost(configure =>
-                {
-                    configure
-                        .ConfigureServices(services =>
-                            services.AddSingleton<IServer>(serviceProvider =>
-                                new TestServer(serviceProvider)
+            var startups = typeof(TestServerFixture)
+                .Assembly
+                .GetTypes()
+                .Where(t => t.Name.EndsWith("Startup"));
+
+            foreach (var startup in startups)
+            {
+                var host = new HostBuilder()
+                    .ConfigureWebHost(configure =>
+                    {
+                        configure
+                            .ConfigureServices(services =>
+                                services.AddSingleton<IServer>(serviceProvider =>
+                                    new TestServer(serviceProvider)
+                                )
                             )
-                        )
-                        .UseStartup<TestStartup>();
-                })
-                .ConfigureAppConfiguration(configure =>
-                {
-                    configure.AddJsonFile("volvoreta.json", optional: false, reloadOnChange: true);
-                })
-                .Build();
+                            .UseStartup(startup);
+                    })
+                    .ConfigureAppConfiguration(configure =>
+                    {
+                        configure
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile("volvoreta.json", optional: false, reloadOnChange: true);
+                    })
+                    .Build();
 
-            _host.StartAsync().Wait();
-
-            Server = _host.GetTestServer();
+                host.StartAsync().Wait();
+                host.MigrateDbContext<StoreDbContext>((_, __) => { });
+                Servers.Add(host.GetTestServer());
+            }
         }
     }
 }

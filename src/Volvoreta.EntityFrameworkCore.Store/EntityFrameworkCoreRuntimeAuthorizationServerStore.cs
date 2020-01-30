@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -13,18 +14,22 @@ namespace Volvoreta.EntityFrameworkCore.Store
     public class EntityFrameworkCoreRuntimeAuthorizationServerStore : IRuntimeAuthorizationServerStore
     {
         private readonly StoreDbContext _context;
+        private readonly VolvoretaOptions _options;
 
-        public EntityFrameworkCoreRuntimeAuthorizationServerStore(StoreDbContext context)
+        public EntityFrameworkCoreRuntimeAuthorizationServerStore(StoreDbContext context, VolvoretaOptions options)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public async Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
         {
-            var claimRoles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
-            var delegation = await _context.Delegations.FirstOrDefaultAsync(d => d.Active); ;
-            var subject = delegation?.Who ?? user.GetSubjectId();
+            var claimRoles = user.GetClaimRoleValues();
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
+                    .AsNoTracking()
+                    .Include(r => r.Application)
                     .Include(r => r.Mappings)
                     .ThenInclude(rm => rm.Mapping)
                     .Include(r => r.Subjects)
@@ -32,6 +37,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
                     .Include(r => r.Permissions)
                     .ThenInclude(rp => rp.Permission)
                     .Where(role =>
+                        role.Application.Name == _options.DefaultApplicationName &&
                         role.Enabled &&
                         (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
                     )
@@ -40,35 +46,46 @@ namespace Volvoreta.EntityFrameworkCore.Store
             return new AuthotizationResult(roles.Select(r => r.To()), delegation.To());
         }
 
-        public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
+        public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var subject = user.GetSubjectId();
-            var roles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            var claimRoles = user.GetClaimRoleValues();
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
 
-            return 
+            return await
                 _context.Roles
+                    .AsNoTracking()
+                    .Include(r => r.Application)
                     .Include(r => r.Permissions)
                     .ThenInclude(rp => rp.Permission)
                     .Where(role =>
+                        role.Application.Name == _options.DefaultApplicationName &&
                         role.Enabled &&
-                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => roles.Contains(rm.Mapping.Name)))
+                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
                     )
                     .SelectMany(role => role.Permissions)
                     .AnyAsync(rp => rp.Permission.Name == permission);
         }
 
-        public Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
+        public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var subject = user.GetSubjectId();
-            var roles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            var claimRoles = user.GetClaimRoleValues();
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var subject = GetSubject(user, delegation);
 
-            return
+            return await
                 _context.Roles
+                    .AsNoTracking()
                     .AnyAsync(r =>
                         r.Enabled &&
                         r.Name == role &&
-                        (r.Subjects.Any(rs => rs.Subject.Sub == subject) || r.Mappings.Any(rm => roles.Contains(rm.Mapping.Name)))
+                        (r.Subjects.Any(rs => rs.Subject.Sub == subject) || r.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
                     );
+        }
+
+        private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
+        {
+            return delegation?.Who ?? user.GetSubjectId();
         }
     }
 }

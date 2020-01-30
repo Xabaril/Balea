@@ -3,14 +3,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Acheve.AspNetCore.TestHost.Security;
 using Acheve.TestHost;
+using Microsoft.EntityFrameworkCore;
 
 namespace FunctionalTests.Seedwork
 {
-    public class TestStartup
+    public class TestEntityFrameworkCoreStartup
     {
         private readonly IConfiguration configuration;
 
-        public TestStartup(IConfiguration configuration)
+        public TestEntityFrameworkCoreStartup(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -19,7 +20,16 @@ namespace FunctionalTests.Seedwork
         {
             services
                 .AddVolvoreta()
-                .AddConfigurationStore(configuration)
+                .AddEntityFrameworkCoreStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                    {
+                        builder.UseSqlServer(configuration.GetConnectionString("Default"), sqlServerOptions =>
+                        {
+                            sqlServerOptions.MigrationsAssembly(typeof(TestEntityFrameworkCoreStartup).Assembly.FullName);
+                        });
+                    };
+                })
                 .Services
                 .AddAuthentication(setup =>
                 {

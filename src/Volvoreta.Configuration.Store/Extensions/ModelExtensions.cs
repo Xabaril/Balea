@@ -1,4 +1,6 @@
-﻿using Volvoreta.Model;
+﻿using System;
+using System.Linq;
+using Volvoreta.Model;
 
 namespace Volvoreta.Configuration.Store.Model
 {
@@ -34,6 +36,16 @@ namespace Volvoreta.Configuration.Store.Model
                     delegation.From,
                     delegation.To
                 );
+        }
+
+        public static DelegationConfiguration GetCurrentDelegation(this DelegationConfiguration[] delegations, string subjectId)
+        {
+            return delegations.FirstOrDefault(d => d.Active && d.Whom == subjectId);
+        }
+
+        public static ApplicationConfiguration GetByName(this ApplicationConfiguration [] applications, string name)
+        {
+            return applications.First(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

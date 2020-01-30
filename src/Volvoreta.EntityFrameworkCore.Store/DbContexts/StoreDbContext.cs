@@ -8,6 +8,7 @@ namespace Volvoreta.EntityFrameworkCore.Store.DbContexts
     {
         private readonly StoreOptions storeOptions;
 
+        public DbSet<ApplicationEntity> Applications { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<MappingEntity> Mappings { get; set; }
         public DbSet<PermissionEntity> Permissions { get; set; }

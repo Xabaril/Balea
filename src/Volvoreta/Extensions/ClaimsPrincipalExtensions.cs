@@ -1,4 +1,7 @@
-﻿namespace System.Security.Claims
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace System.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
@@ -12,6 +15,11 @@
             }
             
             return claim.Value;
+        }
+
+        public static IEnumerable<string> GetClaimRoleValues(this ClaimsPrincipal principal)
+        {
+            return principal.FindAll(ClaimTypes.Role).Select(x => x.Value);
         }
     }
 }

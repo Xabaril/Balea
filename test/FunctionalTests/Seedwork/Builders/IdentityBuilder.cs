@@ -6,6 +6,7 @@ namespace FunctionalTests.Seedwork.Builders
     public class IdentityBuilder
     {
         private const string TeacherSub = "1";
+        private const string CustodianSub = "3";
         private string sub = "-1";
 
         public IdentityBuilder WithSub(string sub)
@@ -19,6 +20,14 @@ namespace FunctionalTests.Seedwork.Builders
             return new List<Claim>()
             {
                 new Claim(Volvoreta.Claims.Subject, TeacherSub)
+            };
+        }
+
+        public List<Claim> Custodian()
+        {
+            return new List<Claim>()
+            {
+                new Claim(Volvoreta.Claims.Subject, CustodianSub)
             };
         }
 

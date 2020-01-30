@@ -18,7 +18,7 @@ namespace FunctionalTests.Seedwork
         [HttpGet]
         [Route("grades")]
         [Authorize(Policy = Policies.ViewGrades)]
-        public IActionResult ViewGrades()
+        public IActionResult GetGrades()
         {
             return Ok();
         }
