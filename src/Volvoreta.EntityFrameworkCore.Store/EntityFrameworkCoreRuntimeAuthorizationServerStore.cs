@@ -22,7 +22,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public async Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
+        public async Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
             var claimRoles = user.GetClaimRoleValues();
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());

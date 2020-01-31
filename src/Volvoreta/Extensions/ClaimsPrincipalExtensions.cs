@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Volvoreta;
 
 namespace System.Security.Claims
 {
@@ -7,7 +8,8 @@ namespace System.Security.Claims
     {
         public static string GetSubjectId(this ClaimsPrincipal principal)
         {
-            var claim = principal.FindFirst(Volvoreta.Claims.Subject);
+            var claim = principal
+                .FindFirst(VolvoretaClaims.Subject);
 
             if (claim == null)
             {
@@ -19,7 +21,8 @@ namespace System.Security.Claims
 
         public static IEnumerable<string> GetClaimRoleValues(this ClaimsPrincipal principal)
         {
-            return principal.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            return principal.FindAll(ClaimTypes.Role)
+                .Select(x => x.Value);
         }
     }
 }
