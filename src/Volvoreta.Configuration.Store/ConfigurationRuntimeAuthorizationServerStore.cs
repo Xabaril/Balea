@@ -20,7 +20,7 @@ namespace Volvoreta.Configuration.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public Task<AuthotizationResult> FindAsync(ClaimsPrincipal user)
+        public Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
             var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
             var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);

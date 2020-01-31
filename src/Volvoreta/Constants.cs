@@ -1,6 +1,6 @@
 ﻿namespace Volvoreta
 {
-    public static class Claims
+    public static class VolvoretaClaims
     {
         public const string Subject = "sub";
         public const string Role = "role";

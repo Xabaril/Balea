@@ -19,7 +19,7 @@ namespace FunctionalTests.Seedwork.Builders
         {
             return new List<Claim>()
             {
-                new Claim(Volvoreta.Claims.Subject, TeacherSub)
+                new Claim(Volvoreta.VolvoretaClaims.Subject, TeacherSub)
             };
         }
 
@@ -27,7 +27,7 @@ namespace FunctionalTests.Seedwork.Builders
         {
             return new List<Claim>()
             {
-                new Claim(Volvoreta.Claims.Subject, CustodianSub)
+                new Claim(Volvoreta.VolvoretaClaims.Subject, CustodianSub)
             };
         }
 
@@ -35,7 +35,7 @@ namespace FunctionalTests.Seedwork.Builders
         {
             return new List<Claim>()
             {
-                new Claim(Volvoreta.Claims.Subject, sub)
+                new Claim(Volvoreta.VolvoretaClaims.Subject, sub)
             };
         }
     }

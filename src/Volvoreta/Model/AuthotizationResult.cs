@@ -11,6 +11,7 @@ namespace Volvoreta.Model
         }
 
         public IEnumerable<Role> Roles { get; set; }
+
         public Delegation Delegation { get; set; }
     }
 }
