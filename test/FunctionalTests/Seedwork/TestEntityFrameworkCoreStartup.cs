@@ -24,7 +24,7 @@ namespace FunctionalTests.Seedwork
                 {
                     options.ConfigureDbContext = builder =>
                     {
-                        builder.UseSqlServer(configuration.GetConnectionString("Default"), sqlServerOptions =>
+                        builder.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.Default), sqlServerOptions =>
                         {
                             sqlServerOptions.MigrationsAssembly(typeof(TestEntityFrameworkCoreStartup).Assembly.FullName);
                         });

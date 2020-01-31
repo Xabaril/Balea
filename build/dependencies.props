@@ -34,6 +34,7 @@
     <AcheveTestHost>3.0.0</AcheveTestHost>
     <FluentAssertions>5.10.0</FluentAssertions>
     <MicrosoftAspNetCoreTestHost>3.1.1</MicrosoftAspNetCoreTestHost>
+    <Respawn>3.2.0</Respawn>
   </PropertyGroup>
 
   <PropertyGroup Label="CLI Tools Versions">

@@ -86,11 +86,14 @@ namespace FunctionalTests.Scenarios
         }
 
         [Fact]
+        [ResetDatabase]
         public async Task to_edit_grades_if_the_user_belongs_to_the_teacher_role()
         {
             var identity = Builders
                 .Identity
                 .Teacher();
+
+            await fixture.GiveAnApplicationWithTeacherRole();
 
             foreach (var server in fixture.Servers)
             {

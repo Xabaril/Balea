@@ -22,9 +22,9 @@ namespace Volvoreta.EntityFrameworkCore.Store.EntityConfigurations
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
-            builder
-                .HasIndex(x => x.Name)
-                .IsUnique();
+            builder.Property(x => x.Description)
+                .HasMaxLength(500)
+                .IsRequired(false);
         }
     }
 }

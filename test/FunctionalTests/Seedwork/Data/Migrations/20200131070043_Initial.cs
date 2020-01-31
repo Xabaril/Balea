@@ -14,7 +14,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: false)
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,8 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,6 +181,12 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Applications_Name",
+                table: "Applications",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Delegations_ApplicationEntityId",
                 table: "Delegations",
                 column: "ApplicationEntityId");
@@ -193,12 +200,6 @@ namespace FunctionalTests.Seedwork.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Mappings_Name",
                 table: "Mappings",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_Name",
-                table: "Permissions",
                 column: "Name",
                 unique: true);
 

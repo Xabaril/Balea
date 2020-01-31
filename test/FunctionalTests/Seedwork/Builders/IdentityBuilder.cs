@@ -5,8 +5,8 @@ namespace FunctionalTests.Seedwork.Builders
 {
     public class IdentityBuilder
     {
-        private const string TeacherSub = "1";
-        private const string CustodianSub = "3";
+        public const string TeacherSub = "1";
+        public const string CustodianSub = "3";
         private string sub = "-1";
 
         public IdentityBuilder WithSub(string sub)
