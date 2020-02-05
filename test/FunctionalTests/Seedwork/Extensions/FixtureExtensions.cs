@@ -1,4 +1,5 @@
-﻿using FunctionalTests.Seedwork.Builders;
+﻿using AutoFixture;
+using System;
 using System.Threading.Tasks;
 using Volvoreta;
 using Volvoreta.EntityFrameworkCore.Store.Entities;
@@ -7,12 +8,34 @@ namespace FunctionalTests.Seedwork
 {
     public static class FixtureExtensions
     {
-        public static async Task GiveAnApplicationWithTeacherRole(this TestServerFixture fixture)
+        public static async Task GiveAnApplication(this TestServerFixture fixture, bool selectedDelegation = false)
         {
             await fixture.ExecuteDbContextAsync(async db =>
             {
-                var application = new ApplicationEntity
+                var john = new SubjectEntity
                 {
+                    Name = "John",
+                    Sub = AutoFixtureExtensions.TeacherSub
+                };
+                var mary = new SubjectEntity
+                {
+                    Name = "Mary",
+                    Sub = AutoFixtureExtensions.FirstSubstituteSub
+                };
+                var anna = new SubjectEntity
+                {
+                    Name = "Anna",
+                    Sub = AutoFixtureExtensions.SecondSubstituteSub
+                };
+
+                db.Add(john);
+                db.Add(mary);
+                db.Add(anna);
+
+                await db.SaveChangesAsync();
+
+                var application = new ApplicationEntity
+                                    {
                     Name = VolvoretaConstants.DefaultApplicationName,
                     Description = "Default application",
                     Roles = new RoleEntity[]
@@ -43,13 +66,28 @@ namespace FunctionalTests.Seedwork
                             {
                                 new RoleSubjectEntity
                                 {
-                                    Subject = new SubjectEntity
-                                    {
-                                        Name = "John",
-                                        Sub = IdentityBuilder.TeacherSub
-                                    }
+                                    SubjectId = john.Id
                                 }
                             }
+                        }
+                    },
+                    Delegations = new DelegationEntity[]
+                    {
+                        new DelegationEntity
+                        {
+                            WhoId = john.Id,
+                            WhomId = mary.Id,
+                            From = DateTime.UtcNow.AddDays(-1),
+                            To = DateTime.UtcNow.AddDays(1),
+                            Selected = selectedDelegation
+                        },
+                        new DelegationEntity
+                        {
+                            WhoId = john.Id,
+                            WhomId = anna.Id,
+                            From = DateTime.UtcNow.AddDays(-1),
+                            To = DateTime.UtcNow.AddDays(1),
+                            Selected = selectedDelegation
                         }
                     }
                 };

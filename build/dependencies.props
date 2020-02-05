@@ -20,14 +20,14 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <MicrosoftExtensionsOptions>3.1.0</MicrosoftExtensionsOptions>
-    <MicrosoftEntityFrameworkCoreSqlServer>3.1.0</MicrosoftEntityFrameworkCoreSqlServer>
-    <MicrosoftEntityFrameworkCoreDesign>3.1.0</MicrosoftEntityFrameworkCoreDesign>
-    <MicrosoftEntityFrameworkCoreRelational>3.1.0</MicrosoftEntityFrameworkCoreRelational>
+    <MicrosoftExtensionsOptions>3.1.1</MicrosoftExtensionsOptions>
+    <MicrosoftEntityFrameworkCoreSqlServer>3.1.1</MicrosoftEntityFrameworkCoreSqlServer>
+    <MicrosoftEntityFrameworkCoreDesign>3.1.1</MicrosoftEntityFrameworkCoreDesign>
+    <MicrosoftEntityFrameworkCoreRelational>3.1.1</MicrosoftEntityFrameworkCoreRelational>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">
-    <MicrosoftNETTestSdk>16.4.0</MicrosoftNETTestSdk>
+    <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
     <xunit>2.4.1</xunit>
     <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
     <coverletcollector>1.2.0</coverletcollector>

@@ -62,22 +62,19 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Who")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                    b.Property<int>("WhoId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Whom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                    b.Property<int>("WhomId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationEntityId");
 
-                    b.HasIndex("Who", "Whom")
-                        .IsUnique();
+                    b.HasIndex("WhoId");
+
+                    b.HasIndex("WhomId");
 
                     b.ToTable("Delegations");
                 });
@@ -232,6 +229,18 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.ApplicationEntity", null)
                         .WithMany("Delegations")
                         .HasForeignKey("ApplicationEntityId");
+
+                    b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.SubjectEntity", "Who")
+                        .WithMany("WhoDelegations")
+                        .HasForeignKey("WhoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.SubjectEntity", "Whom")
+                        .WithMany("WhomDelegations")
+                        .HasForeignKey("WhomId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Volvoreta.EntityFrameworkCore.Store.Entities.RoleEntity", b =>

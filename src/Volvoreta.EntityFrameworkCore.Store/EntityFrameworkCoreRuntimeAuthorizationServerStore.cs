@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -85,7 +84,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
-            return delegation?.Who ?? user.GetSubjectId();
+            return delegation?.Who.Sub ?? user.GetSubjectId();
         }
     }
 }

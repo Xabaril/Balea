@@ -33,8 +33,8 @@ namespace Volvoreta.EntityFrameworkCore.Store.Entities
             }
 
             return new Delegation(
-                    delegation.Who,
-                    delegation.Whom,
+                    delegation.Who.Sub,
+                    delegation.Whom.Sub,
                     delegation.From,
                     delegation.To
                 );
@@ -42,7 +42,14 @@ namespace Volvoreta.EntityFrameworkCore.Store.Entities
 
         public static Task<DelegationEntity> GetCurrentDelegation(this DbSet<DelegationEntity> delegations, string subjectId)
         {
-            return delegations.FirstOrDefaultAsync(d => d.Selected && d.From <= DateTime.UtcNow && d.To >= DateTime.UtcNow && d.Whom == subjectId);
+            var now = DateTime.UtcNow;
+            return delegations
+                .Include(d => d.Who)
+                .Include(d => d.Whom)
+                .FirstOrDefaultAsync(d => 
+                    d.Selected && 
+                    d.From <= now && d.To >= now && 
+                    d.Whom.Sub == subjectId);
         }
 
         public static Task<ApplicationEntity> GetByName(this DbSet<ApplicationEntity> applications, string name)

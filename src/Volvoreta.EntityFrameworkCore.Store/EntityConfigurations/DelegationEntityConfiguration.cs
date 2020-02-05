@@ -19,19 +19,20 @@ namespace Volvoreta.EntityFrameworkCore.Store.EntityConfigurations
         {
             builder.ToTable(options.Delegations.Name);
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Who)
-                .HasMaxLength(200)
-                .IsRequired();
-            builder.Property(x => x.Whom)
-                .HasMaxLength(200)
-                .IsRequired();
             builder.Property(x => x.From)
                 .IsRequired();
             builder.Property(x => x.To)
                 .IsRequired();
             builder
-                .HasIndex(x => new { x.Who, x.Whom })
-                .IsUnique();
+                .HasOne(x => x.Who)
+                .WithMany(x => x.WhoDelegations)
+                .HasForeignKey(x => x.WhoId)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder
+                .HasOne(x => x.Whom)
+                .WithMany(x => x.WhomDelegations)
+                .HasForeignKey(x => x.WhomId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

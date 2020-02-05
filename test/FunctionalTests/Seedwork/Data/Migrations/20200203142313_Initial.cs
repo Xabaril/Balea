@@ -63,30 +63,6 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Delegations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Who = table.Column<string>(maxLength: 200, nullable: false),
-                    Whom = table.Column<string>(maxLength: 200, nullable: false),
-                    From = table.Column<DateTime>(nullable: false),
-                    To = table.Column<DateTime>(nullable: false),
-                    Selected = table.Column<bool>(nullable: false),
-                    ApplicationEntityId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Delegations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Delegations_Applications_ApplicationEntityId",
-                        column: x => x.ApplicationEntityId,
-                        principalTable: "Applications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -106,6 +82,40 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         principalTable: "Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Delegations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhoId = table.Column<int>(nullable: false),
+                    WhomId = table.Column<int>(nullable: false),
+                    From = table.Column<DateTime>(nullable: false),
+                    To = table.Column<DateTime>(nullable: false),
+                    Selected = table.Column<bool>(nullable: false),
+                    ApplicationEntityId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Delegations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Delegations_Applications_ApplicationEntityId",
+                        column: x => x.ApplicationEntityId,
+                        principalTable: "Applications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Delegations_Subjects_WhoId",
+                        column: x => x.WhoId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Delegations_Subjects_WhomId",
+                        column: x => x.WhomId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -192,10 +202,14 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                 column: "ApplicationEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Delegations_Who_Whom",
+                name: "IX_Delegations_WhoId",
                 table: "Delegations",
-                columns: new[] { "Who", "Whom" },
-                unique: true);
+                column: "WhoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Delegations_WhomId",
+                table: "Delegations",
+                column: "WhomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mappings_Name",

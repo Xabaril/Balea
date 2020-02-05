@@ -23,11 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.11.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(MicrosoftEntityFrameworkCoreSqlServer)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(MicrosoftEntityFrameworkCoreDesign)" />
     <PackageReference Include="Acheve.TestHost" Version="$(AcheveTestHost)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertions)" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="$(MicrosoftAspNetCoreTestHost)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdk)" />
     <PackageReference Include="Respawn" Version="$(Respawn)" />
     <PackageReference Include="xunit" Version="$(xunit)" />

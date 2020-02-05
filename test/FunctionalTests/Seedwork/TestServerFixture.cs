@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Respawn;
+using Microsoft.Extensions.Logging;
 
 namespace FunctionalTests.Seedwork
 {
@@ -84,7 +85,7 @@ namespace FunctionalTests.Seedwork
                 CreateTestConfiguration(new ConfigurationBuilder())
                     .Build()
                     .GetConnectionString(ConnectionStrings.Default)
-            );
+            ).Wait();
         }
 
         private static IConfigurationBuilder CreateTestConfiguration(IConfigurationBuilder builder)

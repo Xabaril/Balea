@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Acheve.AspNetCore.TestHost.Security;
 using Acheve.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace FunctionalTests.Seedwork
 {
@@ -27,8 +29,13 @@ namespace FunctionalTests.Seedwork
                         builder.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.Default), sqlServerOptions =>
                         {
                             sqlServerOptions.MigrationsAssembly(typeof(TestEntityFrameworkCoreStartup).Assembly.FullName);
-                        });
+                        })
+                        .UseLoggerFactory(LoggerFactory.Create(builder =>
+                        {
+                            builder.SetMinimumLevel(LogLevel.Information).AddConsole();
+                        }));
                     };
+
                 })
                 .Services
                 .AddAuthentication(setup =>
