@@ -23,7 +23,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var claimRoles = user.GetClaimRoleValues(_options.DefaultRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
@@ -47,7 +47,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var claimRoles = user.GetClaimRoleValues(_options.DefaultRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 
@@ -68,7 +68,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var claimRoles = user.GetClaimRoleValues(_options.DefaultRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 

@@ -21,7 +21,7 @@ namespace Volvoreta.Configuration.Store
 
         public Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
+            var claimsRole = user.GetClaimRoleValues(_options.DefaultRoleClaimType);
             var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
@@ -36,7 +36,7 @@ namespace Volvoreta.Configuration.Store
 
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
+            var claimsRole = user.GetClaimRoleValues(_options.DefaultRoleClaimType);
             var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
