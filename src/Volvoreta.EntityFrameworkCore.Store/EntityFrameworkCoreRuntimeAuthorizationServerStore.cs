@@ -23,7 +23,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
@@ -36,9 +36,9 @@ namespace Volvoreta.EntityFrameworkCore.Store
                     .Include(r => r.Permissions)
                     .ThenInclude(rp => rp.Permission)
                     .Where(role =>
-                        role.Application.Name == _options.DefaultApplicationName &&
+                        role.Application.Name == _options.ApplicationName &&
                         role.Enabled &&
-                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
+                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => sourceRoleClaims.Contains(rm.Mapping.Name)))
                     )
                     .ToListAsync();
 
@@ -47,7 +47,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var volvoretaRoleClaims = user.GetRoleClaimValues(_options.VolvoretaRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 
@@ -58,9 +58,9 @@ namespace Volvoreta.EntityFrameworkCore.Store
                     .Include(r => r.Permissions)
                     .ThenInclude(rp => rp.Permission)
                     .Where(role =>
-                        role.Application.Name == _options.DefaultApplicationName &&
+                        role.Application.Name == _options.ApplicationName &&
                         role.Enabled &&
-                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
+                        volvoretaRoleClaims.Contains(role.Name)
                     )
                     .SelectMany(role => role.Permissions)
                     .AnyAsync(rp => rp.Permission.Name == permission);
@@ -68,7 +68,7 @@ namespace Volvoreta.EntityFrameworkCore.Store
 
         public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var claimRoles = user.GetClaimRoleValues();
+            var claimRoles = user.GetRoleClaimValues(_options.SourceRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 
