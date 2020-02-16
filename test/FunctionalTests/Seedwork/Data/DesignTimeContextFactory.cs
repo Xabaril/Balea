@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-using Volvoreta.EntityFrameworkCore.Store.DbContexts;
+using Balea.EntityFrameworkCore.Store.DbContexts;
 
 namespace FunctionalTests.Seedwork.Data
 {

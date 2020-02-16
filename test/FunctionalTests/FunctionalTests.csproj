@@ -15,21 +15,15 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <Content Include="volvoreta.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.11.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="$(AutoFixtureXunit2)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(MicrosoftEntityFrameworkCoreSqlServer)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(MicrosoftEntityFrameworkCoreDesign)" />
     <PackageReference Include="Acheve.TestHost" Version="$(AcheveTestHost)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertions)" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="$(MicrosoftAspNetCoreTestHost)" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdk)" />
     <PackageReference Include="Respawn" Version="$(Respawn)" />
     <PackageReference Include="xunit" Version="$(xunit)" />
@@ -44,8 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Volvoreta.Configuration.Store\Volvoreta.Configuration.Store.csproj" />
-    <ProjectReference Include="..\..\src\Volvoreta.EntityFrameworkCore.Store\Volvoreta.EntityFrameworkCore.Store.csproj" />
+    <ProjectReference Include="..\..\src\Balea.Configuration.Store\Balea.Configuration.Store.csproj" />
+    <ProjectReference Include="..\..\src\Balea.EntityFrameworkCore.Store\Balea.EntityFrameworkCore.Store.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="balea.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -6,17 +6,19 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package information">
-    <PackageLicenseUrl>https://github.com/Xabaril/Volvoreta/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>http://github.com/xabaril/Volvoreta</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xabaril/Volvoreta</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Xabaril/Balea/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>http://github.com/xabaril/Balea</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xabaril/Balea</RepositoryUrl>
     <Authors>Xabaril Contributors</Authors>
     <Company>Xabaril</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>true</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
-  <PropertyGroup Label="Volvoreta Versions">
-    <Volvoreta>1.0.0$(VersionSuffix)</Volvoreta>
+  <PropertyGroup Label="Balea Versions">
+    <Balea>1.0.0$(VersionSuffix)</Balea>
+    <BaleaConfigurationStore>1.0.0$(VersionSuffix)</BaleaConfigurationStore>
+    <BaleaEntityFrameworkCoreStore>1.0.0$(VersionSuffix)</BaleaEntityFrameworkCoreStore>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
@@ -35,6 +37,7 @@
     <FluentAssertions>5.10.0</FluentAssertions>
     <MicrosoftAspNetCoreTestHost>3.1.1</MicrosoftAspNetCoreTestHost>
     <Respawn>3.2.0</Respawn>
+    <AutoFixtureXunit2>4.11.0</AutoFixtureXunit2>
   </PropertyGroup>
 
   <PropertyGroup Label="CLI Tools Versions">

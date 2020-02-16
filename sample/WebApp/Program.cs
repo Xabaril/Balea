@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Volvoreta.EntityFrameworkCore.Store.DbContexts;
-using WebApp.Infrastratucture.Data.Seeders;
+using Balea.EntityFrameworkCore.Store.DbContexts;
+using WebApp.Infrastucture.Data.Seeders;
 
 namespace WebApp
 {
@@ -12,7 +12,7 @@ namespace WebApp
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StoreDbContext>(db => VolvoretaSeeder.Seed(db))
+                .MigrateDbContext<StoreDbContext>(db => BaleaSeeder.Seed(db))
                 .Run();
         }
 
@@ -24,7 +24,7 @@ namespace WebApp
                 })
             .ConfigureAppConfiguration(builder =>
             {
-                builder.AddJsonFile("volvoreta.json", optional: false, reloadOnChange: true);
+                builder.AddJsonFile("Balea.json", optional: false, reloadOnChange: true);
             });
     }
 }

@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
 using System;
 using System.Threading.Tasks;
-using Volvoreta;
-using Volvoreta.EntityFrameworkCore.Store.Entities;
+using Balea;
+using Balea.EntityFrameworkCore.Store.Entities;
 
 namespace FunctionalTests.Seedwork
 {
@@ -22,7 +22,7 @@ namespace FunctionalTests.Seedwork
 
                 await db.SaveChangesAsync();
 
-                var application = new ApplicationEntity(VolvoretaConstants.DefaultApplicationName, "Default application");
+                var application = new ApplicationEntity(BaleaConstants.DefaultApplicationName, "Default application");
                 var viewGradesPermission = new PermissionEntity(Policies.ViewGrades);
                 var editGradesPermission = new PermissionEntity(Policies.EditGrades);
                 application.Permissions.Add(viewGradesPermission);

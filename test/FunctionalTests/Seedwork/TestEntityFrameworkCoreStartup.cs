@@ -21,11 +21,11 @@ namespace FunctionalTests.Seedwork
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddVolvoreta(options =>
+                .AddBalea(options =>
                 {
                     options
                         .SetSourceRoleClaimType("sourceRole")
-                        .SetVolvoretaRoleClaimType("volvoretaRole");
+                        .SetBaleaRoleClaimType("BaleaRole");
                 })
                 .AddEntityFrameworkCoreStore(options =>
                 {
@@ -60,7 +60,7 @@ namespace FunctionalTests.Seedwork
         {
             app
                 .UseAuthentication()
-                .UseVolvoreta()
+                .UseBalea()
                 .UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>

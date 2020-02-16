@@ -1,0 +1,42 @@
+{
+  "Balea": {
+    "applications": [
+      {
+        "name": "default",
+        "roles": [
+          {
+            "name": "teacher",
+            "enabled": true,
+            "description": "Teacher role",
+            "permissions": [
+              "edit.grades",
+              "view.grades"
+            ],
+            "subjects": [
+              "1"
+            ]
+          },
+          {
+            "name": "student",
+            "description": "Student role",
+            "permissions": [
+              "view.grades"
+            ],
+            "mappings": [
+              "customer"
+            ]
+          }
+        ],
+        "delegations": [
+          {
+            "who": "1",
+            "whom": "2",
+            "from": "2020-01-15 00:00:00",
+            "to": "2020-12-31 23:59:59",
+            "selected": true
+          }
+        ]
+      }
+    ]
+  }
+}

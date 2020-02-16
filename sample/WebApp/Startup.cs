@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,18 +21,18 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddVolvoreta()
+                .AddBalea(options => options.SetBaleaRoleClaimType("demo"))
                 .AddConfigurationStore(Configuration)
-                //.AddEntityFrameworkCoreStore(options =>
-                //{
-                //    options.ConfigureDbContext = builder =>
-                //    {
-                //        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
-                //        {
-                //            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
-                //        });
-                //    };
-                //})
+                .AddEntityFrameworkCoreStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                    {
+                        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
+                        {
+                            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
+                        });
+                    };
+                })
                 .Services
                 .AddAuthentication(configureOptions =>
                 {
@@ -65,7 +66,7 @@ namespace WebApp
                 .UseStaticFiles()
                 .UseRouting()
                 .UseAuthorization()
-                .UseVolvoreta()
+                .UseBalea()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(

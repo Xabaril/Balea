@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
-using Volvoreta.EntityFrameworkCore.Store.DbContexts;
+using Balea.EntityFrameworkCore.Store.DbContexts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,7 +92,7 @@ namespace FunctionalTests.Seedwork
         {
             return builder
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("volvoreta.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("Balea.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
         }
     }
