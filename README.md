@@ -1,2 +1,3 @@
 # Balea
-Balea is an Authorization Server for .NET Developers.
+
+Balea is an authorization framework for ASP.NET Core developers.
