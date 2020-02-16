@@ -3,6 +3,7 @@
     <NetStandardTargetVersion21>netstandard2.1</NetStandardTargetVersion21>
     <NetCoreTargetVersion>netcoreapp3.1</NetCoreTargetVersion>
     <LangVersion>preview</LangVersion>
+    <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Package information">
@@ -22,10 +23,9 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <MicrosoftExtensionsOptions>3.1.1</MicrosoftExtensionsOptions>
-    <MicrosoftEntityFrameworkCoreSqlServer>3.1.1</MicrosoftEntityFrameworkCoreSqlServer>
-    <MicrosoftEntityFrameworkCoreDesign>3.1.1</MicrosoftEntityFrameworkCoreDesign>
-    <MicrosoftEntityFrameworkCoreRelational>3.1.1</MicrosoftEntityFrameworkCoreRelational>
+    <BlazorVersion>3.1.0-preview4.19579.2</BlazorVersion>
+    <AspNetCoreVersion>3.1.1</AspNetCoreVersion>
+    <EntityFrameworkVersion>3.1.1</EntityFrameworkVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">
@@ -34,7 +34,7 @@
     <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
     <coverletcollector>1.2.0</coverletcollector>
     <AcheveTestHost>3.0.0</AcheveTestHost>
-    <FluentAssertions>5.10.0</FluentAssertions>
+    <FluentAssertions>5.10.2</FluentAssertions>
     <MicrosoftAspNetCoreTestHost>3.1.1</MicrosoftAspNetCoreTestHost>
     <Respawn>3.2.0</Respawn>
     <AutoFixtureXunit2>4.11.0</AutoFixtureXunit2>

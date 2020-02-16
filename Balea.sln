@@ -24,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea.Configuration.Store",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea.EntityFrameworkCore.Store", "src\Balea.EntityFrameworkCore.Store\Balea.EntityFrameworkCore.Store.csproj", "{2A1CD101-2868-49ED-8BD4-8B0DDD793F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Belea.Server", "src\Belea.Server\Belea.Server.csproj", "{04B29128-C47B-41EF-B3BB-330BA6BAF427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balea.Client", "src\Balea.Client\Balea.Client.csproj", "{5707EBB0-5690-46FA-AC1F-B8CE74A231A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +54,14 @@ Global
 		{2A1CD101-2868-49ED-8BD4-8B0DDD793F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A1CD101-2868-49ED-8BD4-8B0DDD793F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A1CD101-2868-49ED-8BD4-8B0DDD793F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B29128-C47B-41EF-B3BB-330BA6BAF427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B29128-C47B-41EF-B3BB-330BA6BAF427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B29128-C47B-41EF-B3BB-330BA6BAF427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B29128-C47B-41EF-B3BB-330BA6BAF427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5707EBB0-5690-46FA-AC1F-B8CE74A231A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5707EBB0-5690-46FA-AC1F-B8CE74A231A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5707EBB0-5690-46FA-AC1F-B8CE74A231A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5707EBB0-5690-46FA-AC1F-B8CE74A231A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,8 @@ Global
 		{32784D58-1B36-4083-ABF4-4EDB02761110} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{4856F4E7-C091-4C65-8C86-9EC9869D15BE} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{2A1CD101-2868-49ED-8BD4-8B0DDD793F76} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
+		{04B29128-C47B-41EF-B3BB-330BA6BAF427} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
+		{5707EBB0-5690-46FA-AC1F-B8CE74A231A2} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {943847A1-D097-4149-BEDC-B8541BE7D287}
