@@ -33,7 +33,6 @@ namespace Volvoreta.EntityFrameworkCore.Store.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly, storeOptions);
-
             base.OnModelCreating(modelBuilder);
         }
     }

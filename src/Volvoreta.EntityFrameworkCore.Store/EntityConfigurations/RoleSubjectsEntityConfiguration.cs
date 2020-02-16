@@ -22,11 +22,13 @@ namespace Volvoreta.EntityFrameworkCore.Store.EntityConfigurations
             builder
                 .HasOne(x => x.Subject)
                 .WithMany(x => x.Roles)
-                .HasForeignKey(x => x.SubjectId);
+                .HasForeignKey(x => x.SubjectId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder
                 .HasOne(x => x.Role)
                 .WithMany(x => x.Subjects)
-                .HasForeignKey(x => x.RoleId);
+                .HasForeignKey(x => x.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -10,14 +10,14 @@ using Volvoreta.EntityFrameworkCore.Store.DbContexts;
 namespace FunctionalTests.Seedwork.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20200203142313_Initial")]
+    [Migration("20200214125530_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -108,6 +108,9 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
@@ -118,6 +121,8 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
 
                     b.ToTable("Permissions");
                 });
@@ -245,6 +250,15 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Volvoreta.EntityFrameworkCore.Store.Entities.PermissionEntity", b =>
+                {
+                    b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
+                        .WithMany()
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Volvoreta.EntityFrameworkCore.Store.Entities.RoleEntity", b =>
                 {
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
@@ -259,13 +273,13 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.MappingEntity", "Mapping")
                         .WithMany("Roles")
                         .HasForeignKey("MappingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.RoleEntity", "Role")
                         .WithMany("Mappings")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -274,13 +288,13 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.PermissionEntity", "Permission")
                         .WithMany("Roles")
                         .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.RoleEntity", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -289,13 +303,13 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.RoleEntity", "Role")
                         .WithMany("Subjects")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Volvoreta.EntityFrameworkCore.Store.Entities.SubjectEntity", "Subject")
                         .WithMany("Roles")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

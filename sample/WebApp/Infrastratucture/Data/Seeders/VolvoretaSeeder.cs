@@ -10,18 +10,9 @@ namespace WebApp.Infrastratucture.Data.Seeders
         {
             if (!db.Roles.Any())
             {
-                var teacherRole = new RoleEntity
-                {
-                    Name = "teacher",
-                    Description = "Teacher role",
-                    Enabled = true,
-                };
+                var teacherRole = new RoleEntity("teacher", "Teacher role");
 
-                var johnSmith = new SubjectEntity
-                {
-                    Sub = "10000",
-                    Name = "John Smith"
-                };
+                var johnSmith = new SubjectEntity("John Smith", "10000");
 
                 var roleSubject = new RoleSubjectEntity
                 {
@@ -29,15 +20,8 @@ namespace WebApp.Infrastratucture.Data.Seeders
                     Subject = johnSmith
                 };
 
-                var editGrades = new PermissionEntity
-                {
-                    Name = "edit.grades"
-                };
-
-                var viewGrades = new PermissionEntity
-                {
-                    Name = "view.grades"
-                };
+                var editGrades = new PermissionEntity("edit.grades");
+                var viewGrades = new PermissionEntity("view.grades");
 
                 var viewGradesRolePermission = new RolePermissionEntity
                 {

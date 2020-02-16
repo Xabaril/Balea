@@ -12,21 +12,9 @@ namespace FunctionalTests.Seedwork
         {
             await fixture.ExecuteDbContextAsync(async db =>
             {
-                var john = new SubjectEntity
-                {
-                    Name = "John",
-                    Sub = AutoFixtureExtensions.TeacherSub
-                };
-                var mary = new SubjectEntity
-                {
-                    Name = "Mary",
-                    Sub = AutoFixtureExtensions.FirstSubstituteSub
-                };
-                var anna = new SubjectEntity
-                {
-                    Name = "Anna",
-                    Sub = AutoFixtureExtensions.SecondSubstituteSub
-                };
+                var john = new SubjectEntity("John", AutoFixtureExtensions.TeacherSub);
+                var mary = new SubjectEntity("Mary", AutoFixtureExtensions.FirstSubstituteSub);
+                var anna = new SubjectEntity("Anna", AutoFixtureExtensions.SecondSubstituteSub);
 
                 db.Add(john);
                 db.Add(mary);
@@ -34,64 +22,18 @@ namespace FunctionalTests.Seedwork
 
                 await db.SaveChangesAsync();
 
-                var application = new ApplicationEntity
-                                    {
-                    Name = VolvoretaConstants.DefaultApplicationName,
-                    Description = "Default application",
-                    Roles = new RoleEntity[]
-                    {
-                        new RoleEntity
-                        {
-                            Name = "Teacher",
-                            Description = "Teacher role",
-                            Enabled = true,
-                            Permissions = new RolePermissionEntity[]
-                            {
-                                new RolePermissionEntity
-                                {
-                                    Permission = new PermissionEntity
-                                    {
-                                        Name = Policies.ViewGrades,
-                                    }
-                                },
-                                new RolePermissionEntity
-                                {
-                                    Permission = new PermissionEntity
-                                    {
-                                        Name = Policies.EditGrades
-                                    }
-                                }
-                            },
-                            Subjects = new RoleSubjectEntity[]
-                            {
-                                new RoleSubjectEntity
-                                {
-                                    SubjectId = john.Id
-                                }
-                            }
-                        }
-                    },
-                    Delegations = new DelegationEntity[]
-                    {
-                        new DelegationEntity
-                        {
-                            WhoId = john.Id,
-                            WhomId = mary.Id,
-                            From = DateTime.UtcNow.AddDays(-1),
-                            To = DateTime.UtcNow.AddDays(1),
-                            Selected = selectedDelegation
-                        },
-                        new DelegationEntity
-                        {
-                            WhoId = john.Id,
-                            WhomId = anna.Id,
-                            From = DateTime.UtcNow.AddDays(-1),
-                            To = DateTime.UtcNow.AddDays(1),
-                            Selected = selectedDelegation
-                        }
-                    }
-                };
-
+                var application = new ApplicationEntity(VolvoretaConstants.DefaultApplicationName, "Default application");
+                var viewGradesPermission = new PermissionEntity(Policies.ViewGrades);
+                var editGradesPermission = new PermissionEntity(Policies.EditGrades);
+                application.Permissions.Add(viewGradesPermission);
+                application.Permissions.Add(editGradesPermission);
+                var teacherRole = new RoleEntity("Teacher", "Teacher role");
+                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = john.Id });
+                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
+                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
+                application.Roles.Add(teacherRole);
+                application.Delegations.Add(new DelegationEntity(john.Id, mary.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), selectedDelegation));
+                application.Delegations.Add(new DelegationEntity(john.Id, anna.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), selectedDelegation));
                 db.Applications.Add(application);
                 await db.SaveChangesAsync();
             });

@@ -4,6 +4,12 @@ namespace Volvoreta.EntityFrameworkCore.Store.Entities
 {
     public class SubjectEntity
     {
+        public SubjectEntity(string name, string sub)
+        {
+            Sub = sub;
+            Name = name;
+        }
+
         public int Id { get; set; }
         public string Sub { get; set; }
         public string Name { get; set; }
