@@ -1,2 +1,2 @@
-# Volvoreta
-Volvoreta is a Policy server for .NET Developers.
+# Balea
+Balea is an Authorization Server for .NET Developers.
