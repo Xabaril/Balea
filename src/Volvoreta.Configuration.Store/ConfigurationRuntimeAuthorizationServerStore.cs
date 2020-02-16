@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,12 +22,13 @@ namespace Volvoreta.Configuration.Store
 
         public Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
-            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
+            var application = _volvoreta.Applications.GetByName(_options.ApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
-                    .Where(role => role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
+                    .Where(role => role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) || 
+                                   role.Mappings.Any(m => sourceRoleClaims.Contains(m, StringComparer.InvariantCultureIgnoreCase)))
                     .Select(role => role.To());
 
             var authorization = new AuthotizationResult(roles, delegation.To());
@@ -36,8 +38,8 @@ namespace Volvoreta.Configuration.Store
 
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var claimsRole = user.FindAll(_options.DefaultRoleClaimType).Select(x => x.Value);
-            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var volvoretaRoleClaims = user.GetRoleClaimValues(_options.VolvoretaRoleClaimType);
+            var application = _volvoreta.Applications.GetByName(_options.ApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 
@@ -45,7 +47,7 @@ namespace Volvoreta.Configuration.Store
                 application.Roles
                     .Where(role =>
                         role.Enabled &&
-                        (role.Subjects.Contains(subject) || role.Mappings.Any(m => claimsRole.Contains(m)))
+                        volvoretaRoleClaims.Contains(role.Name, StringComparer.InvariantCultureIgnoreCase)
                     )
                     .SelectMany(role => role.Permissions)
                     .Contains(permission)
@@ -55,14 +57,14 @@ namespace Volvoreta.Configuration.Store
 
         public Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var application = _volvoreta.Applications.GetByName(_options.DefaultApplicationName);
+            var application = _volvoreta.Applications.GetByName(_options.ApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
 
             return Task.FromResult(
                 application.Roles
-                    .Any(r => 
-                        r.Enabled && 
+                    .Any(r =>
+                        r.Enabled &&
                         r.Name.Equals(role, StringComparison.InvariantCultureIgnoreCase) &&
                         (r.Subjects.Contains(subject) || r.Mappings.Any(m => m.Equals(role, StringComparison.InvariantCultureIgnoreCase)))
                     )

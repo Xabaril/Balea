@@ -24,13 +24,16 @@ namespace Volvoreta.Endpoints
 
                 var roleClaims = authorization.Roles
                     .Where(role => role.Enabled)
-                    .Select(role => new Claim(options.DefaultRoleClaimType, role.Name));
+                    .Select(role => new Claim(options.VolvoretaRoleClaimType, role.Name));
 
                 var permissionClaims = authorization.Roles
                     .SelectMany(role => role.GetPermissions())
                     .Select(permission => new Claim(VolvoretaClaims.Permission, permission));
 
-                var identity = new ClaimsIdentity(nameof(VolvoretaMiddleware));
+                var identity = new ClaimsIdentity(
+                    authenticationType: nameof(VolvoretaMiddleware),
+                    nameType: options.VolvoretaNameClaimType,
+                    roleType: options.VolvoretaRoleClaimType);
 
                 identity.AddClaims(roleClaims);
                 identity.AddClaims(permissionClaims);

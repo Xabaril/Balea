@@ -19,9 +19,11 @@ namespace System.Security.Claims
             return claim.Value;
         }
 
-        public static IEnumerable<string> GetClaimRoleValues(this ClaimsPrincipal principal)
+        public static IEnumerable<string> GetRoleClaimValues(
+            this ClaimsPrincipal principal,
+            string roleClaimType)
         {
-            return principal.FindAll(ClaimTypes.Role)
+            return principal.FindAll(roleClaimType)
                 .Select(x => x.Value);
         }
     }

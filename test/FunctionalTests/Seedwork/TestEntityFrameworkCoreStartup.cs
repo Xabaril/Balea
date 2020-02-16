@@ -21,7 +21,12 @@ namespace FunctionalTests.Seedwork
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddVolvoreta()
+                .AddVolvoreta(options =>
+                {
+                    options
+                        .SetSourceRoleClaimType("sourceRole")
+                        .SetVolvoretaRoleClaimType("volvoretaRole");
+                })
                 .AddEntityFrameworkCoreStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
@@ -43,7 +48,10 @@ namespace FunctionalTests.Seedwork
                     setup.DefaultAuthenticateScheme = TestServerDefaults.AuthenticationScheme;
                     setup.DefaultChallengeScheme = TestServerDefaults.AuthenticationScheme;
                 })
-                .AddTestServer()
+                .AddTestServer(options =>
+                {
+                    options.RoleClaimType = "sourceRole";
+                })
                 .Services
                 .AddMvc();
         }
