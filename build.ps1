@@ -32,17 +32,17 @@ $buildSuffix = "$($suffix)-$($commitHash)"
 
 echo "build: Version suffix is $buildSuffix"
 
-exec { & dotnet build Esquio.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
+exec { & dotnet build Balea.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
 	
-echo "Running unit tests"
+# echo "Running unit tests"
 
-try {
+# try {
 
-Push-Location -Path .\tests\UnitTests
-        exec { & dotnet test}
-} finally {
-        Pop-Location
-}
+# Push-Location -Path .\tests\UnitTests
+#         exec { & dotnet test}
+# } finally {
+#         Pop-Location
+# }
 
 echo "Starting docker containers"
 
@@ -52,7 +52,7 @@ echo "Running functional tests"
 
 try {
 
-Push-Location -Path .\tests\FunctionalTests
+Push-Location -Path .\test\FunctionalTests
         exec { & dotnet test}
 } finally {
         Pop-Location
@@ -60,11 +60,3 @@ Push-Location -Path .\tests\FunctionalTests
 
 echo "Finalizing docker containers"
 exec { & docker-compose -f build\docker-compose-infrastructure.yml down }
-
-
-exec { & dotnet pack .\src\Esquio\Esquio.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
-exec { & dotnet pack .\src\Esquio.AspNetCore\Esquio.AspNetCore.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
-exec { & dotnet pack .\src\Esquio.Configuration.Store\Esquio.Configuration.Store.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
-exec { & dotnet pack .\src\Esquio.EntityFrameworkCore.Store\Esquio.EntityFrameworkCore.Store.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
-exec { & dotnet pack .\src\Esquio.AspNetCore.ApplicationInsightProcessor\Esquio.AspNetCore.ApplicationInsightProcessor.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
-exec { & dotnet pack .\tools\MiniProfiler.Esquio\MiniProfiler.Esquio.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
