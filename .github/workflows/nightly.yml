@@ -26,7 +26,7 @@ jobs:
     - name: dotnet build
       run: dotnet build Balea.sln -c $BUILD_CONFIG
     - name: dotnet test [FunctionalTests]
-      run: dotnet test ./tests/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
+      run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
     - name: dotnet pack [Balea]
       run: dotnet pack ./src/Balea/Balea.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix "-nightly" --no-build --include-source --include-symbols
     - name: dotnet pack [Balea.Configuration.Store]
