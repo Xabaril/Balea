@@ -24,7 +24,7 @@ namespace WebApp
                 })
             .ConfigureAppConfiguration(builder =>
             {
-                builder.AddJsonFile("Balea.json", optional: false, reloadOnChange: true);
+                builder.AddJsonFile("balea.json", optional: false, reloadOnChange: true);
             });
     }
 }

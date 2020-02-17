@@ -92,7 +92,7 @@ namespace FunctionalTests.Seedwork
         {
             return builder
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("Balea.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("balea.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
         }
     }
