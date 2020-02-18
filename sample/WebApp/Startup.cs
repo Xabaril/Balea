@@ -22,7 +22,7 @@ namespace WebApp
         {
             services
                 .AddBalea(options => options.SetBaleaRoleClaimType("demo"))
-                .AddConfigurationStore(Configuration)
+                //.AddConfigurationStore(Configuration)
                 .AddEntityFrameworkCoreStore(options =>
                 {
                     options.ConfigureDbContext = builder =>

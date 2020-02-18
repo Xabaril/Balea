@@ -12,7 +12,7 @@ namespace WebApp
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StoreDbContext>(db => BaleaSeeder.Seed(db))
+                .MigrateDbContext<StoreDbContext>(db => BaleaSeeder.Seed(db).Wait())
                 .Run();
         }
 
@@ -22,9 +22,9 @@ namespace WebApp
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-            .ConfigureAppConfiguration(builder =>
-            {
-                builder.AddJsonFile("balea.json", optional: false, reloadOnChange: true);
-            });
+                .ConfigureAppConfiguration(builder =>
+                {
+                    builder.AddJsonFile("balea.json", optional: false, reloadOnChange: true);
+                });
     }
 }

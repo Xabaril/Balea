@@ -24,7 +24,7 @@ namespace Balea.EntityFrameworkCore.Store
         public async Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
         {
             var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
                     .AsNoTracking()
@@ -48,7 +48,7 @@ namespace Balea.EntityFrameworkCore.Store
         public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
             var BaleaRoleClaims = user.GetRoleClaimValues(_options.BaleaRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
             return await
@@ -69,7 +69,7 @@ namespace Balea.EntityFrameworkCore.Store
         public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
             var claimRoles = user.GetRoleClaimValues(_options.SourceRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
             return await
@@ -84,7 +84,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
-            return delegation?.Who.Sub ?? user.GetSubjectId();
+            return delegation?.Who.Sub ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
         }
     }
 }

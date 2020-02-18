@@ -6,6 +6,7 @@ namespace Balea
     public class BaleaOptions
     {
         public string SourceRoleClaimType { get; internal set; } = ClaimTypes.Role;
+        public string SourceNameIdentifierClaimType { get; internal set; } = ClaimTypes.NameIdentifier;
         public string BaleaNameClaimType { get; internal set; } = ClaimTypes.Name;
         public string BaleaRoleClaimType { get; internal set; } = ClaimTypes.Role;
         public string ApplicationName { get; internal set; } = BaleaConstants.DefaultApplicationName;
@@ -18,6 +19,17 @@ namespace Balea
             }
 
             SourceRoleClaimType = value;
+            return this;
+        }
+
+        public BaleaOptions SetSourceNameIdentitfierClaimType(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("The value can not be null or empty", nameof(value));
+            }
+
+            SourceNameIdentifierClaimType = value;
             return this;
         }
 

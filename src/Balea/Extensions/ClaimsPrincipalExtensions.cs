@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Balea;
 
 namespace System.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetSubjectId(this ClaimsPrincipal principal)
+        public static string GetSubjectId(this ClaimsPrincipal principal, string type)
         {
             var claim = principal
-                .FindFirst(BaleaClaims.Subject);
+                .FindFirst(type);
 
             if (claim == null)
             {

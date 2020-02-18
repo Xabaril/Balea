@@ -1,49 +1,40 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Balea;
 using Balea.EntityFrameworkCore.Store.DbContexts;
 using Balea.EntityFrameworkCore.Store.Entities;
+using WebApp.Models;
 
 namespace WebApp.Infrastucture.Data.Seeders
 {
     public static class BaleaSeeder
     {
-        public static void Seed(StoreDbContext db)
+        public static async Task Seed(StoreDbContext db)
         {
             if (!db.Roles.Any())
             {
-                var teacherRole = new RoleEntity("teacher", "Teacher role");
+                var john = new SubjectEntity("John", "1");
+                var mary = new SubjectEntity("Mary", "2");
 
-                var johnSmith = new SubjectEntity("John Smith", "10000");
+                db.Add(john);
+                db.Add(mary);
 
-                var roleSubject = new RoleSubjectEntity
-                {
-                    Role = teacherRole,
-                    Subject = johnSmith
-                };
+                await db.SaveChangesAsync();
 
-                var editGrades = new PermissionEntity("edit.grades");
-                var viewGrades = new PermissionEntity("view.grades");
-
-                var viewGradesRolePermission = new RolePermissionEntity
-                {
-                    Role = teacherRole,
-                    Permission = viewGrades
-                };
-
-                var editGradesRolePermission = new RolePermissionEntity
-                {
-                    Role = teacherRole,
-                    Permission = editGrades
-                };
-
-                db.Roles.Add(teacherRole);
-                db.Subjects.Add(johnSmith);
-                db.RoleSubjects.Add(roleSubject);
-                db.Permissions.Add(editGrades);
-                db.Permissions.Add(viewGrades);
-                db.RolePermissions.Add(viewGradesRolePermission);
-                db.RolePermissions.Add(editGradesRolePermission);
-
-                db.SaveChanges();
+                var application = new ApplicationEntity(BaleaConstants.DefaultApplicationName, "Default application");
+                var viewGradesPermission = new PermissionEntity(Policies.ViewGrades);
+                var editGradesPermission = new PermissionEntity(Policies.EditGrades);
+                application.Permissions.Add(viewGradesPermission);
+                application.Permissions.Add(editGradesPermission);
+                var teacherRole = new RoleEntity("Teacher", "Teacher role");
+                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = john.Id });
+                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
+                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
+                application.Roles.Add(teacherRole);
+                application.Delegations.Add(new DelegationEntity(john.Id, mary.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), true));
+                db.Applications.Add(application);
+                await db.SaveChangesAsync();
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Balea.Configuration.Store
         {
             var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
             var application = _Balea.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
                     .Where(role => role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) || 
@@ -40,7 +40,7 @@ namespace Balea.Configuration.Store
         {
             var BaleaRoleClaims = user.GetRoleClaimValues(_options.BaleaRoleClaimType);
             var application = _Balea.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
             return Task.FromResult(
@@ -58,7 +58,7 @@ namespace Balea.Configuration.Store
         public Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
             var application = _Balea.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
             return Task.FromResult(
@@ -73,7 +73,7 @@ namespace Balea.Configuration.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationConfiguration delegation)
         {
-            return delegation?.Who ?? user.GetSubjectId();
+            return delegation?.Who ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
         }
     }
 }

@@ -12,22 +12,22 @@ namespace AutoFixture
 
         public static IEnumerable<Claim> Teacher(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(Balea.BaleaClaims.Subject, TeacherSub));
+            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, TeacherSub));
         }
 
         public static IEnumerable<Claim> Custodian(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(Balea.BaleaClaims.Subject, CustodianSub));
+            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, CustodianSub));
         }
 
         public static IEnumerable<Claim> FirstSubstitute(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(Balea.BaleaClaims.Subject, FirstSubstituteSub));
+            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, FirstSubstituteSub));
         }
 
         public static IEnumerable<Claim> SecondSubstitute(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(Balea.BaleaClaims.Subject, SecondSubstituteSub));
+            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, SecondSubstituteSub));
         }
 
         private static IEnumerable<Claim> GetClaims(Fixture fixture, params Claim [] claims)
