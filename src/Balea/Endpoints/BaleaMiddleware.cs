@@ -3,11 +3,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Balea.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Balea.Endpoints
 {
     public class BaleaMiddleware
     {
+        internal const string AuthorizationMiddlewareInvokedKey = "__AuthorizationMiddlewareWithEndpointInvoked";
         private readonly RequestDelegate _next;
 
         public BaleaMiddleware(RequestDelegate next)
@@ -19,6 +22,11 @@ namespace Balea.Endpoints
         {
             if (context.User.Identity.IsAuthenticated)
             {
+                if (!context.Items.ContainsKey(AuthorizationMiddlewareInvokedKey))
+                {
+                    ThrowMissingAuthMiddlewareException();
+                }
+
                 var authorization = await store
                     .FindAuthorizationAsync(context.User);
 
@@ -50,5 +58,11 @@ namespace Balea.Endpoints
 
             await _next(context);
         }
+        private static void ThrowMissingAuthMiddlewareException()
+        {
+            throw new InvalidOperationException(
+                "The call to app.UseAuthorization() must appear before app.UseBalea().");
+        }
+
     }
 }

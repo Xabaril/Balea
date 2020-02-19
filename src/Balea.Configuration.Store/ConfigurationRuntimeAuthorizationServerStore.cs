@@ -20,9 +20,9 @@ namespace Balea.Configuration.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
+        public Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.SourceRoleClaimType);
             var application = _Balea.Applications.GetByName(_options.ApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
@@ -31,27 +31,32 @@ namespace Balea.Configuration.Store
                                    role.Mappings.Any(m => sourceRoleClaims.Contains(m, StringComparer.InvariantCultureIgnoreCase)))
                     .Select(role => role.To());
 
-            var authorization = new AuthotizationResult(roles, delegation.To());
+            var authorization = new AuthotizationContext(roles, delegation.To());
 
             return Task.FromResult(authorization);
         }
 
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var BaleaRoleClaims = user.GetRoleClaimValues(_options.BaleaRoleClaimType);
-            var application = _Balea.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
-            var subject = GetSubject(user, delegation);
+            //var roles = user.GetRoleClaimValues(_options.BaleaRoleClaimType);
+            //var application = _Balea.Applications.GetByName(_options.ApplicationName);
+            //var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
+            //var subject = GetSubject(user, delegation);
 
-            return Task.FromResult(
-                application.Roles
-                    .Where(role =>
-                        role.Enabled &&
-                        BaleaRoleClaims.Contains(role.Name, StringComparer.InvariantCultureIgnoreCase)
-                    )
-                    .SelectMany(role => role.Permissions)
-                    .Contains(permission)
-            );
+            //return Task.FromResult(
+            //    application.Roles
+            //        .Where(role =>
+            //            role.Enabled &&
+            //            roles.Contains(role.Name, StringComparer.InvariantCultureIgnoreCase)
+            //        )
+            //        .SelectMany(role => role.Permissions)
+            //        .Contains(permission)
+            //);
+
+            var hasPermission = user.GetClaimValues(_options.BaleaPermissionClaimType)
+                .Any(claimValue => claimValue.Equals(permission, StringComparison.InvariantCultureIgnoreCase));
+
+            return Task.FromResult(hasPermission);
         }
 
 

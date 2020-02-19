@@ -9,6 +9,7 @@ namespace Balea
         public string SourceNameIdentifierClaimType { get; internal set; } = ClaimTypes.NameIdentifier;
         public string BaleaNameClaimType { get; internal set; } = ClaimTypes.Name;
         public string BaleaRoleClaimType { get; internal set; } = ClaimTypes.Role;
+        public string BaleaPermissionClaimType { get; internal set; } = BaleaClaims.Permission;
         public string ApplicationName { get; internal set; } = BaleaConstants.DefaultApplicationName;
 
         public BaleaOptions SetSourceRoleClaimType(string value)

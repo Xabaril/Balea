@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Belea.Server
+namespace Belea.UI.Server
 {
     public class Program
     {

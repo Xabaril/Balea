@@ -22,17 +22,18 @@ namespace WebApp
         {
             services
                 .AddBalea(options => options.SetBaleaRoleClaimType("demo"))
-                //.AddConfigurationStore(Configuration)
-                .AddEntityFrameworkCoreStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                    {
-                        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
-                        {
-                            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
-                        });
-                    };
-                })
+                //.AddBalea()
+                .AddConfigurationStore(Configuration)
+                //.AddEntityFrameworkCoreStore(options =>
+                //{
+                //    options.ConfigureDbContext = builder =>
+                //    {
+                //        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
+                //        {
+                //            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
+                //        });
+                //    };
+                //})
                 .Services
                 .AddAuthentication(configureOptions =>
                 {

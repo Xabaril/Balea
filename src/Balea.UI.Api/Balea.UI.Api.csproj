@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+
+    <PackageReference Include="FluentValidation.AspNetCore" Version="$(FluentValidationVersion)" />
+    <PackageReference Include="MediatR" Version="$(MediatRVersion)" />
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="$(ProblemDetailsVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Balea.EntityFrameworkCore.Store\Balea.EntityFrameworkCore.Store.csproj" />
+  </ItemGroup>
+
+</Project>

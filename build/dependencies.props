@@ -23,9 +23,12 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <BlazorVersion>3.1.0-preview4.19579.2</BlazorVersion>
-    <AspNetCoreVersion>3.1.1</AspNetCoreVersion>
+    <BlazorVersion>3.2.0-preview1.20073.1</BlazorVersion>
+    <AspNetCoreVersion>3.1.2</AspNetCoreVersion>
     <EntityFrameworkVersion>3.1.1</EntityFrameworkVersion>
+    <FluentValidationVersion>8.6.1</FluentValidationVersion>
+    <MediatRVersion>8.0.0</MediatRVersion>
+    <ProblemDetailsVersion>4.1.0</ProblemDetailsVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">
@@ -35,7 +38,7 @@
     <coverletcollector>1.2.0</coverletcollector>
     <AcheveTestHost>3.0.0</AcheveTestHost>
     <FluentAssertions>5.10.2</FluentAssertions>
-    <MicrosoftAspNetCoreTestHost>3.1.1</MicrosoftAspNetCoreTestHost>
+    <MicrosoftAspNetCoreTestHost>3.1.2</MicrosoftAspNetCoreTestHost>
     <Respawn>3.2.0</Respawn>
     <AutoFixtureXunit2>4.11.0</AutoFixtureXunit2>
   </PropertyGroup>

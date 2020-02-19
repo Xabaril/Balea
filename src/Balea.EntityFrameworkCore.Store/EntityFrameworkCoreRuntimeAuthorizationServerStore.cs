@@ -21,9 +21,9 @@ namespace Balea.EntityFrameworkCore.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public async Task<AuthotizationResult> FindAuthorizationAsync(ClaimsPrincipal user)
+        public async Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetRoleClaimValues(_options.SourceRoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.SourceRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
@@ -42,12 +42,12 @@ namespace Balea.EntityFrameworkCore.Store
                     )
                     .ToListAsync();
 
-            return new AuthotizationResult(roles.Select(r => r.To()), delegation.To());
+            return new AuthotizationContext(roles.Select(r => r.To()), delegation.To());
         }
 
         public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
-            var BaleaRoleClaims = user.GetRoleClaimValues(_options.BaleaRoleClaimType);
+            var BaleaRoleClaims = user.GetClaimValues(_options.BaleaRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
@@ -68,7 +68,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
         {
-            var claimRoles = user.GetRoleClaimValues(_options.SourceRoleClaimType);
+            var claimRoles = user.GetClaimValues(_options.SourceRoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
 
@@ -84,7 +84,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
-            return delegation?.Who.Sub ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
+            return delegation?.Who?.Sub ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
         }
     }
 }

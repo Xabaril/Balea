@@ -7,10 +7,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="$(BlazorVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="$(MediatRVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Balea.Client\Balea.Client.csproj" />
+    <ProjectReference Include="..\Balea.UI.Api\Balea.UI.Api.csproj" />
+    <ProjectReference Include="..\Balea.UI.Client\Balea.UI.Client.csproj" />
   </ItemGroup>
 
 </Project>
