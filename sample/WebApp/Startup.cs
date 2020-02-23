@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +19,7 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
+            services                     
                 .AddBalea(options => options.SetBaleaRoleClaimType("demo"))
                 //.AddBalea()
                 .AddConfigurationStore(Configuration)
@@ -66,8 +65,8 @@ namespace WebApp
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
-                .UseAuthorization()
                 .UseBalea()
+                .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(

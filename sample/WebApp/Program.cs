@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Balea.EntityFrameworkCore.Store.DbContexts;
-using WebApp.Infrastucture.Data.Seeders;
+using WebApp.Infrastructure.Data.Seeders;
 
 namespace WebApp
 {

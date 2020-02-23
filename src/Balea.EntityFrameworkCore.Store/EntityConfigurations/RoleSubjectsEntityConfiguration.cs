@@ -8,16 +8,16 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class RoleSubjectsEntityConfiguration : IEntityTypeConfiguration<RoleSubjectEntity>
     {
-        private readonly StoreOptions options;
+        private readonly StoreOptions _options;
 
         public RoleSubjectsEntityConfiguration(StoreOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public void Configure(EntityTypeBuilder<RoleSubjectEntity> builder)
         {
-            builder.ToTable($"{options.Roles.Name}{options.Subjects.Name}");
+            builder.ToTable($"{_options.Roles.Name}{_options.Subjects.Name}");
             builder.HasKey(x => new { x.RoleId, x.SubjectId });
             builder
                 .HasOne(x => x.Subject)

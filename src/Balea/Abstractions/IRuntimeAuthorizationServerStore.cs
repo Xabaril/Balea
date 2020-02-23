@@ -7,7 +7,5 @@ namespace Balea.Abstractions
     public interface IRuntimeAuthorizationServerStore
     {
         Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user);
-        Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role);
-        Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission);
     }
 }

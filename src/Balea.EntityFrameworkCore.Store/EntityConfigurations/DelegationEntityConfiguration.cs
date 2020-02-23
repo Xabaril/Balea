@@ -8,16 +8,16 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class DelegationEntityConfiguration : IEntityTypeConfiguration<DelegationEntity>
     {
-        private readonly StoreOptions options;
+        private readonly StoreOptions _options;
 
         public DelegationEntityConfiguration(StoreOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public void Configure(EntityTypeBuilder<DelegationEntity> builder)
         {
-            builder.ToTable(options.Delegations.Name);
+            builder.ToTable(_options.Delegations.Name);
             builder.HasKey(x => x.Id);
             builder.Property(x => x.From)
                 .IsRequired();

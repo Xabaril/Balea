@@ -3,7 +3,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Balea.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using System;
 
 namespace Balea.Endpoints
@@ -22,7 +21,7 @@ namespace Balea.Endpoints
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                if (!context.Items.ContainsKey(AuthorizationMiddlewareInvokedKey))
+                if (context.Items.ContainsKey(AuthorizationMiddlewareInvokedKey))
                 {
                     ThrowMissingAuthMiddlewareException();
                 }
@@ -61,7 +60,7 @@ namespace Balea.Endpoints
         private static void ThrowMissingAuthMiddlewareException()
         {
             throw new InvalidOperationException(
-                "The call to app.UseAuthorization() must appear before app.UseBalea().");
+                "The call to app.UseAuthorization() must appear after app.UseBalea().");
         }
 
     }

@@ -6,7 +6,7 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
 {
     public class StoreDbContext : DbContext
     {
-        private readonly StoreOptions storeOptions;
+        private readonly StoreOptions _storeOptions;
 
         public DbSet<ApplicationEntity> Applications { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
@@ -27,12 +27,12 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
         public StoreDbContext(DbContextOptions<StoreDbContext> options, StoreOptions storeOptions)
             : base (options)
         {
-            this.storeOptions = storeOptions;
+            _storeOptions = storeOptions;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly, storeOptions);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly, _storeOptions);
             base.OnModelCreating(modelBuilder);
         }
     }

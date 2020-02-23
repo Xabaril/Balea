@@ -29,6 +29,8 @@
     <FluentValidationVersion>8.6.1</FluentValidationVersion>
     <MediatRVersion>8.0.0</MediatRVersion>
     <ProblemDetailsVersion>4.1.0</ProblemDetailsVersion>
+    <AutoMapper>9.0.0</AutoMapper>
+    <MicrosoftExtensionsDependencyInjection>7.0.0</MicrosoftExtensionsDependencyInjection>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">

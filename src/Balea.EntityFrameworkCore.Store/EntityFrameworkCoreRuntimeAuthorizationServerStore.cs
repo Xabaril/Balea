@@ -45,43 +45,6 @@ namespace Balea.EntityFrameworkCore.Store
             return new AuthotizationContext(roles.Select(r => r.To()), delegation.To());
         }
 
-        public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
-        {
-            var BaleaRoleClaims = user.GetClaimValues(_options.BaleaRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
-            var subject = GetSubject(user, delegation);
-
-            return await
-                _context.Roles
-                    .AsNoTracking()
-                    .Include(r => r.Application)
-                    .Include(r => r.Permissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .Where(role =>
-                        role.Application.Name == _options.ApplicationName &&
-                        role.Enabled &&
-                        BaleaRoleClaims.Contains(role.Name)
-                    )
-                    .SelectMany(role => role.Permissions)
-                    .AnyAsync(rp => rp.Permission.Name == permission);
-        }
-
-        public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
-        {
-            var claimRoles = user.GetClaimValues(_options.SourceRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
-            var subject = GetSubject(user, delegation);
-
-            return await
-                _context.Roles
-                    .AsNoTracking()
-                    .AnyAsync(r =>
-                        r.Enabled &&
-                        r.Name == role &&
-                        (r.Subjects.Any(rs => rs.Subject.Sub == subject) || r.Mappings.Any(rm => claimRoles.Contains(rm.Mapping.Name)))
-                    );
-        }
-
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
             return delegation?.Who?.Sub ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);

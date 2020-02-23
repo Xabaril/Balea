@@ -8,16 +8,16 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class RoleMappingEntityConfiguration : IEntityTypeConfiguration<RoleMappingEntity>
     {
-        private readonly StoreOptions options;
+        private readonly StoreOptions _options;
 
         public RoleMappingEntityConfiguration(StoreOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public void Configure(EntityTypeBuilder<RoleMappingEntity> builder)
         {
-            builder.ToTable($"{options.Roles.Name}{options.Mappings.Name}");
+            builder.ToTable($"{_options.Roles.Name}{_options.Mappings.Name}");
             builder.HasKey(x => new { x.RoleId, x.MappingId });
             builder
                 .HasOne(x => x.Mapping)

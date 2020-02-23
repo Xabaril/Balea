@@ -23,8 +23,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             _ = services ?? throw new ArgumentNullException(nameof(services));
 
+            services.AddAuthorization();
             services.AddHttpContextAccessor();
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
             services.AddScoped(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
+            services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

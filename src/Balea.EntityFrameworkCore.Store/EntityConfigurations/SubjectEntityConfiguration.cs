@@ -8,16 +8,16 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class SubjectEntityConfiguration : IEntityTypeConfiguration<SubjectEntity>
     {
-        private readonly StoreOptions options;
+        private readonly StoreOptions _options;
 
         public SubjectEntityConfiguration(StoreOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public void Configure(EntityTypeBuilder<SubjectEntity> builder)
         {
-            builder.ToTable(options.Subjects.Name);
+            builder.ToTable(_options.Subjects.Name);
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Sub)
                 .HasMaxLength(200)

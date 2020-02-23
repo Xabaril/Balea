@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System;
 using System.Threading.Tasks;
 using Balea.Abstractions;
 
@@ -7,18 +6,19 @@ namespace Balea.Authorization
 {
     internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        private readonly IRuntimeAuthorizationServerStore _store;
+        private readonly IPermissionEvaluator _permissionEvaluator;
 
-        public PermissionAuthorizationHandler(IRuntimeAuthorizationServerStore store)
+        public PermissionAuthorizationHandler(IPermissionEvaluator permissionEvaluator)
         {
-            _store = store ?? throw new ArgumentNullException(nameof(store));
+            Ensure.Argument.NotNull(permissionEvaluator, nameof(permissionEvaluator));
+            _permissionEvaluator = permissionEvaluator;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                if ( await _store.HasPermissionAsync(context.User, requirement.Name))
+                if ( await _permissionEvaluator.HasPermissionAsync(context.User, requirement.Name))
                 {
                     context.Succeed(requirement);
                     return;

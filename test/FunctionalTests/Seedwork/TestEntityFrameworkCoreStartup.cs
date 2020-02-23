@@ -5,7 +5,6 @@ using Acheve.AspNetCore.TestHost.Security;
 using Acheve.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace FunctionalTests.Seedwork
 {
@@ -59,9 +58,9 @@ namespace FunctionalTests.Seedwork
         public void Configure(IApplicationBuilder app)
         {
             app
+                .UseRouting()
                 .UseAuthentication()
                 .UseBalea()
-                .UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {

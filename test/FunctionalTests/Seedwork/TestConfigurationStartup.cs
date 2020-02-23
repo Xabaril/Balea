@@ -42,9 +42,9 @@ namespace FunctionalTests.Seedwork
         public void Configure(IApplicationBuilder app)
         {
             app
+                .UseRouting()
                 .UseAuthentication()
                 .UseBalea()
-                .UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {

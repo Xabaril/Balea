@@ -7,16 +7,16 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity>
     {
-        private readonly StoreOptions options;
+        private readonly StoreOptions _options;
 
         public RoleEntityConfiguration(StoreOptions options)
         {
-            this.options = options ?? throw new System.ArgumentNullException(nameof(options));
+            _options = options ?? throw new System.ArgumentNullException(nameof(options));
         }
 
         public void Configure(EntityTypeBuilder<RoleEntity> builder)
         {
-            builder.ToTable(options.Roles.Name);
+            builder.ToTable(_options.Roles.Name);
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name)
                 .HasMaxLength(200)

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Balea;
 using WebApp.Models;
 
 namespace WebApp.Controllers

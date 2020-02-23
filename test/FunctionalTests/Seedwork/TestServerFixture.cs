@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Respawn;
-using Microsoft.Extensions.Logging;
 
 namespace FunctionalTests.Seedwork
 {
@@ -32,10 +31,7 @@ namespace FunctionalTests.Seedwork
 
         private void InitializeTestServer()
         {
-            var startups = typeof(TestServerFixture)
-                .Assembly
-                .GetTypes()
-                .Where(t => t.Name.EndsWith("Startup"));
+            var startups = new Type[] { typeof(TestConfigurationStartup), typeof(TestEntityFrameworkCoreStartup) };
 
             foreach (var startup in startups)
             {
