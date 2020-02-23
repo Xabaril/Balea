@@ -18,7 +18,7 @@ jobs:
         - 5433:1433
     steps:
     - name: BuildId
-      run: $GITHUB_RUN_ID
+      run: echo $GITHUB_RUN_ID
     - name: BuildIdWithJoin
       run: join('-preview', $GITHUB_RUN_ID)
     - uses: actions/checkout@v1
