@@ -20,7 +20,7 @@ jobs:
     - name: BuildId
       run: echo $GITHUB_RUN_ID
     - name: BuildIdWithJoin
-      run: echo ${{ join('-preview',github.run_id) }}
+      run: echo -preview${{ github.run_id }}
     - uses: actions/checkout@v1
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.0.0

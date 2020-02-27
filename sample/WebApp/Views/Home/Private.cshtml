@@ -16,16 +16,33 @@
     </ul>
 }
 
-<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-    <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="OpenDoor">Open the door</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CloseDoor">Clode the door</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewGrades">View grades</a>
-        </li>
-    </ul>
+<h3>Roles and permissions</h3>
+
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+    <h5 class="card-header">Teachers</h5>
+    <div class="card-body">
+        <p class="card-text">Teachers can view and edit grades.</p>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="ViewGrades">View grades</a>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="EditGrades">Edit grades</a>
+    </div>
 </div>
+
+
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+    <div class="card-header">Substitutes</div>
+    <div class="card-body">
+        <p class="card-text">Substitutes can view and edit grades when a teacher delegate his/her permissions.</p>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="ViewGrades">View grades</a>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="EditGrades">Edit grades</a>
+    </div>
+</div>
+
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+    <div class="card-header">Custodians</div>
+    <div class="card-body">
+        <p class="card-text">Custodians open and close doors.</p>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="OpenDoor">Open doors</a>
+        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="CloseDoor">Close doors</a>
+    </div>
+</div>
+

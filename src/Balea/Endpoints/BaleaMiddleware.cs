@@ -59,8 +59,7 @@ namespace Balea.Endpoints
         }
         private static void ThrowMissingAuthMiddlewareException()
         {
-            throw new InvalidOperationException(
-                "The call to app.UseAuthorization() must appear after app.UseBalea().");
+            throw new InvalidOperationException("The call to app.UseAuthorization() must appear after app.UseBalea().");
         }
 
     }

@@ -49,5 +49,11 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+        [Authorize(Policy = Policies.EditGrades)]
+        public IActionResult EditGrades()
+        {
+            return View();
+        }
     }
 }

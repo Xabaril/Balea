@@ -35,7 +35,7 @@ namespace WebApp.Controllers
                 case "mark":
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "3"));
                     identity.AddClaim(new Claim(ClaimTypes.Name, "mark"));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "custodian"));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "employee"));
                     break;
                 default:
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "4"));
@@ -61,6 +61,11 @@ namespace WebApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

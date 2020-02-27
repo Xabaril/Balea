@@ -25,6 +25,17 @@
             "mappings": [
               "customer"
             ]
+          },
+          {
+            "name": "custodian",
+            "description": "Custodian role",
+            "permissions": [
+              "open.door",
+              "close.door"
+            ],
+            "subjects": [
+              "3"
+            ]
           }
         ],
         "delegations": [
