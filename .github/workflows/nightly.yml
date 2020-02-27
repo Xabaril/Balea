@@ -6,6 +6,7 @@ jobs:
   build:
     env:
       BUILD_CONFIG: Release
+      VERSION_SUFFIX: -preview${{ github.run_id }}
     name: Build
     runs-on: ubuntu-latest
     services:
@@ -27,11 +28,11 @@ jobs:
     - name: dotnet test [FunctionalTests]
       run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
     - name: dotnet pack [Balea]
-      run: dotnet pack ./src/Balea/Balea.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix ${{ join('-preview',github.run_id) }} --no-build --include-source --include-symbols
+      run: dotnet pack ./src/Balea/Balea.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols
     - name: dotnet pack [Balea.Configuration.Store]
-      run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix ${{ join('-preview',github.run_id) }} --no-build --include-source --include-symbols
+      run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols
     - name: dotnet pack [Balea.EntityFrameworkCore.Store]
-      run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix ${{ join('-preview',github.run_id) }} --no-build --include-source --include-symbols
+      run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols
     - name: Publish nuget
       run: |
           for f in ./artifacts/*.nupkg
