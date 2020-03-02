@@ -101,3 +101,29 @@ Or you can create as many applications as you want:
 }
 ```
 
+## Defining roles
+
+Define roles is a straightforward proccess. Name the role, add a description, enable it and add permissions:
+
+```json
+{
+  "Balea": {
+    "applications": [
+      {
+        "name": "default",
+        "roles": [
+          {
+            "name": "teacher",
+            "description": "Teacher role",
+            "enabled": true,
+            "permissions": [
+              "grades.edit",
+              "grades.view"
+            ]
+          }
+      }
+    ]
+  }
+}
+```
+

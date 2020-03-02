@@ -32,10 +32,14 @@ namespace WebApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Authorize(Roles = Roles.Custodian)]
         public IActionResult OpenDoor()
         {
-            return View();
+            if (User.IsInRole(Roles.Custodian))
+            {
+                return View();
+            }
+
+            return Forbid();
         }
 
         [Authorize(Roles = Roles.Custodian)]

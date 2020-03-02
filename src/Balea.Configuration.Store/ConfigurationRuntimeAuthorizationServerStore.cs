@@ -26,8 +26,10 @@ namespace Balea.Configuration.Store
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
-                    .Where(role => role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) || 
-                                   role.Mappings.Any(m => sourceRoleClaims.Contains(m, StringComparer.InvariantCultureIgnoreCase)))
+                    .Where(role =>
+                        role.Enabled && 
+                        role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) || 
+                        role.Mappings.Any(m => sourceRoleClaims.Contains(m, StringComparer.InvariantCultureIgnoreCase)))
                     .Select(role => role.To());
 
             var authorization = new AuthotizationContext(roles, delegation.To());

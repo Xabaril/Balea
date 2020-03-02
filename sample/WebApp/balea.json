@@ -19,6 +19,7 @@
           {
             "name": "student",
             "description": "Student role",
+            "enabled": true,
             "permissions": [
               "view.grades"
             ],
@@ -29,6 +30,7 @@
           {
             "name": "custodian",
             "description": "Custodian role",
+            "enabled": true,
             "permissions": [
               "open.door",
               "close.door"
@@ -41,6 +43,13 @@
         "delegations": [
           {
             "who": "1",
+            "whom": "2",
+            "from": "2020-01-15 00:00:00",
+            "to": "2020-12-31 23:59:59",
+            "selected": false
+          },
+          {
+            "who": "3",
             "whom": "2",
             "from": "2020-01-15 00:00:00",
             "to": "2020-12-31 23:59:59",
