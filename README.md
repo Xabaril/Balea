@@ -16,114 +16,26 @@ It's very common to see how people missues OIDC servers adding permissions into 
 
 Balea is an authorization framework for ASP.NET Core developers that aims to help us to decoupling authentication and authorization in our web applications.
 
-# Getting started
+For project documentation, please visit [readthedocs](https://balea.readthedocs.io).
 
-The authorization is defined as a JSON document or in a database.
+## How to build
+Esquio is built against the latest NET Core 3.
 
-We recommend using ASP.NET Core configuration store only for demos or simple applications. To install Balea open a console window and type the following command using the .NET Core CLI:
+* [Install](https://www.microsoft.com/net/download/core#/current) the [required](https://github.com/Xabaril/Balea/blob/master/global.json) .NET Core SDK
+* Run [build.ps1](https://github.com/Xabaril/Balea/blob/master/build.ps1) in the root of the repo.
 
-```txt
-dotnet package add Balea.Configuration.Store
-```
+## Acknowledgements
+Esquio is built using the following great open source projects and free services:
 
-or using Powershell or Package Manager:
+* [ASP.NET Core](https://github.com/aspnet)
+* [XUnit](https://xunit.github.io/)
+* [Fluent Assertions](http://www.fluentassertions.com/)
+* [Fluent Validations](https://github.com/JeremySkinner/FluentValidation)
+* [MediatR](https://github.com/jbogard/MediatR)
+* [Problem Details](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails)
 
-```txt
-Install-Package Balea.Configuration.Store
-```
+..and last but not least a big thanks to all our [contributors](https://github.com/Xabaril/Esquio/graphs/contributors)!
 
-or install via NuGet.
+## Code of conduct
 
-In order to store this information in a centralized store, we recommend using EntityFrameworkCore store:
-
-```txt
-dotnet package add Balea.EntityFrameworkCore.Store
-```
-
-or 
-
-```txt
-Install-Package Balea.EntityFrameworkCore.Store
-```
-
-In the **ConfigureServices** method of Startup.cs, register the Balea services:
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddBalea()
-        .AddConfigurationStore(Configuration);
-}
-```
-
-By default Balea use a configuration section called **Balea** but you can changed if you want:
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddBalea()
-        .AddConfigurationStore(Configuration, key: "key name");
-}
-```
-
-## Defining applications
-
-Applications allows you to manage authorization in multiple different software projects. Each application has it's own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called "default":
-
-```json
-{
-  "Balea": {
-    "applications": [
-      {
-        "name": "default"
-      }
-    ]
-  }
-}
-```
-
-Or you can create as many applications as you want:
-
-```json
-{
-  "Balea": {
-    "applications": [
-      {
-        "name": "hr"
-      },
-      {
-        "name": "erp"
-      }
-    ]
-  }
-}
-```
-
-## Defining roles
-
-Define roles is a straightforward proccess. Name the role, add a description, enable it and add permissions:
-
-```json
-{
-  "Balea": {
-    "applications": [
-      {
-        "name": "default",
-        "roles": [
-          {
-            "name": "teacher",
-            "description": "Teacher role",
-            "enabled": true,
-            "permissions": [
-              "grades.edit",
-              "grades.view"
-            ]
-          }
-      }
-    ]
-  }
-}
-```
-
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).  For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
