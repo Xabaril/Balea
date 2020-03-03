@@ -15,17 +15,17 @@ Also read this first: `Being a good open source citizen <https://hackernoon.com/
 General feedback and discussions?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Please start a discussion on the `core repo issue tracker <https://github.com/Xabaril/Esquio/issues>`_
+Please start a discussion on the `core repo issue tracker <https://github.com/Xabaril/Balea/issues>`_
 
 Bugs and feature requests?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Please log a new issue in the GitHub `repo <https://github.com/Xabaril/Esquio>`_
+Please log a new issue in the GitHub `repo <https://github.com/Xabaril/Balea>`_
 
 Contribution projects
 ^^^^^^^^^^^^^^^^^^^^^
 
-We very much appreciate if you start a contribution project (e.g. support for Toogle X or Store Y). 
+We very much appreciate if you start a contribution project. 
 Tell us about it so we can tweet and link it in our docs.
 
 We generally don't want to take ownership of those contribution libraries, we are already really busy supporting the core projects.

@@ -19,22 +19,24 @@ Balea is an authorization framework for ASP.NET Core developers that aims to hel
 For project documentation, please visit [readthedocs](https://balea.readthedocs.io).
 
 ## How to build
+
 Esquio is built against the latest NET Core 3.
 
-* [Install](https://www.microsoft.com/net/download/core#/current) the [required](https://github.com/Xabaril/Balea/blob/master/global.json) .NET Core SDK
-* Run [build.ps1](https://github.com/Xabaril/Balea/blob/master/build.ps1) in the root of the repo.
+- [Install](https://www.microsoft.com/net/download/core#/current) the [required](https://github.com/Xabaril/Balea/blob/master/global.json) .NET Core SDK
+- Run [build.ps1](https://github.com/Xabaril/Balea/blob/master/build.ps1) in the root of the repo.
 
 ## Acknowledgements
+
 Esquio is built using the following great open source projects and free services:
 
-* [ASP.NET Core](https://github.com/aspnet)
-* [XUnit](https://xunit.github.io/)
-* [Fluent Assertions](http://www.fluentassertions.com/)
-* [Fluent Validations](https://github.com/JeremySkinner/FluentValidation)
-* [MediatR](https://github.com/jbogard/MediatR)
-* [Problem Details](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails)
+- [ASP.NET Core](https://github.com/aspnet)
+- [XUnit](https://xunit.github.io/)
+- [Fluent Assertions](http://www.fluentassertions.com/)
+- [Fluent Validations](https://github.com/JeremySkinner/FluentValidation)
+- [MediatR](https://github.com/jbogard/MediatR)
+- [Problem Details](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails)
 
-..and last but not least a big thanks to all our [contributors](https://github.com/Xabaril/Esquio/graphs/contributors)!
+..and last but not least a big thanks to all our [contributors](https://github.com/Xabaril/Balea/graphs/contributors)!
 
 ## Code of conduct
 
