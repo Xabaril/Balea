@@ -20,17 +20,17 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1
       with:
-        version: 3.1.102
+        dotnet-version: 3.1.102
     - name: dotnet build
       run: dotnet build Balea.sln -c $BUILD_CONFIG
     - name: dotnet test [FunctionalTests]
       run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
     - name: dotnet pack [Balea]
-      run: dotnet pack ./src/Balea/Balea.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source
+      run: dotnet pack ./src/Balea/Balea.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
     - name: dotnet pack [Balea.Configuration.Store]
-      run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source
+      run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
     - name: dotnet pack [Balea.EntityFrameworkCore.Store]
-      run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source
+      run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
     - name: Publish nuget
       run: |
           for f in ./artifacts/*.nupkg
