@@ -1,7 +1,5 @@
 name: Balea Nightly Build
-on:
-  schedule:
-    - cron:  '0 6 * * *'
+on: [push]
 jobs:
   build:
     env:
