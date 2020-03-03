@@ -19,7 +19,7 @@ or using Powershell or Package Manager::
 
 or install via NuGet.
 
-In the **ConfigureServices** method of Startup.cs, register the Esquio services::
+In the **ConfigureServices** method of Startup.cs, register the Balea services::
 
         services
           .AddBalea()

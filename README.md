@@ -20,14 +20,14 @@ For project documentation, please visit [readthedocs](https://balea.readthedocs.
 
 ## How to build
 
-Esquio is built against the latest NET Core 3.
+Balea is built against the latest NET Core 3.
 
 - [Install](https://www.microsoft.com/net/download/core#/current) the [required](https://github.com/Xabaril/Balea/blob/master/global.json) .NET Core SDK
 - Run [build.ps1](https://github.com/Xabaril/Balea/blob/master/build.ps1) in the root of the repo.
 
 ## Acknowledgements
 
-Esquio is built using the following great open source projects and free services:
+Balea is built using the following great open source projects and free services:
 
 - [ASP.NET Core](https://github.com/aspnet)
 - [XUnit](https://xunit.github.io/)
