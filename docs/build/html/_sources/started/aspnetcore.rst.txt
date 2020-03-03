@@ -19,7 +19,7 @@ or using Powershell or Package Manager::
 
 or install via NuGet.
 
-In the **ConfigureServices** method of Startup.cs, register the Esquio services::
+In the **ConfigureServices** method of Startup.cs, register the Balea services::
 
         services
           .AddBalea()
@@ -34,7 +34,7 @@ By default Balea use a configuration section called **Balea** but you can change
           .AddConfigurationStore(Configuration, key: "your key");
 
 Definig applications
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 Applications allows you to manage authorization in multiple different software projects. Each application has it's own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called "default"::
 
@@ -70,7 +70,7 @@ And you could specify which application do you want to use::
           .AddConfigurationStore(Configuration);
 
 Defining roles
-^^^^^^^^^^^^^^
+--------------
 
 Define roles is a straightforward proccess. Name the role, add a description, enable it and add permissions::
 
@@ -118,9 +118,12 @@ Additionaly, roles comming from authentication system can be mapped to the appli
           }
         }
 
+Using roles in our controller and actions
+--------------------------------------------
+
 By default, Balea maps automatically roles and permisions to the user's claims. This is mainly useful is you want to use the standard claims API or the ``[Auhtorize]`` attribute. For example::
 
-        [Authorize(Roles = Roles.Custodian)]
+        [Authorize(Roles = "custodian")]
         public IActionResult OpenDoor()
         {
             return View();
@@ -130,7 +133,7 @@ Or using the standard claims API::
 
         public IActionResult OpenDoor()
         {
-            if (User.IsInRole(Roles.Custodian))
+            if (User.IsInRole("custodian"))
             {
                 return View();
             }
@@ -138,9 +141,12 @@ Or using the standard claims API::
             return Forbid();
         }
 
-Also, Balea maps automatically permissions to ASP.NET Core authorization policies::
+Using permissions in ASP.NET Core authorization policies
+--------------------------------------------------------
 
-        [Authorize(Policy = Policies.ViewGrades)]
+Also, Balea maps automatically permissions to ASP.NET Core authorization policies. You'll need to decorate your controllers/actions like this::
+
+        [Authorize(Policy = "grades.view")]
         public IActionResult ViewGrades()
         {
             return View();

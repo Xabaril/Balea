@@ -18,13 +18,11 @@
 
   <PropertyGroup Label="Balea Versions">
     <Balea>1.0.0$(VersionSuffix)</Balea>
-    <BaleaConfigurationStore>1.0.0$(VersionSuffix)</BaleaConfigurationStore>
-    <BaleaEntityFrameworkCoreStore>1.0.0$(VersionSuffix)</BaleaEntityFrameworkCoreStore>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
     <AspNetCoreVersion>3.1.2</AspNetCoreVersion>
-    <EntityFrameworkVersion>3.1.1</EntityFrameworkVersion>
+    <EntityFrameworkVersion>3.1.2</EntityFrameworkVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">

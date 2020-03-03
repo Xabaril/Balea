@@ -4,14 +4,14 @@
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <PackageLicenseUrl>$(PackageLicenseUrl)</PackageLicenseUrl>
     <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
-    <Description>Authorization Framework Library for .NET Core.For more information see http://github.com/Xabaril/Balea </Description>
-    <PackageTags>Authorization;Roles;Permissions;AspNetCore</PackageTags>
+    <Description>Authorization Framework Library for ASP.NET Core.For more information see http://github.com/Xabaril/Balea </Description>
+    <PackageTags>Authorization;Roles;Permissions;Delegations;AspNetCore</PackageTags>
     <Version>$(Balea)</Version>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
     <Company>$(Company)</Company>
     <Authors>$(Authors)</Authors>
     <PackageId>Balea.EntityFrameworkCore.Store</PackageId>
-    <PackageVersion>$(BaleaEntityFrameworkCoreStore)</PackageVersion>
+    <PackageVersion>$(Balea)</PackageVersion>
     <PublishRepositoryUrl>$(RepositoryUrl)</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <LangVersion>latest</LangVersion>

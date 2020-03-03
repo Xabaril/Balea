@@ -2,7 +2,7 @@
 {
     public static class Policies
     {
-        public const string ViewGrades = "view.grades";
-        public const string EditGrades = "edit.grades";
+        public const string ViewGrades = "grades.view";
+        public const string EditGrades = "grades.edit";
     }
 }

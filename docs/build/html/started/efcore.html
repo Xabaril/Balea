@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using EntityFramework Core store &mdash; Balea 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Getting started with Balea in ASP.NET Core" href="aspnetcore.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Balea
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">About Balea</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/contributing.html">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="aspnetcore.html">Getting started with Balea in ASP.NET Core</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using EntityFramework Core store</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-store">Configuring the store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-the-initial-migration">Adding the initial migration</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Balea</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Using EntityFramework Core store</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/started/efcore.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-entityframework-core-store">
+<h1>Using EntityFramework Core store<a class="headerlink" href="#using-entityframework-core-store" title="Permalink to this headline">¶</a></h1>
+<p>Balea was designed to be extensible and one of the extensibility points is the storage. This article shows you how to configure Balea in order to use EntityFrameworkCore as the storage mechanism rather than using ASP.NET Configuration store.</p>
+<p>&gt; In <a class="reference external" href="https://github.com/Xabaril/Balea/tree/master/sample/WebAppEfCore">samples/WebApp</a> you’ll find a complete Balea example in ASP.NET Core.</p>
+<div class="section" id="configuring-the-store">
+<h2>Configuring the store<a class="headerlink" href="#configuring-the-store" title="Permalink to this headline">¶</a></h2>
+<p>To install Balea open a console window and type the following command using the .NET Core CLI:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">dotnet</span> <span class="n">package</span> <span class="k">add</span> <span class="n">Balea</span><span class="p">.</span><span class="n">EntityFrameworkCore</span><span class="p">.</span><span class="n">Store</span>
+</pre></div>
+</div>
+<p>or using Powershell or Package Manager:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">Install</span><span class="p">-</span><span class="n">Package</span> <span class="n">Balea</span><span class="p">.</span><span class="n">EntityFrameworkCore</span><span class="p">.</span><span class="n">Store</span>
+</pre></div>
+</div>
+<p>or install via NuGet.</p>
+<p>In the <strong>ConfigureServices</strong> method of Startup.cs, register the Balea services:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">services</span>
+    <span class="p">.</span><span class="n">AddBalea</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddEntityFrameworkCoreStore</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">options</span><span class="p">.</span><span class="n">ConfigureDbContext</span> <span class="p">=</span> <span class="n">builder</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">UseSqlServer</span><span class="p">(</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetConnectionString</span><span class="p">(</span><span class="s">&quot;Default&quot;</span><span class="p">),</span> <span class="n">sqlServerOptions</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">sqlServerOptions</span><span class="p">.</span><span class="n">MigrationsAssembly</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">Startup</span><span class="p">).</span><span class="n">Assembly</span><span class="p">.</span><span class="n">FullName</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">};</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AddBalea</span></code> method allows you to register the set of services that Balea needs to works. The <code class="docutils literal notranslate"><span class="pre">AddEntityFrameworkCoreStore</span></code> method registers the EntityFrameworkCore store and also give the opportunity to configure your favorite <a class="reference external" href="https://docs.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli">provider</a></p>
+</div>
+<div class="section" id="adding-the-initial-migration">
+<h2>Adding the initial migration<a class="headerlink" href="#adding-the-initial-migration" title="Permalink to this headline">¶</a></h2>
+<p>Balea.EntityFrameworkCore.Store contains all the entities needed to store all the Balea configuration in a database. This entities could be changed over the time, so you are responsible to upgrade your own database. To manage this changes one approach is using EntityFramework Core migrations. To create the initial migration in your web application open a console window and type the following commands using the .NET Core CLI:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">dotnet</span> <span class="n">ef</span> <span class="n">migrations</span> <span class="k">add</span> <span class="n">Initial</span> <span class="p">-</span><span class="n">c</span> <span class="n">StoreDbContext</span> <span class="p">-</span><span class="n">o</span> <span class="s">&quot;Migrations\Balea&quot;</span> <span class="p">-</span><span class="n">s</span> <span class="s">&quot;Path to your proyect&quot;</span>
+<span class="n">dotnet</span> <span class="n">ef</span> <span class="n">database</span> <span class="n">update</span> <span class="p">-</span><span class="n">s</span> <span class="s">&quot;Path to your proyect&quot;</span>
+</pre></div>
+</div>
+<p>or using Powershell or Package Manager:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">Add</span><span class="p">-</span><span class="n">Migration</span> <span class="n">Initial</span> <span class="p">-</span><span class="n">OutputDir</span> <span class="s">&quot;Migrations\Balea· -StartupProject &quot;</span><span class="n">Path</span> <span class="n">to</span> <span class="n">your</span> <span class="n">project</span><span class="s">&quot;</span>
+<span class="n">Update</span><span class="p">-</span><span class="n">Database</span> <span class="p">-</span><span class="n">StartupProject</span> <span class="s">&quot;Path to your project&quot;</span>
+</pre></div>
+</div>
+<p>The database should be created and you should be able to connect using SQL Server Management, Visual Studio or another tool:</p>
+<img alt="../_images/databaseschema.png" src="../_images/databaseschema.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="aspnetcore.html" class="btn btn-neutral float-left" title="Getting started with Balea in ASP.NET Core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Xabaril
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

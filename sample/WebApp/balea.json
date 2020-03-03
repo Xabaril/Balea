@@ -9,8 +9,8 @@
             "enabled": true,
             "description": "Teacher role",
             "permissions": [
-              "edit.grades",
-              "view.grades"
+              "grades.edit",
+              "grades.view"
             ],
             "subjects": [
               "1"
@@ -21,7 +21,7 @@
             "description": "Student role",
             "enabled": true,
             "permissions": [
-              "view.grades"
+              "grades.view"
             ],
             "mappings": [
               "customer"
@@ -32,8 +32,8 @@
             "description": "Custodian role",
             "enabled": true,
             "permissions": [
-              "open.door",
-              "close.door"
+              "doors.open",
+              "doors.close"
             ],
             "subjects": [
               "3"

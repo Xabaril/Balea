@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started with Balea in ASP.NET Core &mdash; Esquio 0.0.1 documentation</title>
+  <title>Getting started with Balea in ASP.NET Core &mdash; Balea 1.0.0 documentation</title>
   
 
   
@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using EntityFramework Core store" href="efcore.html" />
     <link rel="prev" title="Contributing" href="../intro/contributing.html" /> 
 </head>
 
@@ -49,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Esquio
+            <a href="../index.html" class="icon icon-home"> Balea
           
 
           
@@ -87,13 +88,14 @@
 <p class="caption"><span class="caption-text">Getting Started Guide</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started with Balea in ASP.NET Core</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#definig-applications">Definig applications</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#defining-roles">Defining roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#definig-applications">Definig applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-roles">Defining roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-roles-in-our-controller-and-actions">Using roles in our controller and actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-permissions-in-asp-net-core-authorization-policies">Using permissions in ASP.NET Core authorization policies</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="efcore.html">Using EntityFramework Core store</a></li>
 </ul>
 
             
@@ -108,7 +110,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Esquio</a>
+          <a href="../index.html">Balea</a>
         
       </nav>
 
@@ -173,7 +175,7 @@
 </pre></div>
 </div>
 <p>or install via NuGet.</p>
-<p>In the <strong>ConfigureServices</strong> method of Startup.cs, register the Esquio services:</p>
+<p>In the <strong>ConfigureServices</strong> method of Startup.cs, register the Balea services:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">services</span>
   <span class="p">.</span><span class="n">AddBalea</span><span class="p">()</span>
   <span class="p">.</span><span class="n">AddConfigurationStore</span><span class="p">(</span><span class="n">Configuration</span><span class="p">);</span>
@@ -186,8 +188,9 @@
   <span class="p">.</span><span class="n">AddConfigurationStore</span><span class="p">(</span><span class="n">Configuration</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;your key&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
 <div class="section" id="definig-applications">
-<h3>Definig applications<a class="headerlink" href="#definig-applications" title="Permalink to this headline">¶</a></h3>
+<h2>Definig applications<a class="headerlink" href="#definig-applications" title="Permalink to this headline">¶</a></h2>
 <p>Applications allows you to manage authorization in multiple different software projects. Each application has it’s own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called “default”:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s">&quot;Balea&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -223,7 +226,7 @@
 </div>
 </div>
 <div class="section" id="defining-roles">
-<h3>Defining roles<a class="headerlink" href="#defining-roles" title="Permalink to this headline">¶</a></h3>
+<h2>Defining roles<a class="headerlink" href="#defining-roles" title="Permalink to this headline">¶</a></h2>
 <p>Define roles is a straightforward proccess. Name the role, add a description, enable it and add permissions:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s">&quot;Balea&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -270,8 +273,11 @@
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="using-roles-in-our-controller-and-actions">
+<h2>Using roles in our controller and actions<a class="headerlink" href="#using-roles-in-our-controller-and-actions" title="Permalink to this headline">¶</a></h2>
 <p>By default, Balea maps automatically roles and permisions to the user’s claims. This is mainly useful is you want to use the standard claims API or the <code class="docutils literal notranslate"><span class="pre">[Auhtorize]</span></code> attribute. For example:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="na">[Authorize(Roles = Roles.Custodian)]</span>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="na">[Authorize(Roles = &quot;custodian&quot;)]</span>
 <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">OpenDoor</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
@@ -281,7 +287,7 @@
 <p>Or using the standard claims API:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">OpenDoor</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="n">IsInRole</span><span class="p">(</span><span class="n">Roles</span><span class="p">.</span><span class="n">Custodian</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="n">IsInRole</span><span class="p">(</span><span class="s">&quot;custodian&quot;</span><span class="p">))</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
     <span class="p">}</span>
@@ -290,14 +296,16 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Also, Balea maps automatically permissions to ASP.NET Core authorization policies:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="na">[Authorize(Policy = Policies.ViewGrades)]</span>
+</div>
+<div class="section" id="using-permissions-in-asp-net-core-authorization-policies">
+<h2>Using permissions in ASP.NET Core authorization policies<a class="headerlink" href="#using-permissions-in-asp-net-core-authorization-policies" title="Permalink to this headline">¶</a></h2>
+<p>Also, Balea maps automatically permissions to ASP.NET Core authorization policies. You’ll need to decorate your controllers/actions like this:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="na">[Authorize(Policy = &quot;grades.view&quot;)]</span>
 <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">ViewGrades</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -309,6 +317,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="efcore.html" class="btn btn-neutral float-right" title="Using EntityFramework Core store" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../intro/contributing.html" class="btn btn-neutral float-left" title="Contributing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

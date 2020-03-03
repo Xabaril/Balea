@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,19 +20,17 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services                     
-                .AddBalea(options => options.SetBaleaRoleClaimType("demo"))
-                //.AddBalea()
-                .AddConfigurationStore(Configuration)
-                //.AddEntityFrameworkCoreStore(options =>
-                //{
-                //    options.ConfigureDbContext = builder =>
-                //    {
-                //        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
-                //        {
-                //            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
-                //        });
-                //    };
-                //})
+                .AddBalea()
+                .AddEntityFrameworkCoreStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                    {
+                        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
+                        {
+                            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
+                        });
+                    };
+                })
                 .Services
                 .AddAuthentication(configureOptions =>
                 {

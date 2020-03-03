@@ -20,4 +20,5 @@ Welcome to Balea
    :caption: Getting Started Guide
 
    started/aspnetcore
+   started/efcore
 
