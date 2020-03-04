@@ -21,4 +21,5 @@ Welcome to Balea
 
    started/aspnetcore
    started/efcore
+   started/delegations
 

@@ -12,7 +12,7 @@ namespace System.Security.Claims
 
             if (claim == null)
             {
-                throw new InvalidOperationException("sub claim is missing");
+                throw new InvalidOperationException("sub claim is missing.");
             }
             
             return claim.Value;
