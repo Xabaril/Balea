@@ -5,6 +5,7 @@ namespace AutoFixture
 {
     public static class AutoFixtureExtensions
     {
+        public const string Subject = "sub";
         public const string TeacherSub = "1";
         public const string FirstSubstituteSub = "2";
         public const string SecondSubstituteSub = "3";
@@ -12,22 +13,22 @@ namespace AutoFixture
 
         public static IEnumerable<Claim> Teacher(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, TeacherSub));
+            return GetClaims(fixture, new Claim(Subject, TeacherSub));
         }
 
         public static IEnumerable<Claim> Custodian(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, CustodianSub));
+            return GetClaims(fixture, new Claim(Subject, CustodianSub));
         }
 
         public static IEnumerable<Claim> FirstSubstitute(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, FirstSubstituteSub));
+            return GetClaims(fixture, new Claim(Subject, FirstSubstituteSub));
         }
 
         public static IEnumerable<Claim> SecondSubstitute(this Fixture fixture)
         {
-            return GetClaims(fixture, new Claim(ClaimTypes.NameIdentifier, SecondSubstituteSub));
+            return GetClaims(fixture, new Claim(Subject, SecondSubstituteSub));
         }
 
         private static IEnumerable<Claim> GetClaims(Fixture fixture, params Claim [] claims)
