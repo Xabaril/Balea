@@ -21,7 +21,7 @@ namespace Balea.Configuration.Store
 
         public Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.SourceRoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);

@@ -31,9 +31,8 @@ namespace WebAppEfCoreOidc
                 {
                     options.DefaultClaimTypeMap = new DefaultClaimTypeMap
                     {
-                        SourceRoleClaimType = JwtClaimTypes.Role,
-                        BaleaNameClaimType = JwtClaimTypes.Name,
-                        BaleaRoleClaimType = JwtClaimTypes.Role
+                        RoleClaimType = JwtClaimTypes.Role,
+                        NameClaimType = JwtClaimTypes.Name
                     };
                 })
                 .AddEntityFrameworkCoreStore(options =>

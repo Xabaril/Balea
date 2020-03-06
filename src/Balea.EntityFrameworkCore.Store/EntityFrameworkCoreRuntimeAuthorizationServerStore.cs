@@ -23,7 +23,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         public async Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.SourceRoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles

@@ -41,16 +41,16 @@ namespace Balea.Endpoints
 
                 var roleClaims = authorization.Roles
                     .Where(role => role.Enabled)
-                    .Select(role => new Claim(options.DefaultClaimTypeMap.BaleaRoleClaimType, role.Name));
+                    .Select(role => new Claim(options.DefaultClaimTypeMap.RoleClaimType, role.Name));
 
                 var permissionClaims = authorization.Roles
                     .SelectMany(role => role.GetPermissions())
-                    .Select(permission => new Claim(BaleaClaims.Permission, permission));
+                    .Select(permission => new Claim(options.DefaultClaimTypeMap.PermissionClaimType, permission));
 
                 var identity = new ClaimsIdentity(
                     authenticationType: nameof(BaleaMiddleware),
-                    nameType: options.DefaultClaimTypeMap.BaleaNameClaimType,
-                    roleType: options.DefaultClaimTypeMap.BaleaRoleClaimType);
+                    nameType: options.DefaultClaimTypeMap.NameClaimType,
+                    roleType: options.DefaultClaimTypeMap.RoleClaimType);
 
                 identity.AddClaims(roleClaims);
                 identity.AddClaims(permissionClaims);

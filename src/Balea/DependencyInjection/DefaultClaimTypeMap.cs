@@ -4,9 +4,8 @@ namespace Balea
 {
     public class DefaultClaimTypeMap
     {
-        public string SourceRoleClaimType { get; set; } = ClaimTypes.Role;
-        public string BaleaNameClaimType { get; set; } = ClaimTypes.Name;
-        public string BaleaRoleClaimType { get; set; } = ClaimTypes.Role;
-        public string BaleaPermissionClaimType { get; set; } = BaleaClaims.Permission;
+        public string RoleClaimType { get; set; } = ClaimTypes.Role;
+        public string NameClaimType { get; set; } = ClaimTypes.Name;
+        public string PermissionClaimType { get; set; } = BaleaClaims.Permission;
     }
 }

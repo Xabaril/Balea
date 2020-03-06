@@ -21,7 +21,7 @@ namespace Balea
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
             var hasPermission = user
-                .GetClaimValues(_options.DefaultClaimTypeMap.BaleaPermissionClaimType)
+                .GetClaimValues(_options.DefaultClaimTypeMap.PermissionClaimType)
                 .Any(claimValue => claimValue.Equals(permission, StringComparison.InvariantCultureIgnoreCase));
 
             return Task.FromResult(hasPermission);

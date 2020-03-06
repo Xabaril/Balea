@@ -23,6 +23,10 @@ namespace WebApp
                 .AddBalea(options =>
                 {
                     options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;
+                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                    {
+                        PermissionClaimType = "my-name"
+                    };
                 })
                 .AddConfigurationStore(Configuration)
                 .Services
