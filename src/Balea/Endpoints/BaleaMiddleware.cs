@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Balea.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Balea.Abstractions;
-using System;
 
 namespace Balea.Endpoints
 {
@@ -19,7 +20,9 @@ namespace Balea.Endpoints
 
         public async Task InvokeAsync(HttpContext context, IRuntimeAuthorizationServerStore store, BaleaOptions options)
         {
-            if (context.User.Identity.IsAuthenticated)
+            var endpoint = context.GetEndpoint();
+
+            if (context.User.Identity.IsAuthenticated && endpoint.Metadata.GetMetadata<IAuthorizeData>() != null)
             {
                 if (context.Items.ContainsKey(AuthorizationMiddlewareInvokedKey))
                 {
@@ -29,9 +32,16 @@ namespace Balea.Endpoints
                 var authorization = await store
                     .FindAuthorizationAsync(context.User);
 
+                if (!context.Response.HasStarted && options.UnauthorizedFallback != null && !authorization.Roles.Any())
+                {
+                    await options.UnauthorizedFallback(context);
+
+                    return;
+                }
+
                 var roleClaims = authorization.Roles
                     .Where(role => role.Enabled)
-                    .Select(role => new Claim(options.BaleaRoleClaimType, role.Name));
+                    .Select(role => new Claim(options.DefaultClaimTypeMap.BaleaRoleClaimType, role.Name));
 
                 var permissionClaims = authorization.Roles
                     .SelectMany(role => role.GetPermissions())
@@ -39,8 +49,8 @@ namespace Balea.Endpoints
 
                 var identity = new ClaimsIdentity(
                     authenticationType: nameof(BaleaMiddleware),
-                    nameType: options.BaleaNameClaimType,
-                    roleType: options.BaleaRoleClaimType);
+                    nameType: options.DefaultClaimTypeMap.BaleaNameClaimType,
+                    roleType: options.DefaultClaimTypeMap.BaleaRoleClaimType);
 
                 identity.AddClaims(roleClaims);
                 identity.AddClaims(permissionClaims);

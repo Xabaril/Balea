@@ -18,12 +18,7 @@ namespace FunctionalTests.Seedwork
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddBalea(options =>
-                {
-                    options
-                        .SetSourceRoleClaimType("sourceRole")
-                        .SetBaleaRoleClaimType("BaleaRole");
-                })
+                .AddBalea()
                 .AddConfigurationStore(configuration)
                 .Services
                 .AddAuthentication(setup =>

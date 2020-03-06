@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Balea.Abstractions;
+using Balea.EntityFrameworkCore.Store.DbContexts;
+using Balea.EntityFrameworkCore.Store.Entities;
+using Balea.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Balea.Abstractions;
-using Balea.EntityFrameworkCore.Store.DbContexts;
-using Balea.EntityFrameworkCore.Store.Entities;
-using Balea.Model;
 
 namespace Balea.EntityFrameworkCore.Store
 {
@@ -23,8 +23,8 @@ namespace Balea.EntityFrameworkCore.Store
 
         public async Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.SourceRoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
+            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.SourceRoleClaimType);
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
                     .AsNoTracking()
@@ -47,7 +47,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
-            return delegation?.Who?.Sub ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
+            return delegation?.Who?.Sub ?? user.GetSubjectId();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Balea.Model;
+using System;
 using System.Linq;
-using Balea.Model;
 
 namespace Balea.Configuration.Store.Model
 {
@@ -43,7 +43,7 @@ namespace Balea.Configuration.Store.Model
             return delegations.FirstOrDefault(d => d.Active && d.Whom == subjectId);
         }
 
-        public static ApplicationConfiguration GetByName(this ApplicationConfiguration [] applications, string name)
+        public static ApplicationConfiguration GetByName(this ApplicationConfiguration[] applications, string name)
         {
             return applications.First(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }

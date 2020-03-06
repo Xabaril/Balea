@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Balea.EntityFrameworkCore.Store.DbContexts;
 using WebAppEfCoreOidc.Infrastructure.Data.Seeders;
@@ -21,10 +20,6 @@ namespace WebAppEfCoreOidc
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddJsonFile("balea.json", optional: false, reloadOnChange: true);
                 });
     }
 }

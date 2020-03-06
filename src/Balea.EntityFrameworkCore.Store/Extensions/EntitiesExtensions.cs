@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Balea.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Balea.Model;
 
 namespace Balea.EntityFrameworkCore.Store.Entities
 {
@@ -46,9 +46,9 @@ namespace Balea.EntityFrameworkCore.Store.Entities
             return delegations
                 .Include(d => d.Who)
                 .Include(d => d.Whom)
-                .FirstOrDefaultAsync(d => 
-                    d.Selected && 
-                    d.From <= now && d.To >= now && 
+                .FirstOrDefaultAsync(d =>
+                    d.Selected &&
+                    d.From <= now && d.To >= now &&
                     d.Whom.Sub == subjectId);
         }
 

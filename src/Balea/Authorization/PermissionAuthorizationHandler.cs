@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Balea.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using Balea.Abstractions;
 
 namespace Balea.Authorization
 {
@@ -18,13 +18,13 @@ namespace Balea.Authorization
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                if ( await _permissionEvaluator.HasPermissionAsync(context.User, requirement.Name))
+                if (await _permissionEvaluator.HasPermissionAsync(context.User, requirement.Name))
                 {
                     context.Succeed(requirement);
                     return;
                 }
             }
-            
+
             context.Fail();
         }
     }

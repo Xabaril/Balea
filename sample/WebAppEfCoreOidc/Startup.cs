@@ -1,3 +1,4 @@
+using Balea;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -28,10 +29,12 @@ namespace WebAppEfCoreOidc
             services                     
                 .AddBalea(options =>
                 {
-                    options.SetSourceRoleClaimType(JwtClaimTypes.Role);
-                    options.SetSourceNameIdentitfierClaimType(JwtClaimTypes.Subject);
-                    options.SetBaleaNameClaimType(JwtClaimTypes.Name);
-                    options.SetBaleaRoleClaimType(JwtClaimTypes.Role);
+                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                    {
+                        SourceRoleClaimType = JwtClaimTypes.Role,
+                        BaleaNameClaimType = JwtClaimTypes.Name,
+                        BaleaRoleClaimType = JwtClaimTypes.Role
+                    };
                 })
                 .AddEntityFrameworkCoreStore(options =>
                 {
@@ -53,7 +56,8 @@ namespace WebAppEfCoreOidc
                 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = "https://demo.identityserver.io";
-                    options.ClientId = "interactive.public";
+                    options.ClientId = "interactive.confidential";
+                    options.ClientSecret = "secret";
                     options.ResponseType = "code";
                     options.Scope.Clear();
                     options.Scope.Add("openid");
@@ -61,6 +65,8 @@ namespace WebAppEfCoreOidc
                     options.Scope.Add("email");
                     options.Scope.Add("api");
                     options.UsePkce = true;
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {

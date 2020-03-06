@@ -23,8 +23,8 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Seeders
                 await db.SaveChangesAsync();
 
                 var application = new ApplicationEntity(BaleaConstants.DefaultApplicationName, "Default application");
-                var viewGradesPermission = new PermissionEntity(Policies.ViewGrades);
-                var editGradesPermission = new PermissionEntity(    Policies.EditGrades);
+                var viewGradesPermission = new PermissionEntity(Policies.GradesView);
+                var editGradesPermission = new PermissionEntity(Policies.GradesEdit);
                 application.Permissions.Add(viewGradesPermission);
                 application.Permissions.Add(editGradesPermission);
                 var teacherRole = new RoleEntity("Teacher", "Teacher role");

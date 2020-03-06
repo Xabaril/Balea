@@ -17,9 +17,16 @@ Welcome to Balea
 .. toctree::
    :maxdepth: 3
    :hidden:
-   :caption: Getting Started Guide
+   :caption: Quickstarts
 
    started/aspnetcore
    started/efcore
    started/delegations
 
+.. toctree::
+   :maxdepth: 3
+   :hidden:
+   :caption: Topics
+
+   topics/fallback
+   topics/claimtypemap

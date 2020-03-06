@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Balea
 {
+    /// <summary>
+    /// Check if BaleaMiddleware authentication scheme has claims permissions fot the current user. 
+    /// </summary>
     public class DefaultPermissionEvaluator : IPermissionEvaluator
     {
         private readonly BaleaOptions _options;
@@ -18,7 +21,7 @@ namespace Balea
         public Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
         {
             var hasPermission = user
-                .GetClaimValues(_options.BaleaPermissionClaimType)
+                .GetClaimValues(_options.DefaultClaimTypeMap.BaleaPermissionClaimType)
                 .Any(claimValue => claimValue.Equals(permission, StringComparison.InvariantCultureIgnoreCase));
 
             return Task.FromResult(hasPermission);

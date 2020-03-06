@@ -9,7 +9,7 @@ namespace Balea.Model
         private readonly List<string> _permissions = new List<string>();
 
         public Role(
-            string name, 
+            string name,
             string description,
             IEnumerable<string> subjects,
             IEnumerable<string> mappings,

@@ -21,4 +21,8 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Diagnostics\" />
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Balea.Abstractions;
+﻿using Balea.Abstractions;
 using Balea.Configuration.Store;
 using Balea.Configuration.Store.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

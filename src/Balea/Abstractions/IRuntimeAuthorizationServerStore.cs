@@ -1,6 +1,6 @@
-﻿using System.Security.Claims;
+﻿using Balea.Model;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Balea.Model;
 
 namespace Balea.Abstractions
 {

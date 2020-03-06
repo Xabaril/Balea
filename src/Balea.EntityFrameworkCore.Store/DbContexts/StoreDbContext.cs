@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Balea.EntityFrameworkCore.Store.Entities;
+﻿using Balea.EntityFrameworkCore.Store.Entities;
 using Balea.EntityFrameworkCore.Store.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Balea.EntityFrameworkCore.Store.DbContexts
 {
@@ -25,7 +25,7 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
         }
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options, StoreOptions storeOptions)
-            : base (options)
+            : base(options)
         {
             _storeOptions = storeOptions;
         }

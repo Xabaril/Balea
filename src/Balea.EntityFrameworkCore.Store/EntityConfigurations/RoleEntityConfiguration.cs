@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Balea.EntityFrameworkCore.Store.Entities;
+﻿using Balea.EntityFrameworkCore.Store.Entities;
 using Balea.EntityFrameworkCore.Store.Options;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {

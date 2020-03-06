@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Balea.EntityFrameworkCore.Store.Options;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Balea.EntityFrameworkCore.Store.Options;
 
 namespace Microsoft.EntityFrameworkCore
 {

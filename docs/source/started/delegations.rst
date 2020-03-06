@@ -1,5 +1,5 @@
-Delegate Permissions to another Person
-======================================
+Delegate Permissions to another users
+=====================================
 
 In role-based access model, delegation involves delegating roles to another users that can assume a set of permissions to access to the resources on behalf of the user. Balea supports the delegation of your permissions to another person. This article shows you how to configure Balea in order to use delegations.
 
@@ -38,6 +38,8 @@ An example of delegation::
           }
         }
 
-When you are acting on behalf of somenone, Balea adds some claims to the principal in order to use in the application:
+When you are acting on behalf of somenone, Balea adds new claims to the principal:
 
+.. image:: ../images/delegations.png
 
+For example, a use case could be use the claim **delegatedby** in your queries to retrieve data that belongs to the user which has delegated his permissions.

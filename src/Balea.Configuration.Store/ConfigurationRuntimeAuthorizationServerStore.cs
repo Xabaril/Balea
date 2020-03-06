@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Balea.Abstractions;
+using Balea.Configuration.Store.Model;
+using Balea.Model;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Balea.Abstractions;
-using Balea.Configuration.Store.Model;
-using Balea.Model;
 
 namespace Balea.Configuration.Store
 {
@@ -21,14 +21,14 @@ namespace Balea.Configuration.Store
 
         public Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.SourceRoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.SourceRoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options.SourceNameIdentifierClaimType));
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
                     .Where(role =>
-                        role.Enabled && 
-                        role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) || 
+                        role.Enabled &&
+                        role.Subjects.Contains(subject, StringComparer.InvariantCultureIgnoreCase) ||
                         role.Mappings.Any(m => sourceRoleClaims.Contains(m, StringComparer.InvariantCultureIgnoreCase)))
                     .Select(role => role.To());
 
@@ -39,7 +39,7 @@ namespace Balea.Configuration.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationConfiguration delegation)
         {
-            return delegation?.Who ?? user.GetSubjectId(_options.SourceNameIdentifierClaimType);
+            return delegation?.Who ?? user.GetSubjectId();
         }
     }
 }

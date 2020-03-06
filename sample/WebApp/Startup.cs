@@ -1,3 +1,4 @@
+using Balea;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,7 +20,10 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services                     
-                .AddBalea()
+                .AddBalea(options =>
+                {
+                    options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;
+                })
                 .AddConfigurationStore(Configuration)
                 .Services
                 .AddAuthentication(configureOptions =>
@@ -35,7 +39,6 @@ namespace WebApp
                 .AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -48,13 +48,13 @@ namespace WebAppEfCoreOidc.Controllers
             return View();
         }
 
-        [Authorize(Policy = Policies.ViewGrades)]
+        [Authorize(Policy = Policies.GradesView)]
         public IActionResult ViewGrades()
         {
             return View();
         }
 
-        [Authorize(Policy = Policies.EditGrades)]
+        [Authorize(Policy = Policies.GradesEdit)]
         public IActionResult EditGrades()
         {
             return View();
