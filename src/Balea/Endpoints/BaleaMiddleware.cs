@@ -45,6 +45,7 @@ namespace Balea.Endpoints
 
                 var permissionClaims = authorization.Roles
                     .SelectMany(role => role.GetPermissions())
+                    .Distinct()
                     .Select(permission => new Claim(options.DefaultClaimTypeMap.PermissionClaimType, permission));
 
                 var identity = new ClaimsIdentity(

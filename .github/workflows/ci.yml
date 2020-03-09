@@ -1,4 +1,4 @@
-name: Balea CI
+name: Balea Continous Integration
 on: [push]
 
 jobs:

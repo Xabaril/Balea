@@ -19,7 +19,7 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services                     
+            services  
                 .AddBalea(options =>
                 {
                     options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;

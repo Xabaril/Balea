@@ -18,7 +18,7 @@ namespace Balea.Configuration.Store.Model
                     role.Description,
                     role.Subjects,
                     role.Mappings,
-                    role.Permissions,
+                    role.Permissions.Distinct(),
                     role.Enabled
                 );
         }
