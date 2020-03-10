@@ -32,9 +32,6 @@ Balea is built using the following great open source projects and free services:
 - [ASP.NET Core](https://github.com/aspnet)
 - [XUnit](https://xunit.github.io/)
 - [Fluent Assertions](http://www.fluentassertions.com/)
-- [Fluent Validations](https://github.com/JeremySkinner/FluentValidation)
-- [MediatR](https://github.com/jbogard/MediatR)
-- [Problem Details](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails)
 
 ..and last but not least a big thanks to all our [contributors](https://github.com/Xabaril/Balea/graphs/contributors)!
 
