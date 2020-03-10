@@ -4,7 +4,7 @@
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <PackageLicenseUrl>$(PackageLicenseUrl)</PackageLicenseUrl>
     <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
-    <Description>Authorization Framework Library for ASP.NET Core.For more information see http://github.com/Xabaril/Balea </Description>
+    <Description>EntityFrameworkCode store support for Balea.For more information see http://github.com/Xabaril/Balea </Description>
     <PackageTags>Authorization;Roles;Permissions;Delegations;AspNetCore</PackageTags>
     <Version>$(Balea)</Version>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
