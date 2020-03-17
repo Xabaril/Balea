@@ -5,6 +5,7 @@ using Acheve.AspNetCore.TestHost.Security;
 using Acheve.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Balea;
 
 namespace FunctionalTests.Seedwork
 {
@@ -20,7 +21,13 @@ namespace FunctionalTests.Seedwork
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddBalea()
+                .AddBalea(options =>
+                {
+                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                    {
+                        SubjectClaimType = JwtClaimTypes.Subject
+                    };
+                })
                 .AddEntityFrameworkCoreStore(options =>
                 {
                     options.ConfigureDbContext = builder =>

@@ -15,10 +15,12 @@ namespace FunctionalTests.Seedwork
                 var john = new SubjectEntity("John", AutoFixtureExtensions.TeacherSub);
                 var mary = new SubjectEntity("Mary", AutoFixtureExtensions.FirstSubstituteSub);
                 var anna = new SubjectEntity("Anna", AutoFixtureExtensions.SecondSubstituteSub);
+                var client = new SubjectEntity("Client", AutoFixtureExtensions.ClientId);
 
                 db.Add(john);
                 db.Add(mary);
                 db.Add(anna);
+                db.Add(client);
 
                 await db.SaveChangesAsync();
 
@@ -29,6 +31,7 @@ namespace FunctionalTests.Seedwork
                 application.Permissions.Add(editGradesPermission);
                 var teacherRole = new RoleEntity("Teacher", "Teacher role");
                 teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = john.Id });
+                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = client.Id});
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
                 application.Roles.Add(teacherRole);

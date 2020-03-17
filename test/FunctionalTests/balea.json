@@ -13,7 +13,7 @@
               "view.grades"
             ],
             "subjects": [
-              "1"
+              "1","m2m"
             ]
           },
           {

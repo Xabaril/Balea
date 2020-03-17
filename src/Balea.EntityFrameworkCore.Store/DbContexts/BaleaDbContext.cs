@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Balea.EntityFrameworkCore.Store.DbContexts
 {
-    public class StoreDbContext : DbContext
+    public class BaleaDbContext : DbContext
     {
         private readonly StoreOptions _storeOptions;
 
@@ -18,13 +18,13 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
         public DbSet<RoleMappingEntity> RoleMappings { get; set; }
         public DbSet<RoleSubjectEntity> RoleSubjects { get; set; }
 
-        public StoreDbContext(DbContextOptions<StoreDbContext> options)
+        public BaleaDbContext(DbContextOptions<BaleaDbContext> options)
             : this(options, new StoreOptions())
         {
 
         }
 
-        public StoreDbContext(DbContextOptions<StoreDbContext> options, StoreOptions storeOptions)
+        public BaleaDbContext(DbContextOptions<BaleaDbContext> options, StoreOptions storeOptions)
             : base(options)
         {
             _storeOptions = storeOptions;
@@ -32,7 +32,7 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly, _storeOptions);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaleaDbContext).Assembly, _storeOptions);
             base.OnModelCreating(modelBuilder);
         }
     }

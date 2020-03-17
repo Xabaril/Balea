@@ -12,10 +12,10 @@ namespace Balea.EntityFrameworkCore.Store
 {
     public class EntityFrameworkCoreRuntimeAuthorizationServerStore : IRuntimeAuthorizationServerStore
     {
-        private readonly StoreDbContext _context;
+        private readonly BaleaDbContext _context;
         private readonly BaleaOptions _options;
 
-        public EntityFrameworkCoreRuntimeAuthorizationServerStore(StoreDbContext context, BaleaOptions options)
+        public EntityFrameworkCoreRuntimeAuthorizationServerStore(BaleaDbContext context, BaleaOptions options)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -24,7 +24,7 @@ namespace Balea.EntityFrameworkCore.Store
         public async Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options));
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
                     .AsNoTracking()
@@ -47,7 +47,7 @@ namespace Balea.EntityFrameworkCore.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
-            return delegation?.Who?.Sub ?? user.GetSubjectId();
+            return delegation?.Who?.Sub ?? user.GetSubjectId(_options);
         }
     }
 }

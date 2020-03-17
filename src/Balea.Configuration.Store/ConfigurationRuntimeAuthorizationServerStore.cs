@@ -23,7 +23,7 @@ namespace Balea.Configuration.Store
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
-            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId());
+            var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options));
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
                     .Where(role =>
@@ -39,7 +39,7 @@ namespace Balea.Configuration.Store
 
         private string GetSubject(ClaimsPrincipal user, DelegationConfiguration delegation)
         {
-            return delegation?.Who ?? user.GetSubjectId();
+            return delegation?.Who ?? user.GetSubjectId(_options);
         }
     }
 }

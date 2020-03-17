@@ -11,7 +11,7 @@ namespace WebAppEfCoreOidc
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<StoreDbContext>(db => BaleaSeeder.Seed(db).Wait())
+                .MigrateDbContext<BaleaDbContext>(db => BaleaSeeder.Seed(db).Wait())
                 .Run();
         }
 

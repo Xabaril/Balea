@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using WebAppEfCoreOidc.Models;
 
 namespace WebAppEfCoreOidc
 {
@@ -32,7 +31,8 @@ namespace WebAppEfCoreOidc
                     options.DefaultClaimTypeMap = new DefaultClaimTypeMap
                     {
                         RoleClaimType = JwtClaimTypes.Role,
-                        NameClaimType = JwtClaimTypes.Name
+                        NameClaimType = JwtClaimTypes.Name,
+                        SubjectClaimType = JwtClaimTypes.Subject
                     };
                 })
                 .AddEntityFrameworkCoreStore(options =>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Balea;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace AutoFixture
@@ -10,6 +11,7 @@ namespace AutoFixture
         public const string FirstSubstituteSub = "2";
         public const string SecondSubstituteSub = "3";
         public const string CustodianSub = "4";
+        public const string ClientId = "m2m";
 
         public static IEnumerable<Claim> Teacher(this Fixture fixture)
         {
@@ -29,6 +31,11 @@ namespace AutoFixture
         public static IEnumerable<Claim> SecondSubstitute(this Fixture fixture)
         {
             return GetClaims(fixture, new Claim(Subject, SecondSubstituteSub));
+        }
+
+        public static IEnumerable<Claim> Client(this Fixture fixture)
+        {
+            return GetClaims(fixture, new Claim(JwtClaimTypes.ClientId, ClientId));
         }
 
         private static IEnumerable<Claim> GetClaims(Fixture fixture, params Claim [] claims)
