@@ -13,7 +13,11 @@ namespace Microsoft.Extensions.DependencyInjection
             var options = new StoreOptions();
             configurer?.Invoke(options);
 
-            builder.Services.AddDbContext<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+            if (options.ConfigureDbContext != null)
+            {
+                builder.Services.AddDbContext<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+            }
+            
             builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore>();
 
             return builder;
