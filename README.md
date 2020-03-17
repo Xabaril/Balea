@@ -1,8 +1,8 @@
 ![Balea CI](https://github.com/Xabaril/Balea/workflows/Balea%20CI/badge.svg) 
 
-![Nuget](https://img.shields.io/nuget/v/balea?label=balea) ![Nuget](https://img.shields.io/nuget/v/balea.configuration.store?label=baleaconfigurationstore) ![Nuget](https://img.shields.io/nuget/v/balea.entityframeworkcore.store?label=baleaefcorestore) 
+[![Nuget](https://img.shields.io/nuget/v/balea?label=balea)](https://www.nuget.org/packages/Balea/) [![Nuget](https://img.shields.io/nuget/v/balea.configuration.store?label=baleaconfigurationstore)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget](https://img.shields.io/nuget/v/balea.entityframeworkcore.store?label=baleaefcorestore)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/) 
 
-![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea?color=yellow&label=balea%20preview) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.configuration.store?color=yellow&label=baleaconfigurationstore%20preview) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.entityframeworkcore.store?color=yellow&label=baleaefcorestore%20preview)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea?color=yellow&label=balea%20preview)](https://www.nuget.org/packages/Balea/) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.configuration.store?color=yellow&label=baleaconfigurationstore%20preview)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.entityframeworkcore.store?color=yellow&label=baleaefcorestore%20preview)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/) 
 
 # Authentication != Authorization
 
