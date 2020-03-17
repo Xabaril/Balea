@@ -2,7 +2,7 @@
 
 [![Nuget](https://img.shields.io/nuget/v/balea?label=balea)](https://www.nuget.org/packages/Balea/) [![Nuget](https://img.shields.io/nuget/v/balea.configuration.store?label=baleaconfigurationstore)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget](https://img.shields.io/nuget/v/balea.entityframeworkcore.store?label=baleaefcorestore)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/) 
 
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea?color=yellow&label=balea%20preview)](https://www.nuget.org/packages/Balea/) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.configuration.store?color=yellow&label=baleaconfigurationstore%20preview)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.entityframeworkcore.store?color=yellow&label=baleaefcorestore%20preview)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/) 
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea?color=yellow&label=balea%20preview)](https://www.nuget.org/packages/Balea/1.0.0-preview53023997) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.configuration.store?color=yellow&label=baleaconfigurationstore%20preview)](https://www.nuget.org/packages/Balea.Configuration.Store/1.0.0-preview53023997) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.entityframeworkcore.store?color=yellow&label=baleaefcorestore%20preview)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/1.0.0-preview53023997) 
 
 # Authentication != Authorization
 
