@@ -1,23 +1,13 @@
 ﻿using Balea.EntityFrameworkCore.Store.Entities;
-using Balea.EntityFrameworkCore.Store.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
 {
     internal class DelegationEntityConfiguration : IEntityTypeConfiguration<DelegationEntity>
     {
-        private readonly StoreOptions _options;
-
-        public DelegationEntityConfiguration(StoreOptions options)
-        {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-        }
-
         public void Configure(EntityTypeBuilder<DelegationEntity> builder)
         {
-            builder.ToTable(_options.Delegations.Name);
             builder.HasKey(x => x.Id);
             builder.Property(x => x.From)
                 .IsRequired();

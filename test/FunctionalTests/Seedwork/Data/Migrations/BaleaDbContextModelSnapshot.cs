@@ -171,7 +171,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("MappingId");
 
-                    b.ToTable("RolesMappings");
+                    b.ToTable("RoleMappings");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RolePermissionEntity", b =>
@@ -186,7 +186,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RolesPermissions");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RoleSubjectEntity", b =>
@@ -201,7 +201,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("RolesSubjects");
+                    b.ToTable("RoleSubjects");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", b =>

@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\src\Balea.EntityFrameworkCore.Store\Balea.EntityFrameworkCore.Store.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Data\Migrations\" />
-  </ItemGroup>
-
 </Project>

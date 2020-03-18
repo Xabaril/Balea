@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace Balea.EntityFrameworkCore.Store
 {
-    public class EntityFrameworkCoreRuntimeAuthorizationServerStore : IRuntimeAuthorizationServerStore
+    public class EntityFrameworkCoreRuntimeAuthorizationServerStore<TContext>
+        : IRuntimeAuthorizationServerStore
+        where TContext : BaleaDbContext
     {
-        private readonly BaleaDbContext _context;
+        private readonly TContext _context;
         private readonly BaleaOptions _options;
 
-        public EntityFrameworkCoreRuntimeAuthorizationServerStore(BaleaDbContext context, BaleaOptions options)
+        public EntityFrameworkCoreRuntimeAuthorizationServerStore(TContext context, BaleaOptions options)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _options = options ?? throw new ArgumentNullException(nameof(options));

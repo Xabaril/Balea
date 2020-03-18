@@ -17,8 +17,24 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 builder.Services.AddDbContext<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
             }
-            
-            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore>();
+
+            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<BaleaDbContext>>();
+
+            return builder;
+        }
+
+        public static IBaleaBuilder AddEntityFrameworkCoreStore<TContext>(this IBaleaBuilder builder, Action<StoreOptions> configurer = null) 
+            where TContext : BaleaDbContext
+        {
+            var options = new StoreOptions();
+            configurer?.Invoke(options);
+
+            if (options.ConfigureDbContext != null)
+            {
+                builder.Services.AddDbContext<TContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+            }
+
+            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<TContext>>();
 
             return builder;
         }
