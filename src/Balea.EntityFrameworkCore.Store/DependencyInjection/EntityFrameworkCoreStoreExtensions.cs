@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (options.ConfigureDbContext != null)
             {
-                builder.Services.AddDbContext<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+                builder.Services.AddDbContextPool<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
             }
 
             builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<BaleaDbContext>>();
@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (options.ConfigureDbContext != null)
             {
-                builder.Services.AddDbContext<TContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+                builder.Services.AddDbContextPool<TContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
             }
 
             builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<TContext>>();
