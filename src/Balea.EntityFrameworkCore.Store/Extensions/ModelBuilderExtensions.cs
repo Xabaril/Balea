@@ -1,5 +1,4 @@
 ﻿using Balea.EntityFrameworkCore.Store.Options;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +8,6 @@ namespace Microsoft.EntityFrameworkCore
 {
     internal static class ModelBuilderExtensions
     {
-        internal static EntityTypeBuilder<TEntity> ToTable<TEntity>(
-            this EntityTypeBuilder<TEntity> entityTypeBuilder,
-            TableConfiguration configuration)
-            where TEntity : class
-        {
-            return string.IsNullOrWhiteSpace(configuration.Schema) ? entityTypeBuilder.ToTable(configuration.Name) : entityTypeBuilder.ToTable(configuration.Name, configuration.Schema);
-        }
-
         internal static IEnumerable<Type> GetMappingTypes(this Assembly assembly, Type mappingInterface)
         {
             return assembly.GetTypes()

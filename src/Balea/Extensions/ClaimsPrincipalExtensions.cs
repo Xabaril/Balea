@@ -6,15 +6,12 @@ namespace System.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetSubjectId(this ClaimsPrincipal principal)
+        public static string GetSubjectId(this ClaimsPrincipal principal, BaleaOptions options)
         {
-            var claim = principal
-                .FindFirst(BaleaClaims.Subject);
-
-            if (claim == null)
-            {
-                throw new InvalidOperationException("sub claim is missing.");
-            }
+            var claim = 
+                principal.FindFirst(options.DefaultClaimTypeMap.SubjectClaimType) ??
+                principal.FindFirst(options.DefaultClaimTypeMap.FallbackSubjectClaimType) ??
+                throw new InvalidOperationException($"'{options.DefaultClaimTypeMap.SubjectClaimType}' or '{options.DefaultClaimTypeMap.FallbackSubjectClaimType}' claim is missing.");
             
             return claim.Value;
         }

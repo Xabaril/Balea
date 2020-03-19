@@ -10,7 +10,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Seeders
 {
     public static class BaleaSeeder
     {
-        public static async Task Seed(StoreDbContext db)
+        public static async Task Seed(BaleaDbContext db)
         {
             if (!db.Roles.Any())
             {

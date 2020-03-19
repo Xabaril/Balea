@@ -126,7 +126,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RolesMappings",
+                name: "RoleMappings",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(nullable: false),
@@ -134,15 +134,15 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolesMappings", x => new { x.RoleId, x.MappingId });
+                    table.PrimaryKey("PK_RoleMappings", x => new { x.RoleId, x.MappingId });
                     table.ForeignKey(
-                        name: "FK_RolesMappings_Mappings_MappingId",
+                        name: "FK_RoleMappings_Mappings_MappingId",
                         column: x => x.MappingId,
                         principalTable: "Mappings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RolesMappings_Roles_RoleId",
+                        name: "FK_RoleMappings_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
@@ -150,7 +150,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RolesPermissions",
+                name: "RolePermissions",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(nullable: false),
@@ -158,15 +158,15 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolesPermissions", x => new { x.RoleId, x.PermissionId });
+                    table.PrimaryKey("PK_RolePermissions", x => new { x.RoleId, x.PermissionId });
                     table.ForeignKey(
-                        name: "FK_RolesPermissions_Permissions_PermissionId",
+                        name: "FK_RolePermissions_Permissions_PermissionId",
                         column: x => x.PermissionId,
                         principalTable: "Permissions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RolesPermissions_Roles_RoleId",
+                        name: "FK_RolePermissions_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
@@ -174,7 +174,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RolesSubjects",
+                name: "RoleSubjects",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(nullable: false),
@@ -182,15 +182,15 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolesSubjects", x => new { x.RoleId, x.SubjectId });
+                    table.PrimaryKey("PK_RoleSubjects", x => new { x.RoleId, x.SubjectId });
                     table.ForeignKey(
-                        name: "FK_RolesSubjects_Roles_RoleId",
+                        name: "FK_RoleSubjects_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RolesSubjects_Subjects_SubjectId",
+                        name: "FK_RoleSubjects_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
@@ -230,6 +230,16 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RoleMappings_MappingId",
+                table: "RoleMappings",
+                column: "MappingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePermissions_PermissionId",
+                table: "RolePermissions",
+                column: "PermissionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roles_ApplicationId",
                 table: "Roles",
                 column: "ApplicationId");
@@ -241,18 +251,8 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_RolesMappings_MappingId",
-                table: "RolesMappings",
-                column: "MappingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RolesPermissions_PermissionId",
-                table: "RolesPermissions",
-                column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RolesSubjects_SubjectId",
-                table: "RolesSubjects",
+                name: "IX_RoleSubjects_SubjectId",
+                table: "RoleSubjects",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
@@ -268,13 +268,13 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                 name: "Delegations");
 
             migrationBuilder.DropTable(
-                name: "RolesMappings");
+                name: "RoleMappings");
 
             migrationBuilder.DropTable(
-                name: "RolesPermissions");
+                name: "RolePermissions");
 
             migrationBuilder.DropTable(
-                name: "RolesSubjects");
+                name: "RoleSubjects");
 
             migrationBuilder.DropTable(
                 name: "Mappings");

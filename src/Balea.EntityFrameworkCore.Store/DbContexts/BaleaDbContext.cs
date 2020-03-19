@@ -1,13 +1,10 @@
 ﻿using Balea.EntityFrameworkCore.Store.Entities;
-using Balea.EntityFrameworkCore.Store.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace Balea.EntityFrameworkCore.Store.DbContexts
 {
-    public class StoreDbContext : DbContext
+    public class BaleaDbContext : DbContext
     {
-        private readonly StoreOptions _storeOptions;
-
         public DbSet<ApplicationEntity> Applications { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<MappingEntity> Mappings { get; set; }
@@ -18,21 +15,14 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
         public DbSet<RoleMappingEntity> RoleMappings { get; set; }
         public DbSet<RoleSubjectEntity> RoleSubjects { get; set; }
 
-        public StoreDbContext(DbContextOptions<StoreDbContext> options)
-            : this(options, new StoreOptions())
-        {
-
-        }
-
-        public StoreDbContext(DbContextOptions<StoreDbContext> options, StoreOptions storeOptions)
+        public BaleaDbContext(DbContextOptions options)
             : base(options)
         {
-            _storeOptions = storeOptions;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly, _storeOptions);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaleaDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }

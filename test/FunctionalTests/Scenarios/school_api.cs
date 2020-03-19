@@ -92,6 +92,23 @@ namespace FunctionalTests.Scenarios
 
         [Fact]
         [ResetDatabase]
+        public async Task allow_to_edit_grades_if_the_client_belongs_to_the_teacher_role()
+        {
+            await fixture.GiveAnApplication();
+
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.EditGrades)
+                    .WithIdentity(new Fixture().Client())
+                    .PutAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            }
+        }
+
+        [Fact]
+        [ResetDatabase]
         public async Task allow_to_edit_grades_if_someone_has_delegated_his_permissions()
         {
             await fixture.GiveAnApplication(selectedDelegation:true);

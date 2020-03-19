@@ -52,7 +52,7 @@ namespace FunctionalTests.Seedwork
                     .Build();
 
                 host.StartAsync().Wait();
-                host.MigrateDbContext<StoreDbContext>((_, __) => { });
+                host.MigrateDbContext<BaleaDbContext>((_, __) => { });
                 _hosts.Add(startup, host);
                 _servers.Add(startup, host.GetTestServer());
             }
@@ -69,9 +69,9 @@ namespace FunctionalTests.Seedwork
             }
         }
 
-        public async Task ExecuteDbContextAsync(Func<StoreDbContext, Task> func)
+        public async Task ExecuteDbContextAsync(Func<BaleaDbContext, Task> func)
         {
-            await ExecuteScopeAsync(sp => func(sp.GetRequiredService<StoreDbContext>()));
+            await ExecuteScopeAsync(sp => func(sp.GetRequiredService<BaleaDbContext>()));
         }
 
         public static void ResetDatabase()

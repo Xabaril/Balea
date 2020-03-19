@@ -13,8 +13,28 @@ namespace Microsoft.Extensions.DependencyInjection
             var options = new StoreOptions();
             configurer?.Invoke(options);
 
-            builder.Services.AddDbContext<StoreDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
-            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore>();
+            if (options.ConfigureDbContext != null)
+            {
+                builder.Services.AddDbContextPool<BaleaDbContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+            }
+
+            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<BaleaDbContext>>();
+
+            return builder;
+        }
+
+        public static IBaleaBuilder AddEntityFrameworkCoreStore<TContext>(this IBaleaBuilder builder, Action<StoreOptions> configurer = null) 
+            where TContext : BaleaDbContext
+        {
+            var options = new StoreOptions();
+            configurer?.Invoke(options);
+
+            if (options.ConfigureDbContext != null)
+            {
+                builder.Services.AddDbContextPool<TContext>(optionsAction => options.ConfigureDbContext?.Invoke(optionsAction));
+            }
+
+            builder.Services.AddScoped<IRuntimeAuthorizationServerStore, EntityFrameworkCoreRuntimeAuthorizationServerStore<TContext>>();
 
             return builder;
         }

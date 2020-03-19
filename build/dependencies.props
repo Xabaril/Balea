@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Balea Versions">
-    <Balea>1.0.0$(VersionSuffix)</Balea>
+    <Balea>2.0.0$(VersionSuffix)</Balea>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
@@ -33,7 +33,7 @@
     <AcheveTestHost>3.0.0</AcheveTestHost>
     <FluentAssertions>5.10.2</FluentAssertions>
     <MicrosoftAspNetCoreTestHost>3.1.2</MicrosoftAspNetCoreTestHost>
-    <Respawn>3.2.0</Respawn>
+    <Respawn>3.3.0</Respawn>
     <AutoFixtureXunit2>4.11.0</AutoFixtureXunit2>
   </PropertyGroup>
 

@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunctionalTests.Seedwork.Data.Migrations
 {
-    [DbContext(typeof(StoreDbContext))]
-    [Migration("20200216081134_Initial")]
+    [DbContext(typeof(BaleaDbContext))]
+    [Migration("20200318140159_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -173,7 +173,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("MappingId");
 
-                    b.ToTable("RolesMappings");
+                    b.ToTable("RoleMappings");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RolePermissionEntity", b =>
@@ -188,7 +188,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RolesPermissions");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RoleSubjectEntity", b =>
@@ -203,7 +203,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("RolesSubjects");
+                    b.ToTable("RoleSubjects");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", b =>
