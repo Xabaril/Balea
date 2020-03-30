@@ -7,7 +7,7 @@ email, or any other method with the owners of this repository before making a ch
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 Pull Request Process
-====================
+--------------------
 
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
    build.
@@ -19,7 +19,7 @@ Pull Request Process
    do not have permission to do that, you may request the second reviewer to merge it for you.
 
 Code of Conduct
-===============
+---------------
 
 Our Pledge
 ^^^^^^^^^^
