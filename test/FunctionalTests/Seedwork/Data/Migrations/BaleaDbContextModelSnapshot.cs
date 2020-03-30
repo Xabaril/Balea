@@ -15,7 +15,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,6 +29,10 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
 
                     b.Property<string>("Name")
                         .IsRequired()
