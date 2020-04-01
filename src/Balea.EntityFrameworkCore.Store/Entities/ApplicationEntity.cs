@@ -4,10 +4,11 @@ namespace Balea.EntityFrameworkCore.Store.Entities
 {
     public class ApplicationEntity
     {
-        public ApplicationEntity(string name, string description = null)
+        public ApplicationEntity(string name, string description = null, string imageUrl = null)
         {
             Name = name;
             Description = description;
+            ImageUrl = imageUrl;
         }
 
         public int Id { get; set; }
