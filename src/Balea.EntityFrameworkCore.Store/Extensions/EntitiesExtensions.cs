@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Balea.EntityFrameworkCore.Store.Entities
@@ -40,21 +41,21 @@ namespace Balea.EntityFrameworkCore.Store.Entities
                 );
         }
 
-        public static Task<DelegationEntity> GetCurrentDelegation(this DbSet<DelegationEntity> delegations, string subjectId)
+        public static Task<DelegationEntity> GetCurrentDelegation(
+            this DbSet<DelegationEntity> delegations,
+            string subjectId,
+            CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;
             return delegations
                 .Include(d => d.Who)
                 .Include(d => d.Whom)
-                .FirstOrDefaultAsync(d =>
-                    d.Selected &&
-                    d.From <= now && d.To >= now &&
-                    d.Whom.Sub == subjectId);
-        }
-
-        public static Task<ApplicationEntity> GetByName(this DbSet<ApplicationEntity> applications, string name)
-        {
-            return applications.FirstOrDefaultAsync(a => a.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                .FirstOrDefaultAsync(
+                    d =>
+                        d.Selected &&
+                        d.From <= now && d.To >= now &&
+                        d.Whom.Sub == subjectId, 
+                    cancellationToken);
         }
     }
 }

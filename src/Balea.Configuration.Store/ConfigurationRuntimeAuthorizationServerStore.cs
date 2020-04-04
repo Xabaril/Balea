@@ -4,6 +4,7 @@ using Balea.Model;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Balea.Configuration.Store
@@ -19,7 +20,7 @@ namespace Balea.Configuration.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user)
+        public Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
