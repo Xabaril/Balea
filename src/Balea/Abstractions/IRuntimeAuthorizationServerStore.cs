@@ -7,6 +7,6 @@ namespace Balea.Abstractions
 {
     public interface IRuntimeAuthorizationServerStore
     {
-        Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default);
+        Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Balea.Model
 {
-    public class AuthotizationContext
+    public class AuthorizationContext
     {
-        public AuthotizationContext(IEnumerable<Role> roles, Delegation delegation)
+        public AuthorizationContext(IEnumerable<Role> roles, Delegation delegation)
         {
             Roles = roles;
             Delegation = delegation;

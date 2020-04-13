@@ -24,7 +24,7 @@ namespace Balea.EntityFrameworkCore.Store
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public async Task<AuthotizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
+        public async Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options), cancellationToken);
@@ -45,7 +45,7 @@ namespace Balea.EntityFrameworkCore.Store
                     )
                     .ToListAsync(cancellationToken);
 
-            return new AuthotizationContext(roles.Select(r => r.To()), delegation.To());
+            return new AuthorizationContext(roles.Select(r => r.To()), delegation.To());
         }
 
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
