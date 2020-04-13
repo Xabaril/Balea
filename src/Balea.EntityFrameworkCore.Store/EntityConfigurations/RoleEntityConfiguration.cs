@@ -19,7 +19,6 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
                 .HasMaxLength(500)
                 .IsRequired(false);
             builder.Property(x => x.Enabled)
-                .HasDefaultValue(true)
                 .IsRequired();
         }
     }
