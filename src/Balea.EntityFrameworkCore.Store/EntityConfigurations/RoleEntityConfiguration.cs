@@ -9,12 +9,11 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
         public void Configure(EntityTypeBuilder<RoleEntity> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => new { x.Name, x.ApplicationId })
+                .IsUnique();
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
-            builder
-                .HasIndex(x => x.Name)
-                .IsUnique();
             builder.Property(x => x.Description)
                 .HasMaxLength(500)
                 .IsRequired(false);

@@ -9,6 +9,8 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
         public void Configure(EntityTypeBuilder<PermissionEntity> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => new { x.Name, x.ApplicationId })
+                .IsUnique();
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
