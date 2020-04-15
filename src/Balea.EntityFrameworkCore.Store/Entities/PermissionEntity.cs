@@ -4,6 +4,12 @@ namespace Balea.EntityFrameworkCore.Store.Entities
 {
     public class PermissionEntity
     {
+        public PermissionEntity(string name, int applicationId)
+        {
+            Name = name;
+            ApplicationId = applicationId;
+        }
+
         public PermissionEntity(string name)
         {
             Name = name;
