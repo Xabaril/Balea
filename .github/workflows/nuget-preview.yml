@@ -2,8 +2,8 @@ name: Balea continous Deployment (PREVIEW)
 on:
   push:
     branches:
-      - relase/*
-      
+      - "release/*"
+
 jobs:
   build:
     env:
