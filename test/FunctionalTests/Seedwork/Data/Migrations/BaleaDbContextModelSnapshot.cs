@@ -53,7 +53,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApplicationEntityId")
+                    b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("From")
@@ -73,7 +73,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationEntityId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("WhoId");
 
@@ -235,9 +235,11 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.DelegationEntity", b =>
                 {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", null)
+                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
                         .WithMany("Delegations")
-                        .HasForeignKey("ApplicationEntityId");
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", "Who")
                         .WithMany("WhoDelegations")
