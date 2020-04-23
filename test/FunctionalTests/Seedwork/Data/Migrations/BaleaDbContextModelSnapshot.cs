@@ -75,9 +75,10 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("WhoId");
-
                     b.HasIndex("WhomId");
+
+                    b.HasIndex("WhoId", "WhomId", "ApplicationId")
+                        .IsUnique();
 
                     b.ToTable("Delegations");
                 });
