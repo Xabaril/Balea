@@ -95,7 +95,6 @@ namespace WebAppEfCoreOidc
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
-                .UseBalea()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {

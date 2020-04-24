@@ -4,6 +4,7 @@ using System;
 using Balea;
 using Balea.Abstractions;
 using Balea.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -25,11 +26,11 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddAuthorization();
             services.AddHttpContextAccessor();
-            services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
             services.AddScoped(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
 
             return new BaleaBuilder(services);
         }

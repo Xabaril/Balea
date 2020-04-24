@@ -60,7 +60,6 @@ namespace WebApp
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
-                .UseBalea()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {

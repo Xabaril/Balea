@@ -46,7 +46,6 @@ namespace FunctionalTests.Seedwork
             app
                 .UseRouting()
                 .UseAuthentication()
-                .UseBalea()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
