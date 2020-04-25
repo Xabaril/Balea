@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Balea.Abstractions;
@@ -26,11 +27,19 @@ namespace Balea.Authorization
 
         public override async Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
+            var baleaHasSchemes = _options.Schemes.Any();
+
             if (policy.AuthenticationSchemes != null && policy.AuthenticationSchemes.Count > 0)
             {
                 ClaimsPrincipal newPrincipal = null;
+                var baleaMatchPolicySchemes = false;
                 foreach (var scheme in policy.AuthenticationSchemes)
                 {
+                    if (_options.Schemes.Any(s => s.Equals(scheme, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        baleaMatchPolicySchemes = true;
+                    }
+
                     var result = await context.AuthenticateAsync(scheme);
                     if (result != null && result.Succeeded)
                     {
@@ -41,18 +50,26 @@ namespace Balea.Authorization
                 if (newPrincipal != null)
                 {
                     context.User = newPrincipal;
+                    
+                    if (baleaMatchPolicySchemes)
+                    {
+                        await AddBaleaIdentity(context.User, context);
+                    }
+
                     return AuthenticateResult.Success(new AuthenticationTicket(newPrincipal, string.Join(";", policy.AuthenticationSchemes)));
                 }
-                else
-                {
-                    context.User = new ClaimsPrincipal(new ClaimsIdentity());
-                    return AuthenticateResult.NoResult();
-                }
+
+                context.User = new ClaimsPrincipal(new ClaimsIdentity());
+                return AuthenticateResult.NoResult();
             }
 
             if (context.User?.Identity?.IsAuthenticated ?? false)
             {
-                await AddBaleaIdentity(context.User, context);
+                // Only apply balea policies if balea is configured without specific schemes
+                if (!baleaHasSchemes)
+                {
+                    await AddBaleaIdentity(context.User, context);
+                }
 
                 return AuthenticateResult.Success(new AuthenticationTicket(context.User, "context.User"));
             }

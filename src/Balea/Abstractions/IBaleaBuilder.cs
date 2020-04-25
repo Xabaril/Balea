@@ -15,13 +15,5 @@ namespace Balea.Abstractions
         }
 
         public IServiceCollection Services { get; }
-
-        public IBaleaBuilder AddBalea()
-        {
-            Services.AddAuthorization();
-            Services.AddHttpContextAccessor();
-
-            return this;
-        }
     }
 }

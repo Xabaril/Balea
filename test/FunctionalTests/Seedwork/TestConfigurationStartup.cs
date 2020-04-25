@@ -38,6 +38,13 @@ namespace FunctionalTests.Seedwork
                     options.RoleClaimType = "sourceRole";
                 })
                 .Services
+                .AddAuthorization(options =>
+                {
+                    options.AddPolicy(Policies.Custom, builder =>
+                    {
+                        builder.RequireAuthenticatedUser();
+                    });
+                })
                 .AddMvc();
         }
 

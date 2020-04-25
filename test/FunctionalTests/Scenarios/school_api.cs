@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoFixture;
 using FluentAssertions;
 using FunctionalTests.Seedwork;
 using Microsoft.AspNetCore.Http;
@@ -12,16 +14,20 @@ namespace FunctionalTests.Scenarios
     public class school_api
     {
         private readonly TestServerFixture fixture;
+        private readonly IEnumerable<TestServer> servers;
 
         public school_api(TestServerFixture fixture)
         {
             this.fixture = fixture;
+            this.servers = fixture.Servers
+                .Where(x => !x.SupportSchemes)
+                .Select(x => x.TestServer);
         }
 
         [Fact]
         public async Task not_allow_to_view_grades_if_the_user_is_not_authenticated()
         {
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
@@ -34,7 +40,7 @@ namespace FunctionalTests.Scenarios
         [Fact]
         public async Task not_allow_to_view_grades_if_the_user_is_not_authorized()
         {
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
@@ -48,7 +54,7 @@ namespace FunctionalTests.Scenarios
         [Fact]
         public async Task allow_to_view_grades_if_the_user_belongs_to_the_teacher_role()
         {
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
@@ -62,7 +68,7 @@ namespace FunctionalTests.Scenarios
         [Fact]
         public async Task not_allow_to_view_grades_if_the_user_not_belongs_to_the_teacher_role()
         {
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
@@ -79,7 +85,7 @@ namespace FunctionalTests.Scenarios
         {
             await fixture.GiveAnApplication();
 
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.EditGrades)
@@ -96,7 +102,7 @@ namespace FunctionalTests.Scenarios
         {
             await fixture.GiveAnApplication();
 
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.EditGrades)
@@ -111,9 +117,9 @@ namespace FunctionalTests.Scenarios
         [ResetDatabase]
         public async Task allow_to_edit_grades_if_someone_has_delegated_his_permissions()
         {
-            await fixture.GiveAnApplication(selectedDelegation:true);
+            await fixture.GiveAnApplication(selectedDelegation: true);
 
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.EditGrades)
@@ -130,7 +136,7 @@ namespace FunctionalTests.Scenarios
         {
             await fixture.GiveAnApplication(selectedDelegation: false);
 
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.EditGrades)

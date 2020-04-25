@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunctionalTests.Seedwork
@@ -12,7 +13,11 @@ namespace FunctionalTests.Seedwork
         [Authorize(Policy = Policies.EditGrades)]
         public IActionResult EditGrades()
         {
-            return Ok();
+            var authenticatedSchemes = User.Identities
+                .Where(i => i.IsAuthenticated)
+                .Select(i => i.AuthenticationType);
+
+            return Ok(authenticatedSchemes);
         }
 
         [HttpGet]
@@ -20,7 +25,35 @@ namespace FunctionalTests.Seedwork
         [Authorize(Policy = Policies.ViewGrades)]
         public IActionResult GetGrades()
         {
-            return Ok();
+            var authenticatedSchemes = User.Identities
+                .Where(i => i.IsAuthenticated)
+                .Select(i => i.AuthenticationType);
+
+            return Ok(authenticatedSchemes);
+        }
+
+        [HttpGet]
+        [Route("schemes")]
+        [Authorize] // This apply default authentication scheme
+        public IActionResult GetSchemes()
+        {
+            var authenticatedSchemes = User.Identities
+                .Where(i => i.IsAuthenticated)
+                .Select(i => i.AuthenticationType);
+
+            return Ok(authenticatedSchemes);
+        }
+
+        [HttpGet]
+        [Route("custom-policy")]
+        [Authorize(Policies.Custom)] 
+        public IActionResult GetCustomPolicy()
+        {
+            var authenticatedSchemes = User.Identities
+                .Where(i => i.IsAuthenticated)
+                .Select(i => i.AuthenticationType);
+
+            return Ok(authenticatedSchemes);
         }
     }
 }
