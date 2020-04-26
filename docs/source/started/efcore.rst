@@ -3,7 +3,7 @@ Using EntityFramework Core store
 
 Balea was designed to be extensible and one of the extensibility points is the storage. This article shows you how to configure Balea in order to use EntityFrameworkCore as the storage mechanism rather than using ASP.NET Configuration store.
 
-> In `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebAppEfCore>`_ you'll find a complete Balea example in ASP.NET Core.
+> In `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebAppEfCoreOidc>`_ you'll find a complete Balea example in ASP.NET Core.
 
 Configuring the store
 ---------------------
@@ -45,7 +45,7 @@ Balea.EntityFrameworkCore.Store contains all the entities needed to store all th
 
 or using Powershell or Package Manager::
 
-        Add-Migration Initial -OutputDir "Migrations\Balea· -StartupProject "Path to your project"
+        Add-Migration Initial -OutputDir "Migrations\Balea" -StartupProject "Path to your project"
         Update-Database -StartupProject "Path to your project"
 
 The database should be created and you should be able to connect using SQL Server Management, Visual Studio or another tool:
