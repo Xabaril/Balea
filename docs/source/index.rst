@@ -1,8 +1,9 @@
 Welcome to Balea
 ================
 
-.. image:: images/balea.png
+.. image:: images/Balea.png
    :align: center
+   :width: 200px
 
 **Balea** is an authorization framework for ASP.NET Core developers that aims to help us to decoupling authentication and authorization in our web applications.
 

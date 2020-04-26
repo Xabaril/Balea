@@ -1,6 +1,8 @@
-![Balea CI](https://github.com/Xabaril/Balea/workflows/Balea%20CI/badge.svg) 
+![Balea CI](https://github.com/Xabaril/Balea/workflows/Balea%20CI/badge.svg) [![Documentation Status](https://readthedocs.org/projects/balea/badge/?version=latest)](https://balea.readthedocs.io/en/latest/?badge=latest)
 
-[![Nuget](https://img.shields.io/nuget/v/balea?label=balea)](https://www.nuget.org/packages/Balea/) [![Nuget](https://img.shields.io/nuget/v/balea.configuration.store?label=baleaconfigurationstore)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget](https://img.shields.io/nuget/v/balea.entityframeworkcore.store?label=baleaefcorestore)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/) 
+[![Nuget](https://img.shields.io/nuget/v/balea?label=balea)](https://www.nuget.org/packages/Balea/) [![Nuget](https://img.shields.io/nuget/v/balea.configuration.store?label=baleaconfigurationstore)](https://www.nuget.org/packages/Balea.Configuration.Store/) [![Nuget](https://img.shields.io/nuget/v/balea.entityframeworkcore.store?label=baleaefcorestore)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/)
+
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea?color=yellow&label=balea%20preview)](https://www.nuget.org/packages/Balea/1.0.0-preview53023997) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.configuration.store?color=yellow&label=baleaconfigurationstore%20preview)](https://www.nuget.org/packages/Balea.Configuration.Store/1.0.0-preview53023997) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/balea.entityframeworkcore.store?color=yellow&label=baleaefcorestore%20preview)](https://www.nuget.org/packages/Balea.EntityFrameworkCore.Store/1.0.0-preview53023997)
 
 # Authentication != Authorization
 
@@ -39,4 +41,4 @@ Balea is built using the following great open source projects and free services:
 
 ## Code of conduct
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).  For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

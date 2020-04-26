@@ -15,7 +15,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,6 +29,9 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,7 +53,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApplicationEntityId")
+                    b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("From")
@@ -70,11 +73,12 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationEntityId");
-
-                    b.HasIndex("WhoId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("WhomId");
+
+                    b.HasIndex("WhoId", "WhomId", "ApplicationId")
+                        .IsUnique();
 
                     b.ToTable("Delegations");
                 });
@@ -122,6 +126,9 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
+                    b.HasIndex("Name", "ApplicationId")
+                        .IsUnique();
+
                     b.ToTable("Permissions");
                 });
 
@@ -140,9 +147,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<bool>("Enabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -153,7 +158,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Name", "ApplicationId")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -231,9 +236,11 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.DelegationEntity", b =>
                 {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", null)
+                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
                         .WithMany("Delegations")
-                        .HasForeignKey("ApplicationEntityId");
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", "Who")
                         .WithMany("WhoDelegations")

@@ -11,6 +11,14 @@ namespace Balea.EntityFrameworkCore.Store.Entities
             Enabled = true;
         }
 
+        public RoleEntity(string name, int applicationId, string description = null)
+        {
+            Name = name;
+            ApplicationId = applicationId;
+            Description = description;
+            Enabled = true;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -9,6 +9,8 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
         public void Configure(EntityTypeBuilder<DelegationEntity> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => new { x.WhoId, x.WhomId, x.ApplicationId })
+                .IsUnique();
             builder.Property(x => x.From)
                 .IsRequired();
             builder.Property(x => x.To)

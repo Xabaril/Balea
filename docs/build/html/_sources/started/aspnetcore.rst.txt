@@ -151,3 +151,11 @@ Also, Balea maps automatically permissions to ASP.NET Core authorization policie
         {
             return View();
         }
+
+Testing the authorization
+-------------------------
+
+if you run the example `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebApp>`_ you could see that Balea creates on the fly a new ``ClaimsIdentity`` with all the information from teh authorization store for the user:
+
+.. image:: ../images/claimsidentity.png
+

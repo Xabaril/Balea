@@ -1,51 +1,42 @@
-Configure claim types map
-=========================
+Dealing with claim types map
+============================
 
 There is an old history about claim types and the reason why some times authorization does not work as we expected. We recommend you to read this awesome `blog post <https://leastprivilege.com/2016/08/21/why-does-my-authorize-attribute-not-work/>`_ about it before to continue reading.  
 
-The problem is basically that Microsoft has their owns claim type names for RoleClaimType (http://schemas.microsoft.com/ws/2008/06/identity/claims/role) and NameClaimType (http://schemas.microsoft.com/ws/2008/06/identity/claims/name) and of course their own JWT validation library which does not follow the more modern standard OpenID Connect claim `types <https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`_. 
+The problem is basically that Microsoft has their owns claim type names for RoleClaimType (http://schemas.microsoft.com/ws/2008/06/identity/claims/role) and NameClaimType (http://schemas.microsoft.com/ws/2008/06/identity/claims/name) and of course their own JWT validation library which does not follow the more modern standard OpenID Connect claim `types <https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`_.
 
 > In `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebAppEfCoreOidc>`_ you'll find an example of how to configure the mappings.
 
-Configure the AuthorizationFallback
------------------------------------
+Configure the claim types map
+-----------------------------
 
-To configure the authorization fallback, in the method ``AddBalea`` you have a parameter for the fallback: 
+By default, Balea asummes you are staying within the Microsoft world so Balea looking for the roles coming from the authentication system to mapping to the application roles using the ClaimTypes.Role ``"http://schemas.microsoft.com/ws/2008/06/identity/claims/role"``. To configure the RoleClaimType and NameClaimType, in the method ``AddBalea`` you have a parameter for the claim mapping::
 
-In the **ConfigureServices** method of Startup.cs, register the Balea services::
+        services                     
+            .AddBalea(options =>
+            {
+                options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                {
+                    RoleClaimType = JwtClaimTypes.Role
+                    NameClaimType = JwtClaimTypes.Name
+                };
+            })
 
-      services
-        .AddBalea(options =>
-        {
-          options.UnauthorizedFallback = (context) =>
-          {
-              context.Response.StatusCode = StatusCodes.Status403Forbidden;
-              return Task.CompletedTask;
-          };
-        })
-        .AddConfigurationStore(Configuration);
+In this case, Balea will look for the roles coming from the authentication system using JwtClaimTypes.Role ``"role"``.
 
-The ``UnauthorizedFallback`` is a `RequestDelegate <https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.requestdelegate?view=aspnetcore-3.1>`_ so you can configure the behavior when user is not authorized.
+Balea also add new claims permission to the ```ClaimsIdentity```:
 
-Out-of-the-box Balea provides a ``AuthorizationFallbackAction`` class that defines common fallback actions to be used when user is not authorized:
+.. image:: ../images/permissions.png
 
-    * Redirect result to MVC action::
-        
-        public static RequestDelegate RedirectToAction(string controllerName, string actionName)
+You can change also the name of the claim::
 
-    * Redirect result::
-        
-        public static RequestDelegate RedirectTo(string uri)
+        services                     
+            .AddBalea(options =>
+            {
+                options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                {
+                    PermissionClaimType = "my-name"
+                };
+            })
 
-    * Forbidden status response::
-        
-        public static RequestDelegate Forbidden
-
-We can modify the code like this::
-
-      services
-        .AddBalea(options =>
-        {
-          options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;
-        })
-        .AddConfigurationStore(Configuration);
+.. image:: ../images/permissiontype.png

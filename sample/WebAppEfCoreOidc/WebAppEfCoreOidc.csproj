@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <UserSecretsId>WebAppEfCoreOidc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

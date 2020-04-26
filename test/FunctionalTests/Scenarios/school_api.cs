@@ -140,5 +140,19 @@ namespace FunctionalTests.Scenarios
                 response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
             }
         }
+        [Fact]
+        [ResetDatabase]
+        public async Task not_fails_when_endpoint_does_not_exists()
+        {
+            foreach (var server in fixture.Servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.InvalidEndpoint)
+                    .WithIdentity(new Fixture().Client())
+                    .GetAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            }
+        }
     }
 }
