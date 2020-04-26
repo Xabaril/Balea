@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    [Migration("20200421054951_Release_2_1_03")]
-    partial class Release_2_1_03
+    [Migration("20200426064043_Release_2_1_0")]
+    partial class Release_2_1_0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,9 +77,10 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("WhoId");
-
                     b.HasIndex("WhomId");
+
+                    b.HasIndex("WhoId", "WhomId", "ApplicationId")
+                        .IsUnique();
 
                     b.ToTable("Delegations");
                 });

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
+namespace FunctionalTests.Seedwork.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    [Migration("20200401081737_Release_2_1_01")]
-    partial class Release_2_1_01
+    [Migration("20200426064021_Release_2_1_0")]
+    partial class Release_2_1_0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApplicationEntityId")
+                    b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("From")
@@ -75,11 +75,12 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationEntityId");
-
-                    b.HasIndex("WhoId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("WhomId");
+
+                    b.HasIndex("WhoId", "WhomId", "ApplicationId")
+                        .IsUnique();
 
                     b.ToTable("Delegations");
                 });
@@ -127,6 +128,9 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
+                    b.HasIndex("Name", "ApplicationId")
+                        .IsUnique();
+
                     b.ToTable("Permissions");
                 });
 
@@ -145,9 +149,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<bool>("Enabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -158,7 +160,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Name", "ApplicationId")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -236,9 +238,11 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.DelegationEntity", b =>
                 {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", null)
+                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
                         .WithMany("Delegations")
-                        .HasForeignKey("ApplicationEntityId");
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", "Who")
                         .WithMany("WhoDelegations")
