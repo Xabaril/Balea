@@ -4,14 +4,16 @@ using Balea.EntityFrameworkCore.Store.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
+namespace FunctionalTests.Seedwork.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    partial class BaleaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200426064021_Release_2_1_0")]
+    partial class Release_2_1_0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

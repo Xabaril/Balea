@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configure claim types map &mdash; Balea 1.0.0 documentation</title>
+  <title>Dealing with claim types map &mdash; Balea 1.0.0 documentation</title>
   
 
   
@@ -93,8 +93,8 @@
 <p class="caption"><span class="caption-text">Topics</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="fallback.html">Configure a fallback mechanisim for unauthorized users</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configure claim types map</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#configure-the-authorizationfallback">Configure the AuthorizationFallback</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dealing with claim types map</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configure-the-claim-types-map">Configure the claim types map</a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +142,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Configure claim types map</li>
+      <li>Dealing with claim types map</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,57 +161,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="configure-claim-types-map">
-<h1>Configure claim types map<a class="headerlink" href="#configure-claim-types-map" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dealing-with-claim-types-map">
+<h1>Dealing with claim types map<a class="headerlink" href="#dealing-with-claim-types-map" title="Permalink to this headline">¶</a></h1>
 <p>There is an old history about claim types and the reason why some times authorization does not work as we expected. We recommend you to read this awesome <a class="reference external" href="https://leastprivilege.com/2016/08/21/why-does-my-authorize-attribute-not-work/">blog post</a> about it before to continue reading.</p>
 <p>The problem is basically that Microsoft has their owns claim type names for RoleClaimType (<a class="reference external" href="http://schemas.microsoft.com/ws/2008/06/identity/claims/role">http://schemas.microsoft.com/ws/2008/06/identity/claims/role</a>) and NameClaimType (<a class="reference external" href="http://schemas.microsoft.com/ws/2008/06/identity/claims/name">http://schemas.microsoft.com/ws/2008/06/identity/claims/name</a>) and of course their own JWT validation library which does not follow the more modern standard OpenID Connect claim <a class="reference external" href="https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims">types</a>.</p>
 <p>&gt; In <a class="reference external" href="https://github.com/Xabaril/Balea/tree/master/sample/WebAppEfCoreOidc">samples/WebApp</a> you’ll find an example of how to configure the mappings.</p>
-<div class="section" id="configure-the-authorizationfallback">
-<h2>Configure the AuthorizationFallback<a class="headerlink" href="#configure-the-authorizationfallback" title="Permalink to this headline">¶</a></h2>
-<p>To configure the authorization fallback, in the method <code class="docutils literal notranslate"><span class="pre">AddBalea</span></code> you have a parameter for the fallback:</p>
-<p>In the <strong>ConfigureServices</strong> method of Startup.cs, register the Balea services:</p>
+<div class="section" id="configure-the-claim-types-map">
+<h2>Configure the claim types map<a class="headerlink" href="#configure-the-claim-types-map" title="Permalink to this headline">¶</a></h2>
+<p>By default, Balea asummes you are staying within the Microsoft world so Balea looking for the roles coming from the authentication system to mapping to the application roles using the ClaimTypes.Role <code class="docutils literal notranslate"><span class="pre">&quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;</span></code>. To configure the RoleClaimType and NameClaimType, in the method <code class="docutils literal notranslate"><span class="pre">AddBalea</span></code> you have a parameter for the claim mapping:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">services</span>
-  <span class="p">.</span><span class="n">AddBalea</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
-  <span class="p">{</span>
-    <span class="n">options</span><span class="p">.</span><span class="n">UnauthorizedFallback</span> <span class="p">=</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="p">=&gt;</span>
+    <span class="p">.</span><span class="n">AddBalea</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
     <span class="p">{</span>
-        <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status403Forbidden</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
-    <span class="p">};</span>
-  <span class="p">})</span>
-  <span class="p">.</span><span class="n">AddConfigurationStore</span><span class="p">(</span><span class="n">Configuration</span><span class="p">);</span>
+        <span class="n">options</span><span class="p">.</span><span class="n">DefaultClaimTypeMap</span> <span class="p">=</span> <span class="k">new</span> <span class="n">DefaultClaimTypeMap</span>
+        <span class="p">{</span>
+            <span class="n">RoleClaimType</span> <span class="p">=</span> <span class="n">JwtClaimTypes</span><span class="p">.</span><span class="n">Role</span>
+            <span class="n">NameClaimType</span> <span class="p">=</span> <span class="n">JwtClaimTypes</span><span class="p">.</span><span class="n">Name</span>
+        <span class="p">};</span>
+    <span class="p">})</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">UnauthorizedFallback</span></code> is a <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.requestdelegate?view=aspnetcore-3.1">RequestDelegate</a> so you can configure the behavior when user is not authorized.</p>
-<p>Out-of-the-box Balea provides a <code class="docutils literal notranslate"><span class="pre">AuthorizationFallbackAction</span></code> class that defines common fallback actions to be used when user is not authorized:</p>
-<blockquote>
-<div><ul>
-<li><p>Redirect result to MVC action:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="n">RequestDelegate</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="kt">string</span> <span class="n">controllerName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">actionName</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>Redirect result:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="n">RequestDelegate</span> <span class="nf">RedirectTo</span><span class="p">(</span><span class="kt">string</span> <span class="n">uri</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>Forbidden status response:</p>
-<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="n">RequestDelegate</span> <span class="n">Forbidden</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</div></blockquote>
-<p>We can modify the code like this:</p>
+<p>In this case, Balea will look for the roles coming from the authentication system using JwtClaimTypes.Role <code class="docutils literal notranslate"><span class="pre">&quot;role&quot;</span></code>.</p>
+<p>Balea also add new claims permission to the <code class="docutils literal notranslate"><span class="pre">`ClaimsIdentity`</span></code>:</p>
+<img alt="../_images/permissions.png" src="../_images/permissions.png" />
+<p>You can change also the name of the claim:</p>
 <div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">services</span>
-  <span class="p">.</span><span class="n">AddBalea</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
-  <span class="p">{</span>
-    <span class="n">options</span><span class="p">.</span><span class="n">UnauthorizedFallback</span> <span class="p">=</span> <span class="n">AuthorizationFallbackAction</span><span class="p">.</span><span class="n">Forbidden</span><span class="p">;</span>
-  <span class="p">})</span>
-  <span class="p">.</span><span class="n">AddConfigurationStore</span><span class="p">(</span><span class="n">Configuration</span><span class="p">);</span>
+    <span class="p">.</span><span class="n">AddBalea</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">options</span><span class="p">.</span><span class="n">DefaultClaimTypeMap</span> <span class="p">=</span> <span class="k">new</span> <span class="n">DefaultClaimTypeMap</span>
+        <span class="p">{</span>
+            <span class="n">PermissionClaimType</span> <span class="p">=</span> <span class="s">&quot;my-name&quot;</span>
+        <span class="p">};</span>
+    <span class="p">})</span>
 </pre></div>
 </div>
+<img alt="../_images/permissiontype.png" src="../_images/permissiontype.png" />
 </div>
 </div>
 

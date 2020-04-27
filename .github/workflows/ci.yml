@@ -1,5 +1,10 @@
 name: Balea Continous Integration
-on: [push]
+on:
+  push:
+    branches:
+      - relase/*
+      - feature/*
+      - fix/*
 
 jobs:
   build:
@@ -15,14 +20,14 @@ jobs:
           ACCEPT_EULA: Y
           MSSQL_SA_PASSWORD: Password12!
         ports:
-        - 5433:1433
+          - 5433:1433
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.102
-    - name: dotnet build
-      run: dotnet build Balea.sln -c $BUILD_CONFIG
-    - name: dotnet test [FunctionalTests]
-      run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.102
+      - name: dotnet build
+        run: dotnet build Balea.sln -c $BUILD_CONFIG
+      - name: dotnet test [FunctionalTests]
+        run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build

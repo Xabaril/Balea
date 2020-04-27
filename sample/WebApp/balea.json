@@ -3,6 +3,7 @@
     "applications": [
       {
         "name": "default",
+        "description": "Balea give you a default application name called default. You can confgure the name if you want.",
         "roles": [
           {
             "name": "teacher",
@@ -46,7 +47,7 @@
             "whom": "2",
             "from": "2020-01-15 00:00:00",
             "to": "2020-12-31 23:59:59",
-            "selected": false
+            "selected": true
           },
           {
             "who": "3",
