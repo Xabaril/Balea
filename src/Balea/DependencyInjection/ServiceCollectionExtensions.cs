@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddAuthorization();
             services.AddHttpContextAccessor();
-            services.AddScoped(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
