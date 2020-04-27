@@ -150,7 +150,7 @@ namespace FunctionalTests.Scenarios
         [ResetDatabase]
         public async Task not_fails_when_endpoint_does_not_exists()
         {
-            foreach (var server in fixture.Servers)
+            foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.InvalidEndpoint)
