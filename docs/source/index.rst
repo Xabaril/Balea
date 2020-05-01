@@ -31,3 +31,4 @@ Welcome to Balea
 
    topics/fallback
    topics/claimtypemap
+   topics/schemes

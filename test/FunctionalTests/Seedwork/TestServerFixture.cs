@@ -19,9 +19,9 @@ namespace FunctionalTests.Seedwork
             TablesToIgnore = new[] { "__EFMigrationsHistory" },
             WithReseed = true
         };
-        private Dictionary<Type, IHost> _hosts = new Dictionary<Type, IHost>();
-        private Dictionary<Type, TestServer> _servers = new Dictionary<Type, TestServer>();
-        public IReadOnlyCollection<TestServer> Servers => _servers.Values;
+        private readonly Dictionary<Type, IHost> _hosts = new Dictionary<Type, IHost>();
+        private readonly Dictionary<Type, TestServerInfo> _servers = new Dictionary<Type, TestServerInfo>();
+        public IReadOnlyCollection<TestServerInfo> Servers => _servers.Values;
 
         public TestServerFixture()
         {
@@ -30,7 +30,12 @@ namespace FunctionalTests.Seedwork
 
         private void InitializeTestServer()
         {
-            var startups = new Type[] { typeof(TestConfigurationStartup), typeof(TestEntityFrameworkCoreStartup) };
+            var startups = new Tuple<Type, bool>[]
+            {
+                new Tuple<Type, bool>(typeof(TestConfigurationStartup), false),// Not support schemes
+                new Tuple<Type, bool>(typeof(TestEntityFrameworkCoreStartup), false), // Not support schemes
+                new Tuple<Type, bool>(typeof(TestConfigurationWithSchemesStartup), true) // Support schemes
+            };
 
             foreach (var startup in startups)
             {
@@ -43,7 +48,7 @@ namespace FunctionalTests.Seedwork
                                     new TestServer(serviceProvider)
                                 )
                             )
-                            .UseStartup(startup);
+                            .UseStartup(startup.Item1);
                     })
                     .ConfigureAppConfiguration(configure =>
                     {
@@ -53,8 +58,8 @@ namespace FunctionalTests.Seedwork
 
                 host.StartAsync().Wait();
                 host.MigrateDbContext<BaleaDbContext>((_, __) => { });
-                _hosts.Add(startup, host);
-                _servers.Add(startup, host.GetTestServer());
+                _hosts.Add(startup.Item1, host);
+                _servers.Add(startup.Item1, new TestServerInfo(host.GetTestServer(), startup.Item2));
             }
         }
 
@@ -90,5 +95,18 @@ namespace FunctionalTests.Seedwork
                 .AddJsonFile("balea.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
         }
+    }
+
+    public class TestServerInfo
+    {
+        public TestServerInfo(TestServer testServer, bool supportSchemes)
+        {
+            TestServer = testServer;
+            SupportSchemes = supportSchemes;
+        }
+
+        public TestServer TestServer { get; }
+
+        public bool SupportSchemes { get; }
     }
 }

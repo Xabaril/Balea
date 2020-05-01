@@ -3,17 +3,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Acheve.AspNetCore.TestHost.Security;
 using Acheve.TestHost;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Balea;
 
 namespace FunctionalTests.Seedwork
 {
-    public class TestEntityFrameworkCoreStartup
+    public class TestConfigurationWithSchemesStartup
     {
         private readonly IConfiguration configuration;
 
-        public TestEntityFrameworkCoreStartup(IConfiguration configuration)
+        public TestConfigurationWithSchemesStartup(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -27,38 +25,29 @@ namespace FunctionalTests.Seedwork
                     {
                         SubjectClaimType = JwtClaimTypes.Subject
                     };
+                    options.AddAuthenticationSchemes("scheme2");
                 })
-                .AddEntityFrameworkCoreStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                    {
-                        builder.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.Default), sqlServerOptions =>
-                        {
-                            sqlServerOptions.MigrationsAssembly(typeof(TestEntityFrameworkCoreStartup).Assembly.FullName);
-                        })
-                        .UseLoggerFactory(LoggerFactory.Create(builder =>
-                        {
-                            builder.SetMinimumLevel(LogLevel.Information).AddConsole();
-                        }));
-                    };
-
-                })
+                .AddConfigurationStore(configuration)
                 .Services
                 .AddAuthentication(setup =>
                 {
-                    setup.DefaultAuthenticateScheme = TestServerDefaults.AuthenticationScheme;
-                    setup.DefaultChallengeScheme = TestServerDefaults.AuthenticationScheme;
+                    setup.DefaultAuthenticateScheme = "scheme1";
+                    setup.DefaultChallengeScheme = "scheme1";
                 })
-                .AddTestServer(options =>
+                .AddTestServer("scheme1")
+                .AddTestServer("scheme2", options =>
                 {
                     options.RoleClaimType = "sourceRole";
                 })
+                .AddTestServer("scheme3")
+
                 .Services
                 .AddAuthorization(options =>
                 {
                     options.AddPolicy(Policies.Custom, builder =>
                     {
                         builder.RequireAuthenticatedUser();
+                        builder.AddAuthenticationSchemes("scheme3");
                     });
                 })
                 .AddMvc();
