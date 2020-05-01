@@ -1,8 +1,8 @@
 name: Balea continous Deployment (PREVIEW)
 on:
   push:
-    branches:
-      - "release/*"
+    tags:
+      - preview*
 
 jobs:
   build:
