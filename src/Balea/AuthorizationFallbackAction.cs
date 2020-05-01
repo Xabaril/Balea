@@ -39,17 +39,5 @@ namespace Balea
                 return Task.CompletedTask;
             });
         }
-
-        /// <summary>
-        /// Create a <see cref="Microsoft.AspNetCore.Http.RequestDelegate"/> with a Forbidden status response. 
-        /// </summary>
-        /// <returns>The <see cref="Microsoft.AspNetCore.Http.RequestDelegate"/> created with Forbidden response status.</returns>
-        public static RequestDelegate Forbidden =>
-            new RequestDelegate(context =>
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-
-                return Task.CompletedTask;
-            });
     }
 }

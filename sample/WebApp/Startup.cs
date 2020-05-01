@@ -22,7 +22,7 @@ namespace WebApp
             services  
                 .AddBalea(options =>
                 {
-                    options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;
+                    options.UnauthorizedFallback = AuthorizationFallbackAction.RedirectToAction("Account", "AccessDenied");
                     options.DefaultClaimTypeMap = new DefaultClaimTypeMap
                     {
                         PermissionClaimType = "my-name"
@@ -38,6 +38,7 @@ namespace WebApp
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, setup =>
                 {
                     setup.LoginPath = "/Account/Login";
+                    setup.AccessDeniedPath = "/Account/AccessDenied";
                 })
                 .Services
                 .AddControllersWithViews();
