@@ -35,15 +35,11 @@ Out-of-the-box Balea provides a ``AuthorizationFallbackAction`` class that defin
         
         public static RequestDelegate RedirectTo(string uri)
 
-    * Forbidden status response::
-        
-        public static RequestDelegate Forbidden
-
 We can modify the code like this::
 
       services
         .AddBalea(options =>
         {
-          options.UnauthorizedFallback = AuthorizationFallbackAction.Forbidden;
+          options.UnauthorizedFallback = AuthorizationFallbackAction.RedirectToAction("Home","Denied");
         })
         .AddConfigurationStore(Configuration);
