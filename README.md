@@ -6,19 +6,19 @@
 
 # Authentication != Authorization
 
-Authentication and authorization might be sound similar but both are distinct security processes in the world of identity and access management and understand the difference between these two concepts are the key to successfully implementing a good IAM solution.
+Authentication and authorization might sound similar, but both are distinct security processes in the world of identity and access management and understanding the difference between these two concepts is the key to successfully implementing a good IAM solution.
 
-While authentication is the act of verifing oneself, authorization is the process of verifing what you have access to, so coupling identity and access management in a single solution is not consider a good approach. Authentication is really good for provide a common identity across all applications while authorization is something that depends on each application, for these reason we should treat them indepentdly.
+While authentication is the act of verifying oneself, authorization is the process of verifying what you have access to, so coupling identity and access management in a single solution is not considered a good approach. Authentication is really good to provide a common identity across all applications while authorization is something that varies in each application, for these reasons we should treat them independently.
 
-It's very common to see how people missues OIDC servers adding permissions into tokens and there are many reasons why this approach is a wrong solution:
+It is very common to see how people misuse OIDC servers by adding permissions into tokens and there are many reasons why this approach is a wrong solution:
 
-- Permissions are something that depends on each application and sometimes depends on complex bussines rules.
-- Permissions could change during the user session, so if you are using JWT tokens, you must be wait until the lifetime of the token expires in order to retrieve a new token with the permissions up to date.
-- You should keep your tokens smalls because we have some well known restrictions such us URL Path Length Restrictions, bandwidth...
+- Permissions are something that depends on each application and sometimes depends on complex business rules.
+- Permissions could change during the user session, so if you are using JWT tokens, you must wait until the lifetime of the token expires to retrieve a new token with the permissions up to date.
+- You should keep your tokens small because we have some well-known restrictions such as URL Path Length Restrictions, bandwidth...
 
 # What is Balea?
 
-Balea is an authorization framework for ASP.NET Core developers that aims to help us to decoupling authentication and authorization in our web applications.
+Balea is an authorization framework for ASP.NET Core developers that aims to help us decoupling authentication and authorization in our web applications.
 
 For project documentation, please visit [readthedocs](https://balea.readthedocs.io).
 
