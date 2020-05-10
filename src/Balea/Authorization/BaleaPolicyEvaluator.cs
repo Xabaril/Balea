@@ -3,29 +3,35 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Balea.Abstractions;
+using Balea.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Balea.Authorization
 {
-    public class BaleaPolicyEvaluator : PolicyEvaluator
+    public class BaleaPolicyEvaluator : IPolicyEvaluator
     {
+        private readonly IAuthorizationService _authorization;
         private readonly IRuntimeAuthorizationServerStore _store;
         private readonly BaleaOptions _options;
+        private readonly ILogger<BaleaPolicyEvaluator> _logger;
 
         public BaleaPolicyEvaluator(
             IAuthorizationService authorization,
             IRuntimeAuthorizationServerStore store,
-            BaleaOptions options)
-            : base(authorization)
+            BaleaOptions options,
+            ILogger<BaleaPolicyEvaluator> logger)
         {
+            _authorization = authorization;
             _store = store;
             _options = options;
+            _logger = logger;
         }
 
-        public override async Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
+        public async Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
             var baleaHasSchemes = _options.Schemes.Any();
 
@@ -50,7 +56,7 @@ namespace Balea.Authorization
                 if (newPrincipal != null)
                 {
                     context.User = newPrincipal;
-                    
+
                     if (baleaMatchPolicySchemes)
                     {
                         await AddBaleaIdentity(context.User, context);
@@ -77,14 +83,68 @@ namespace Balea.Authorization
             return AuthenticateResult.NoResult();
         }
 
+        public async Task<PolicyAuthorizationResult> AuthorizeAsync(
+            AuthorizationPolicy policy,
+            AuthenticateResult authenticationResult,
+            HttpContext context,
+            object resource)
+        {
+            if (policy == null)
+            {
+                throw new ArgumentNullException(nameof(policy));
+            }
+
+            var result = await _authorization.AuthorizeAsync(context.User, resource, policy);
+
+            if (result.Succeeded)
+            {
+                _logger.PolicySucceed();
+                return PolicyAuthorizationResult.Success();
+            }
+
+            // If authentication was successful, return forbidden, otherwise challenge
+            if (authenticationResult.Succeeded)
+            {
+                _logger.PolicyFailToForbid();
+                return PolicyAuthorizationResult.Forbid();
+            }
+
+            _logger.PolicyFailToChallenge();
+            return PolicyAuthorizationResult.Challenge();
+        }
+
         private async Task AddBaleaIdentity(ClaimsPrincipal user, HttpContext context)
         {
             var authorization = await _store
                 .FindAuthorizationAsync(user);
 
-            if (!context.Response.HasStarted && _options.UnauthorizedFallback != null && !authorization.Roles.Any())
+            if (authorization.Roles.Any())
             {
-                await _options.UnauthorizedFallback(context);
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.BaleaRolesFoundForUser(user.GetSubjectId(_options), authorization.Roles.Select(r => r.Name));
+                }
+            }
+            else
+            {
+                // For Balea, a user without mapping roles is an unauthorized user, because we can not match Balea roles or permissions.
+                // If the user has not Balea roles, we try to execute the unauthorized fallback to be consistent with this principle.
+                // If there is not an unauthorized fallback defined, the authorizations result may be unexpected.
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.NoBaleaRolesForUser(user.GetSubjectId(_options));
+                }
+
+                if (!context.Response.HasStarted && _options.UnauthorizedFallback != null)
+                {
+                    _logger.ExecutingBaleaUnauthorizedFallback();
+
+                    await _options.UnauthorizedFallback(context);
+                }
+                else
+                {
+                    _logger.NoBaleaRolesForUserAndNoUnauthorizedFallback();
+                }
 
                 return;
             }
