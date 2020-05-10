@@ -4,17 +4,17 @@
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <PackageLicenseUrl>$(PackageLicenseUrl)</PackageLicenseUrl>
     <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
-    <Description>EntityFrameworkCore store support for Balea. For more information see http://github.com/Xabaril/Balea </Description>
+    <Description>API store support for Balea Server. For more information see http://github.com/Xabaril/Balea </Description>
     <PackageTags>Authorization;Roles;Permissions;Delegations;AspNetCore</PackageTags>
     <Version>$(Balea)</Version>
-    <PackageId>Balea.EntityFrameworkCore.Store</PackageId>
+    <PackageId>Balea.Api.Store</PackageId>
     <PackageVersion>$(Balea)</PackageVersion>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFrameworkVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="$(AspNetCoreVersion)" />
   </ItemGroup>
 
   <ItemGroup>

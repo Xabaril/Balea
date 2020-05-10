@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea.EntityFrameworkCore.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppEfCoreOidc", "sample\WebAppEfCoreOidc\WebAppEfCoreOidc.csproj", "{832F4A7A-861E-411C-B304-0DCF9A7DA13B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea.Api.Store", "src\Balea.Api.Store\Balea.Api.Store.csproj", "{8127B32C-7846-426A-9560-9EE3A2A25F18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{832F4A7A-861E-411C-B304-0DCF9A7DA13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{832F4A7A-861E-411C-B304-0DCF9A7DA13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{832F4A7A-861E-411C-B304-0DCF9A7DA13B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8127B32C-7846-426A-9560-9EE3A2A25F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8127B32C-7846-426A-9560-9EE3A2A25F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8127B32C-7846-426A-9560-9EE3A2A25F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8127B32C-7846-426A-9560-9EE3A2A25F18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{4856F4E7-C091-4C65-8C86-9EC9869D15BE} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{2A1CD101-2868-49ED-8BD4-8B0DDD793F76} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 		{832F4A7A-861E-411C-B304-0DCF9A7DA13B} = {58F16D81-1049-4D95-83E8-D773BEE31A5B}
+		{8127B32C-7846-426A-9560-9EE3A2A25F18} = {902B3EDC-5C6F-4058-8A05-DA80D4B03F97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {943847A1-D097-4149-BEDC-B8541BE7D287}
