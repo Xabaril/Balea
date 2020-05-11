@@ -35,6 +35,8 @@ jobs:
         run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols -o ./artifacts
       - name: dotnet pack [Balea.EntityFrameworkCore.Store]
         run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols -o ./artifacts
+      - name: dotnet pack [Balea.Api.Store]
+        run: dotnet pack ./src/Balea.Api.Store/Balea.Api.Store.csproj -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols -o ./artifacts
       - name: setup nuget
         uses: NuGet/setup-nuget@v1.0.2
         with:

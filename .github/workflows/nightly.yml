@@ -6,7 +6,7 @@ jobs:
   build:
     env:
       BUILD_CONFIG: Release
-      VERSION_SUFFIX: -preview${{ github.run_id }}
+      VERSION_SUFFIX: -preview${{ github.run_number }}
     name: Build
     runs-on: ubuntu-latest
     services:
@@ -33,6 +33,8 @@ jobs:
         run: dotnet pack ./src/Balea.Configuration.Store/Balea.Configuration.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
       - name: dotnet pack [Balea.EntityFrameworkCore.Store]
         run: dotnet pack ./src/Balea.EntityFrameworkCore.Store/Balea.EntityFrameworkCore.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
+      - name: dotnet pack [Balea.Api.Store]
+        run: dotnet pack ./src/Balea.Api.Store/Balea.Api.Store.csproj -o ./artifacts -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build
       - name: Publish nuget
         run: |
           for f in ./artifacts/*.nupkg
