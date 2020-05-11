@@ -1,14 +1,14 @@
 name: Balea continous Deployment (PREVIEW)
 on:
   push:
-    branches:
-      - "release/*"
+    tags:
+      - preview*
 
 jobs:
   build:
     env:
       BUILD_CONFIG: Release
-      VERSION_SUFFIX: -preview${{ github.run_id }}
+      VERSION_SUFFIX: -preview${{ github.run_number }}
     name: Build
     runs-on: ubuntu-latest
     services:

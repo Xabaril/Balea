@@ -2,7 +2,7 @@ name: Balea Continous Integration
 on:
   push:
     branches:
-      - relase/*
+      - release/*
       - feature/*
       - fix/*
 
