@@ -47,3 +47,5 @@ jobs:
         run: dotnet nuget push ./artifacts/Balea.Configuration.Store.*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       - name: Publish EntityFramework Store  nuget
         run: dotnet nuget push ./artifacts/Balea.EntityFrameworkCore.Store.*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Publish Api Store nuget
+        run: dotnet nuget push ./artifacts/Balea.Api.Store.*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
