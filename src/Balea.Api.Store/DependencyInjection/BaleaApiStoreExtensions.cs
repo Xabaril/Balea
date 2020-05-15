@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         private const string API_KEY_HEADER = "X-Api-Key";
 
-        public static IBaleaBuilder AddClient(this IBaleaBuilder builder, Action<StoreOptions> setup)
+        public static IBaleaBuilder AddApiStore(this IBaleaBuilder builder, Action<StoreOptions> setup)
         {
             var options = new StoreOptions();
             setup?.Invoke(options);

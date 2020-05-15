@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package information">
-    <PackageLicenseUrl>https://github.com/Xabaril/Balea/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>http://github.com/xabaril/Balea</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xabaril/Balea</RepositoryUrl>
     <Authors>Xabaril Contributors</Authors>
