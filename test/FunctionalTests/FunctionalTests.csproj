@@ -19,11 +19,14 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture.Xunit2" Version="$(AutoFixtureXunit2)" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkVersion)" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Acheve.TestHost" Version="$(AcheveTestHost)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertions)" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="$(MicrosoftAspNetCoreTestHost)" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="Respawn" Version="$(Respawn)" />
     <PackageReference Include="xunit" Version="$(xunit)" />
@@ -46,6 +49,13 @@
     <None Update="balea.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

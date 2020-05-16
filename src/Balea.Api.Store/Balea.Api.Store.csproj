@@ -14,11 +14,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Balea\Balea.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,10 @@
     <Authors>Xabaril Contributors</Authors>
     <Company>Xabaril</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>true</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>true;</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <PropertyGroup Label="Balea Versions">

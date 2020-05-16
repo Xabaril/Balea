@@ -9,20 +9,19 @@
 .EXAMPLE
   exec { svn info $repository_trunk } "Error executing SVN. Please verify SVN command-line client is installed"
 #>
-function Exec
-{
-    [CmdletBinding()]
-    param(
-        [Parameter(Position=0,Mandatory=1)][scriptblock]$cmd,
-        [Parameter(Position=1,Mandatory=0)][string]$errorMessage = ($msgs.error_bad_command -f $cmd)
-    )
-    & $cmd
-    if ($lastexitcode -ne 0) {
-        throw ("Exec: " + $errorMessage)
-    }
+function Exec {
+  [CmdletBinding()]
+  param(
+    [Parameter(Position = 0, Mandatory = 1)][scriptblock]$cmd,
+    [Parameter(Position = 1, Mandatory = 0)][string]$errorMessage = ($msgs.error_bad_command -f $cmd)
+  )
+  & $cmd
+  if ($lastexitcode -ne 0) {
+    throw ("Exec: " + $errorMessage)
+  }
 }
 
-if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
+if (Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
 exec { & dotnet restore }
 
@@ -30,7 +29,7 @@ $suffix = "-ci-local"
 $commitHash = $(git rev-parse --short HEAD)
 $buildSuffix = "$($suffix)-$($commitHash)"
 
-echo "build: Version suffix is $buildSuffix"
+Write-Output "build: Version suffix is $buildSuffix"
 
 exec { & dotnet build Balea.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
 	
@@ -44,19 +43,22 @@ exec { & dotnet build Balea.sln -c Release --version-suffix=$buildSuffix -v q /n
 #         Pop-Location
 # }
 
-echo "Starting docker containers"
+Write-Output "Starting docker containers"
 
 exec { & docker-compose -f build\docker-compose-infrastructure.yml up -d }
 
-echo "Running functional tests"
+Write-Output "Running functional tests"
 
 try {
 
-Push-Location -Path .\test\FunctionalTests
-        exec { & dotnet test}
-} finally {
-        Pop-Location
+  Push-Location -Path .\test\FunctionalTests
+  exec { & dotnet test }
+}
+finally {
+  Pop-Location
 }
 
-echo "Finalizing docker containers"
+Write-Output "Finalizing docker containers"
 exec { & docker-compose -f build\docker-compose-infrastructure.yml down }
+
+exec { & dotnet pack .\src\Balea\Balea.csproj -c Release -o .\artifacts --include-symbols --no-build --version-suffix=$buildSuffix }
