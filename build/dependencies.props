@@ -6,33 +6,21 @@
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Label="Package information">
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>http://github.com/xabaril/Balea</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xabaril/Balea</RepositoryUrl>
-    <Authors>Xabaril Contributors</Authors>
-    <Company>Xabaril</Company>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>true;</AllowedOutputExtensionsInPackageBuildOutputFolder>
-  </PropertyGroup>
-
   <PropertyGroup Label="Balea Versions">
     <Balea>3.0.1$(VersionSuffix)</Balea>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <AspNetCoreVersion>3.1.3</AspNetCoreVersion>
-    <EntityFrameworkVersion>3.1.3</EntityFrameworkVersion>
+    <AspNetCoreVersion>3.1.4</AspNetCoreVersion>
+    <EntityFrameworkVersion>3.1.4</EntityFrameworkVersion>
+    <MicrosoftSourceLinkGithub>1.0.0</MicrosoftSourceLinkGithub>
   </PropertyGroup>
 
   <PropertyGroup Label="Testing Dependencies">
-    <MicrosoftNETTestSdk>16.5.0</MicrosoftNETTestSdk>
+    <MicrosoftNETTestSdk>16.6.1</MicrosoftNETTestSdk>
     <xunit>2.4.1</xunit>
     <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
-    <coverletcollector>1.2.0</coverletcollector>
+    <coverletcollector>1.2.1</coverletcollector>
     <AcheveTestHost>3.0.0</AcheveTestHost>
     <FluentAssertions>5.10.3</FluentAssertions>
     <MicrosoftAspNetCoreTestHost>3.1.3</MicrosoftAspNetCoreTestHost>
