@@ -18,6 +18,9 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
             builder
                 .HasIndex(x => x.Sub)
                 .IsUnique();
+            builder.Property(x => x.ImageUrl)
+                .HasMaxLength(2048)
+                .IsRequired(false);
         }
     }
 }
