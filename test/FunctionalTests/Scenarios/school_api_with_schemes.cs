@@ -15,6 +15,7 @@ namespace FunctionalTests.Scenarios
     [Collection(nameof(TestServerCollectionFixture))]
     public class school_api_with_schemes
     {
+        private const string InvalidSub = "0";
         private const string DefaultScheme = "scheme1";
         private const string BaleaScheme = "scheme2";
         private const string NotBaleaScheme = "scheme3";
@@ -50,7 +51,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Custodian(), DefaultScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
                 response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
@@ -64,7 +65,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Custodian(), BaleaScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), BaleaScheme)
                     .GetAsync();
 
                 response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
@@ -78,7 +79,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Teacher(), DefaultScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
                 response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
@@ -86,13 +87,18 @@ namespace FunctionalTests.Scenarios
         }
 
         [Fact]
+        [ResetDatabase]
         public async Task allow_to_view_grades_if_the_user_is_authenticated_with_balea_schema_and_belongs_to_the_teacher_role()
         {
+            var application = await fixture.GivenAnApplication();
+            var subject = await fixture.GivenAnSubject(Subs.Teacher);
+            await fixture.GivenARole(Roles.Teacher, application, subject);
+
             foreach (var server in servers)
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Teacher(), BaleaScheme)
+                    .WithIdentity(new Fixture().Sub(subject.Sub), BaleaScheme)
                     .GetAsync();
 
                 await response.IsSuccessStatusCodeOrThrow();
@@ -112,7 +118,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Custodian(), DefaultScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
                 response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
@@ -126,7 +132,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetGrades)
-                    .WithIdentity(new Fixture().Custodian(), BaleaScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), BaleaScheme)
                     .GetAsync();
 
                 response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
@@ -140,7 +146,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetSchemes)
-                    .WithIdentity(new Fixture().Custodian(), DefaultScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
                 await response.IsSuccessStatusCodeOrThrow();
@@ -160,7 +166,7 @@ namespace FunctionalTests.Scenarios
             {
                 var response = await server
                     .CreateRequest(Api.School.GetCustomPolicy)
-                    .WithIdentity(new Fixture().Custodian(), NotBaleaScheme)
+                    .WithIdentity(new Fixture().Sub(InvalidSub), NotBaleaScheme)
                     .GetAsync();
 
                 await response.IsSuccessStatusCodeOrThrow();
@@ -172,73 +178,5 @@ namespace FunctionalTests.Scenarios
                 schemes.Should().NotContain("Balea");
             }
         }
-
-        //[Fact]
-        //[ResetDatabase]
-        //public async Task allow_to_edit_grades_if_the_user_belongs_to_the_teacher_role()
-        //{
-        //    await fixture.GiveAnApplication();
-
-        //    foreach (var server in servers)
-        //    {
-        //        var response = await server
-        //            .CreateRequest(Api.School.EditGrades)
-        //            .WithIdentity(new Fixture().Teacher())
-        //            .PutAsync();
-
-        //        response.StatusCode.Should().Be(StatusCodes.Status200OK);
-        //    }
-        //}
-
-        //[Fact]
-        //[ResetDatabase]
-        //public async Task allow_to_edit_grades_if_the_client_belongs_to_the_teacher_role()
-        //{
-        //    await fixture.GiveAnApplication();
-
-        //    foreach (var server in servers)
-        //    {
-        //        var response = await server
-        //            .CreateRequest(Api.School.EditGrades)
-        //            .WithIdentity(new Fixture().Client())
-        //            .PutAsync();
-
-        //        response.StatusCode.Should().Be(StatusCodes.Status200OK);
-        //    }
-        //}
-
-        //[Fact]
-        //[ResetDatabase]
-        //public async Task allow_to_edit_grades_if_someone_has_delegated_his_permissions()
-        //{
-        //    await fixture.GiveAnApplication(selectedDelegation: true);
-
-        //    foreach (var server in servers)
-        //    {
-        //        var response = await server
-        //            .CreateRequest(Api.School.EditGrades)
-        //            .WithIdentity(new Fixture().FirstSubstitute())
-        //            .PutAsync();
-
-        //        response.StatusCode.Should().Be(StatusCodes.Status200OK);
-        //    }
-        //}
-
-        //[Fact]
-        //[ResetDatabase]
-        //public async Task not_allow_to_edit_grades_if_someone_has_delegated_his_permissions_but_no_delegations_has_been_selected()
-        //{
-        //    await fixture.GiveAnApplication(selectedDelegation: false);
-
-        //    foreach (var server in servers)
-        //    {
-        //        var response = await server
-        //            .CreateRequest(Api.School.EditGrades)
-        //            .WithIdentity(new Fixture().SecondSubstitute())
-        //            .PutAsync();
-
-        //        response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
-        //    }
-        //}
     }
 }

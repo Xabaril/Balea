@@ -1,43 +1,86 @@
-﻿using AutoFixture;
+﻿using Balea;
+using Balea.EntityFrameworkCore.Store.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Balea;
-using Balea.EntityFrameworkCore.Store.Entities;
 
 namespace FunctionalTests.Seedwork
 {
     public static class FixtureExtensions
     {
-        public static async Task GiveAnApplication(this TestServerFixture fixture, bool selectedDelegation = false)
+        public static async Task<ApplicationEntity> GivenAnApplication(
+            this TestServerFixture fixture,
+            string applicationName = BaleaConstants.DefaultApplicationName)
         {
+            var application = new ApplicationEntity(applicationName, applicationName);
             await fixture.ExecuteDbContextAsync(async db =>
             {
-                var john = new SubjectEntity("John", AutoFixtureExtensions.TeacherSub);
-                var mary = new SubjectEntity("Mary", AutoFixtureExtensions.FirstSubstituteSub);
-                var anna = new SubjectEntity("Anna", AutoFixtureExtensions.SecondSubstituteSub);
-                var client = new SubjectEntity("Client", AutoFixtureExtensions.ClientId);
-
-                db.Add(john);
-                db.Add(mary);
-                db.Add(anna);
-                db.Add(client);
-
-                await db.SaveChangesAsync();
-
-                var application = new ApplicationEntity(BaleaConstants.DefaultApplicationName, "Default application");
                 var viewGradesPermission = new PermissionEntity(Policies.ViewGrades);
                 var editGradesPermission = new PermissionEntity(Policies.EditGrades);
                 application.Permissions.Add(viewGradesPermission);
                 application.Permissions.Add(editGradesPermission);
-                var teacherRole = new RoleEntity("Teacher", "Teacher role");
-                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = john.Id });
-                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = client.Id});
-                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
-                teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
-                application.Roles.Add(teacherRole);
-                application.Delegations.Add(new DelegationEntity(john.Id, mary.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), selectedDelegation));
-                application.Delegations.Add(new DelegationEntity(john.Id, anna.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), selectedDelegation));
                 db.Applications.Add(application);
+                await db.SaveChangesAsync();
+            });
+            return application;
+        }
+
+        public static async Task<SubjectEntity> GivenAnSubject(this TestServerFixture fixture, string sub)
+        {
+            var subject = new SubjectEntity(sub, sub);
+
+            await fixture.ExecuteDbContextAsync(async db =>
+            {
+                db.Add(subject);
+
+                await db.SaveChangesAsync();
+            });
+
+            return subject;
+        }
+
+        public static async Task<RoleEntity> GivenARole(
+            this TestServerFixture fixture,
+            string name,
+            ApplicationEntity application,
+            SubjectEntity subject,
+            bool withPermissions = true)
+        {
+            var role = new RoleEntity(name, application.Id, $"{name} role");
+
+            await fixture.ExecuteDbContextAsync(async db =>
+            {
+                role.Subjects.Add(new RoleSubjectEntity { SubjectId = subject.Id });
+                
+                if (withPermissions)
+                {
+                    foreach (var permission in application.Permissions)
+                    {
+                        role.Permissions.Add(new RolePermissionEntity { PermissionId = permission.Id });
+                    }
+                }
+
+                db.Add(role);
+
+                await db.SaveChangesAsync();
+            });
+
+            return role;
+        }
+
+        public static async Task GivenAnUserWithADelegation(
+            this TestServerFixture fixture,
+            ApplicationEntity application,
+            SubjectEntity who,
+            SubjectEntity whom,
+            bool selected = true)
+        {
+            await fixture.ExecuteDbContextAsync(async db =>
+            {
+                var app = await db.Applications.SingleAsync(a => a.Id == application.Id);
+
+                app.Delegations.Add(new DelegationEntity(who.Id, whom.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddDays(1), selected));
+
                 await db.SaveChangesAsync();
             });
         }
