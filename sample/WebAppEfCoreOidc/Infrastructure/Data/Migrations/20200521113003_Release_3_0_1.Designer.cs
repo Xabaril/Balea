@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    [Migration("20200520060915_Release_3_0_1")]
+    [Migration("20200521113003_Release_3_0_1")]
     partial class Release_3_0_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(2048)")
-                        .HasMaxLength(2048);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -220,8 +219,7 @@ namespace WebAppEfCoreOidc.Infrastructure.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(2048)")
-                        .HasMaxLength(2048);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
