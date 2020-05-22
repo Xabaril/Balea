@@ -27,7 +27,10 @@ namespace Balea.EntityFrameworkCore.Store
         public async Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(user.GetSubjectId(_options), cancellationToken);
+            var delegation = await _context.Delegations.GetCurrentDelegation(
+                user.GetSubjectId(_options),
+                _options.ApplicationName,
+                cancellationToken);
             var subject = GetSubject(user, delegation);
             var roles = await _context.Roles
                     .AsNoTracking()

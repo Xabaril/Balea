@@ -20,5 +20,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Balea\Balea.csproj" />
   </ItemGroup>
-
 </Project>

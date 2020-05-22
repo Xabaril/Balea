@@ -44,17 +44,20 @@ namespace Balea.EntityFrameworkCore.Store.Entities
         public static Task<DelegationEntity> GetCurrentDelegation(
             this DbSet<DelegationEntity> delegations,
             string subjectId,
+            string applicationName,
             CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;
             return delegations
                 .Include(d => d.Who)
                 .Include(d => d.Whom)
+                .Include(d => d.Application)
                 .FirstOrDefaultAsync(
                     d =>
                         d.Selected &&
                         d.From <= now && d.To >= now &&
-                        d.Whom.Sub == subjectId, 
+                        d.Whom.Sub == subjectId &&
+                        d.Application.Name == applicationName, 
                     cancellationToken);
         }
     }
