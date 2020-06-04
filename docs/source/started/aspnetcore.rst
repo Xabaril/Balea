@@ -33,7 +33,7 @@ By default Balea use a configuration section called **Balea** but you can change
           .AddBalea()
           .AddConfigurationStore(Configuration, key: "your key");
 
-Definig applications
+Defining applications
 --------------------
 
 Applications allows you to manage authorization in multiple different software projects. Each application has it's own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called "default"::
