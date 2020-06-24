@@ -8,12 +8,21 @@ namespace System.Security.Claims
     {
         public static string GetSubjectId(this ClaimsPrincipal principal, BaleaOptions options)
         {
-            var claim = 
-                principal.FindFirst(options.DefaultClaimTypeMap.SubjectClaimType) ??
-                principal.FindFirst(options.DefaultClaimTypeMap.FallbackSubjectClaimType) ??
-                throw new InvalidOperationException($"'{options.DefaultClaimTypeMap.SubjectClaimType}' or '{options.DefaultClaimTypeMap.FallbackSubjectClaimType}' claim is missing.");
+            string sid = null;
+
+            foreach(var allowedSubjectClaimType in options.DefaultClaimTypeMap.AllowedSubjectClaimTypes)
+            {
+                sid = principal.FindFirstValue(allowedSubjectClaimType);
+
+                if ( sid != null )
+                {
+                    break;
+                }
+            }
+
+            _ = sid ?? throw new InvalidOperationException($"'Balea allowed subject claim type is missing.");
             
-            return claim.Value;
+            return sid;
         }
 
         public static IEnumerable<string> GetClaimValues(

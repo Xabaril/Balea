@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Acheve.AspNetCore.TestHost.Security;
+using Balea;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Acheve.AspNetCore.TestHost.Security;
-using Acheve.TestHost;
-using Balea;
+using System.Security.Claims;
 
 namespace FunctionalTests.Seedwork
 {
@@ -21,10 +21,9 @@ namespace FunctionalTests.Seedwork
             services
                 .AddBalea(options =>
                 {
-                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
-                    {
-                        SubjectClaimType = JwtClaimTypes.Subject
-                    };
+                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
+                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(ClaimTypes.Upn);
+
                     options.AddAuthenticationSchemes("scheme2");
                 })
                 .AddConfigurationStore(configuration)

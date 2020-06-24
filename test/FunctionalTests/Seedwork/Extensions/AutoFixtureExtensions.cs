@@ -18,6 +18,11 @@ namespace AutoFixture
             return GetClaims(fixture, new Claim(JwtClaimTypes.ClientId, sub));
         }
 
+        public static IEnumerable<Claim> UpnSub(this Fixture fixture, string sub)
+        {
+            return GetClaims(fixture, new Claim(ClaimTypes.Upn, sub));
+        }
+
         private static IEnumerable<Claim> GetClaims(Fixture fixture, params Claim[] claims)
         {
             return fixture.Build<Claim[]>().FromFactory(() => claims).Create();

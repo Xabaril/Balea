@@ -32,8 +32,10 @@ namespace WebAppEfCoreOidc
                     {
                         RoleClaimType = JwtClaimTypes.Role,
                         NameClaimType = JwtClaimTypes.Name,
-                        SubjectClaimType = JwtClaimTypes.Subject
                     };
+
+                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Clear();
+                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
                 })
                 .AddEntityFrameworkCoreStore(options =>
                 {

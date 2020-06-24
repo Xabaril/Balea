@@ -129,6 +129,26 @@ namespace FunctionalTests.Scenarios
 
         [Fact]
         [ResetDatabase]
+        public async Task allow_to_edit_grades_if_the_upn_user_does_have_permission()
+        {
+            var application = await fixture.GivenAnApplication();
+            var subject = await fixture.GivenAnSubject(Subs.Teacher);
+            await fixture.GivenARole(Roles.Teacher, application, subject);
+
+            foreach (var server in servers)
+            {
+                var response = await server
+                    .CreateRequest(Api.School.EditGrades)
+                    .WithIdentity(new Fixture().UpnSub(subject.Sub))
+                    .PutAsync();
+
+                response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            }
+        }
+
+
+        [Fact]
+        [ResetDatabase]
         public async Task allow_to_edit_grades_if_someone_has_delegated_his_permissions()
         {
             var application = await fixture.GivenAnApplication();
