@@ -25,9 +25,9 @@ In the **ConfigureServices** method of Startup.cs, register the Balea services::
           .AddBalea()
           .AddConfigurationStore(Configuration);
 
-``AddBalea`` method allows you to register the set of services that Balea needs to works. The ``AddConfigurationStore`` method registers the configuration store to use, in this case, based on the default configuration system of `ASP.NET Core <https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1>`_
+``AddBalea`` method allows you to register the set of services that Balea needs to work. The ``AddConfigurationStore`` method registers the configuration store to use, in this case, based on the default configuration system of `ASP.NET Core <https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1>`_
 
-By default Balea use a configuration section called **Balea** but you can changed if you want::
+By default Balea use a configuration section called **Balea** but you can change if you want::
 
         services
           .AddBalea()
@@ -36,7 +36,7 @@ By default Balea use a configuration section called **Balea** but you can change
 Defining applications
 --------------------
 
-Applications allows you to manage authorization in multiple different software projects. Each application has it's own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called "default"::
+Applications allow you to manage authorization in multiple different software projects. Each application has its own unique roles and delegations. If you have a simple scenario where you only have one application, Balea give you a default application name called "default"::
 
         {
           "Balea": {
@@ -94,7 +94,7 @@ Define roles is a straightforward proccess. Name the role, add a description, en
           }
         }
 
-Additionaly, roles comming from authentication system can be mapped to the application roles::
+Additionaly, roles coming from authentication system can be mapped to the application roles::
 
         {
           "Balea": {
@@ -121,7 +121,7 @@ Additionaly, roles comming from authentication system can be mapped to the appli
 Using roles in our controller and actions
 --------------------------------------------
 
-By default, Balea maps automatically roles and permisions to the user's claims. This is mainly useful is you want to use the standard claims API or the ``[Auhtorize]`` attribute. For example::
+By default, Balea automatically maps roles and permissions to the user's claims. This is mainly useful if you want to use the standard claims API or the ``[Authorize]`` attribute. For example::
 
         [Authorize(Roles = "custodian")]
         public IActionResult OpenDoor()
@@ -144,7 +144,7 @@ Or using the standard claims API::
 Using permissions in ASP.NET Core authorization policies
 --------------------------------------------------------
 
-Also, Balea maps automatically permissions to ASP.NET Core authorization policies. You'll need to decorate your controllers/actions like this::
+Also, Balea automatically maps permissions to ASP.NET Core authorization policies. You'll need to decorate your controllers/actions like this::
 
         [Authorize(Policy = "grades.view")]
         public IActionResult ViewGrades()
@@ -155,7 +155,7 @@ Also, Balea maps automatically permissions to ASP.NET Core authorization policie
 Testing the authorization
 -------------------------
 
-if you run the example `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebApp>`_ you could see that Balea creates on the fly a new ``ClaimsIdentity`` with all the information from teh authorization store for the user:
+If you run the example `samples/WebApp <https://github.com/Xabaril/Balea/tree/master/sample/WebApp>`_ you could see that Balea creates on the fly a new ``ClaimsIdentity`` with all the information from the authorization store for the user:
 
 .. image:: ../images/claimsidentity.png
 
