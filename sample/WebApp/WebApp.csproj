@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <UserSecretsId>d2e512fc-296f-4f24-9ff2-d0fbeff6c42d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
