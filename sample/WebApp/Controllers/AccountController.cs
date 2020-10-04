@@ -53,7 +53,7 @@ namespace WebApp.Controllers
                     ExpiresUtc = DateTime.UtcNow.AddMinutes(10)
                 });
 
-            return RedirectToAction(nameof(HomeController.Private), "Home");
+            return RedirectToAction(nameof(HomeController.Profile), "Home");
         }
 
         public async Task<IActionResult> Logout()

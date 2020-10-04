@@ -10,8 +10,8 @@
             "enabled": true,
             "description": "Teacher role",
             "permissions": [
-              "grades.edit",
-              "grades.view"
+              "grades.read",
+              "grades.edit"
             ],
             "subjects": [
               "1"
@@ -22,7 +22,7 @@
             "description": "Student role",
             "enabled": true,
             "permissions": [
-              "grades.view"
+              "grades.read"
             ],
             "mappings": [
               "customer"

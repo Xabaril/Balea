@@ -25,7 +25,7 @@ namespace WebApp
                     options.UnauthorizedFallback = AuthorizationFallbackAction.RedirectToAction("Account", "AccessDenied");
                     options.DefaultClaimTypeMap = new DefaultClaimTypeMap
                     {
-                        PermissionClaimType = "my-name"
+                        PermissionClaimType = "permissions"
                     };
                 })
                 .AddConfigurationStore(Configuration)
