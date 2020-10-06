@@ -4,18 +4,20 @@ using Balea.EntityFrameworkCore.Store.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FunctionalTests.Seedwork.Data.Migrations
+namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    partial class BaleaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200318140122_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,9 +31,6 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -53,7 +52,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationId")
+                    b.Property<int?>("ApplicationEntityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("From")
@@ -73,7 +72,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationId");
+                    b.HasIndex("ApplicationEntityId");
 
                     b.HasIndex("WhoId");
 
@@ -125,25 +124,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("Name", "ApplicationId")
-                        .IsUnique();
-
                     b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.PermissionTagEntity", b =>
-                {
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("PermissionTags");
                 });
 
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RoleEntity", b =>
@@ -161,7 +142,9 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -172,7 +155,7 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
-                    b.HasIndex("Name", "ApplicationId")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -223,30 +206,12 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.ToTable("RoleSubjects");
                 });
 
-            modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RoleTagEntity", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoleId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("RoleTags");
-                });
-
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -266,28 +231,11 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.ToTable("Subjects");
                 });
 
-            modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.TagEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tags");
-                });
-
             modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.DelegationEntity", b =>
                 {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
+                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", null)
                         .WithMany("Delegations")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationEntityId");
 
                     b.HasOne("Balea.EntityFrameworkCore.Store.Entities.SubjectEntity", "Who")
                         .WithMany("WhoDelegations")
@@ -307,21 +255,6 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                     b.HasOne("Balea.EntityFrameworkCore.Store.Entities.ApplicationEntity", "Application")
                         .WithMany("Permissions")
                         .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.PermissionTagEntity", b =>
-                {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.PermissionEntity", "Permission")
-                        .WithMany("Tags")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.TagEntity", "Tag")
-                        .WithMany("Permissions")
-                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -377,21 +310,6 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Balea.EntityFrameworkCore.Store.Entities.RoleTagEntity", b =>
-                {
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.RoleEntity", "Role")
-                        .WithMany("Tags")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Balea.EntityFrameworkCore.Store.Entities.TagEntity", "Tag")
-                        .WithMany("Roles")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

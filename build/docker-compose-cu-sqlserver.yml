@@ -1,0 +1,23 @@
+version: "3"
+services:
+    web:
+        image: web
+        container_name: web
+        ports:
+            - 8060:80
+        build:
+            context: ..
+            dockerfile: build/DockerfileEfCore
+        depends_on:
+            - sqlserver
+        environment:
+            - ConnectionStrings__Default=Server=tcp:sqlserver,1433;Initial Catalog=ContosoUniversity;User Id=sa;Password=Password12!
+            - ASPNETCORE_ENVIRONMENT=Development
+    sqlserver:
+        image: microsoft/mssql-server-linux
+        restart: always
+        ports:
+            - 5433:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Password12!

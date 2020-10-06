@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FunctionalTests.Seedwork.Data.Migrations
+namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
     partial class BaleaDbContextModelSnapshot : ModelSnapshot

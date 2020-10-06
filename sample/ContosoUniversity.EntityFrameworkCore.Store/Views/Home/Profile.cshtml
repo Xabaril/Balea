@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+<section class="ftco-section ftco-no-pt ftc-no-pb">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-12 wrap-about py-5 pr-md-4 ftco-animate">
+                @foreach (var identity in User.Identities)
+                {
+                    <h2 class="mb-4">Authentication scheme: @identity.AuthenticationType</h2>
+                    <ul>
+                        @foreach (var claim in identity.Claims)
+                        {
+                            <li><p><strong>Claim Type:</strong> @claim.Type - <strong>Claim Value:</strong> @claim.Value</p></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
