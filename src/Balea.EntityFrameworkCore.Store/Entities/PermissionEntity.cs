@@ -21,5 +21,6 @@ namespace Balea.EntityFrameworkCore.Store.Entities
         public int ApplicationId { get; set; }
         public ApplicationEntity Application { get; set; }
         public ICollection<RolePermissionEntity> Roles { get; set; }
+        public ICollection<PermissionTagEntity> Tags { get; set; }
     }
 }

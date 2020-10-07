@@ -1,0 +1,63 @@
+{
+  "Balea": {
+    "applications": [
+      {
+        "name": "default",
+        "description": "Balea give you a default application name called default. You can confgure the name if you want.",
+        "roles": [
+          {
+            "name": "Teacher",
+            "enabled": true,
+            "description": "Teacher role",
+            "permissions": [
+              "grades.read",
+              "grades.edit"
+            ],
+            "subjects": [
+              "1"
+            ]
+          },
+          {
+            "name": "Student",
+            "description": "Student role",
+            "enabled": true,
+            "permissions": [
+              "grades.read"
+            ],
+            "mappings": [
+              "customer"
+            ]
+          },
+          {
+            "name": "Custodian",
+            "description": "Custodian role",
+            "enabled": true,
+            "permissions": [
+              "doors.open",
+              "doors.close"
+            ],
+            "subjects": [
+              "3"
+            ]
+          }
+        ],
+        "delegations": [
+          {
+            "who": "1",
+            "whom": "2",
+            "from": "2020-01-15 00:00:00",
+            "to": "2020-12-31 23:59:59",
+            "selected": true
+          },
+          {
+            "who": "3",
+            "whom": "2",
+            "from": "2020-01-15 00:00:00",
+            "to": "2020-12-31 23:59:59",
+            "selected": false
+          }
+        ]
+      }
+    ]
+  }
+}

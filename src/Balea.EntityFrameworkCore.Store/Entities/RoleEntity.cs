@@ -28,5 +28,6 @@ namespace Balea.EntityFrameworkCore.Store.Entities
         public ICollection<RoleMappingEntity> Mappings { get; set; } = new List<RoleMappingEntity>();
         public ICollection<RoleSubjectEntity> Subjects { get; set; } = new List<RoleSubjectEntity>();
         public ICollection<RolePermissionEntity> Permissions { get; set; } = new List<RolePermissionEntity>();
+        public ICollection<RoleTagEntity> Tags { get; set; } = new List<RoleTagEntity>();
     }
 }

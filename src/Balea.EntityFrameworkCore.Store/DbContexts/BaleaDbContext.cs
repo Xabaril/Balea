@@ -14,6 +14,9 @@ namespace Balea.EntityFrameworkCore.Store.DbContexts
         public DbSet<RolePermissionEntity> RolePermissions { get; set; }
         public DbSet<RoleMappingEntity> RoleMappings { get; set; }
         public DbSet<RoleSubjectEntity> RoleSubjects { get; set; }
+        public DbSet<TagEntity> Tags { get; set; }
+        public DbSet<RoleTagEntity> RoleTags { get; set; }
+        public DbSet<PermissionTagEntity> PermissionTags { get; set; }
 
         public BaleaDbContext(DbContextOptions options)
             : base(options)
