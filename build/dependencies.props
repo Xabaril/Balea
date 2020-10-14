@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Balea Versions">
-    <Balea>4.1.0$(VersionSuffix)</Balea>
+    <Balea>4.2.0$(VersionSuffix)</Balea>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <AspNetCoreVersion>3.1.5</AspNetCoreVersion>
-    <EntityFrameworkVersion>3.1.5</EntityFrameworkVersion>
+    <AspNetCoreVersion>3.1.9</AspNetCoreVersion>
+    <EntityFrameworkVersion>3.1.9</EntityFrameworkVersion>
     <MicrosoftSourceLinkGithub>1.0.0</MicrosoftSourceLinkGithub>
   </PropertyGroup>
 
