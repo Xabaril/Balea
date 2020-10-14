@@ -17,8 +17,8 @@ jobs:
       - name: Upload Release Notes to Wiki
         uses: docker://decathlon/wiki-page-creator-action:latest
         env:
-          ACTION_MAIL: myuser@users.noreply.github.com
-          ACTION_NAME: myPushingUser
+          ACTION_MAIL: release@users.noreply.github.com
+          ACTION_NAME: release
           GH_PAT: ${{ secrets.GH_PAT }}
           MD_FOLDER: temp_release_notes
           OWNER: Xabaril
