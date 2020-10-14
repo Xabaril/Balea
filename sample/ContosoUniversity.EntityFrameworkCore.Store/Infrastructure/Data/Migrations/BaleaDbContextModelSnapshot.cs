@@ -245,6 +245,10 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrat
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 

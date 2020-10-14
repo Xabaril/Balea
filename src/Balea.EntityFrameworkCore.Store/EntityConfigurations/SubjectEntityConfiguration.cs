@@ -20,6 +20,9 @@ namespace Balea.EntityFrameworkCore.Store.EntityConfigurations
                 .IsUnique();
             builder.Property(x => x.ImageUrl)
                 .IsRequired(false);
+            builder.Property(x => x.Email)
+                .HasMaxLength(255)
+                .IsRequired(false);
         }
     }
 }
