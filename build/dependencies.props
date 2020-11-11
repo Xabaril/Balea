@@ -1,18 +1,18 @@
 <Project>
   <PropertyGroup Label="SDK Versions">
     <NetStandardTargetVersion21>netstandard2.1</NetStandardTargetVersion21>
-    <NetCoreTargetVersion>netcoreapp3.1</NetCoreTargetVersion>
+    <NetCoreTargetVersion>net5.0</NetCoreTargetVersion>
     <LangVersion>preview</LangVersion>
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Balea Versions">
-    <Balea>4.2.0$(VersionSuffix)</Balea>
+    <Balea>5.0.0$(VersionSuffix)</Balea>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">
-    <AspNetCoreVersion>3.1.9</AspNetCoreVersion>
-    <EntityFrameworkVersion>3.1.9</EntityFrameworkVersion>
+    <AspNetCoreVersion>5.0.0</AspNetCoreVersion>
+    <EntityFrameworkVersion>5.0.0</EntityFrameworkVersion>
     <MicrosoftSourceLinkGithub>1.0.0</MicrosoftSourceLinkGithub>
   </PropertyGroup>
 
