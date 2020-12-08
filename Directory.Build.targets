@@ -7,12 +7,27 @@
     <EmbeddedFiles Include="$(GeneratedAssemblyInfoFile)"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Extensions.Options" Version="$(AspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(AspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFrameworkVersion)" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkVersion)" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkVersion)">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <PackageReference Update="Microsoft.Extensions.Options" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.Extensions.Http.Polly" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(NetCoreVersion3)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <PackageReference Update="Microsoft.Extensions.Options" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.Extensions.Http.Polly" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion5)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(NetCoreVersion5)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -22,8 +37,7 @@
     <PackageReference Update="AutoFixture.Xunit2" Version="4.14.0" />
     <PackageReference Update="Acheve.TestHost" Version="3.0.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
-    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(AspNetCoreVersion)" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Update="Respawn" Version="3.3.0" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.3">
