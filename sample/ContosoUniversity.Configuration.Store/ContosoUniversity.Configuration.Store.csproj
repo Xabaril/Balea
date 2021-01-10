@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
+    <TargetFrameworks>$(NetCoreTargetVersion)</TargetFrameworks>
     <GenerateProgramFile>false</GenerateProgramFile>
     <UserSecretsId>ContosoUniversity.Configuration.Store</UserSecretsId>
   </PropertyGroup>

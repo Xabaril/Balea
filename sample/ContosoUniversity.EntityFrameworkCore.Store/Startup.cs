@@ -1,4 +1,5 @@
 using Balea;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -56,15 +57,17 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {
-                    options.Authority = "https://demo.identityserver.io";
-                    options.ClientId = "interactive.confidential";
-                    options.ClientSecret = "secret";
+                    options.Authority = "https://localhost:6001";
+                    options.ClientId = "interactive";
+                    options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                     options.ResponseType = "code";
                     options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
-                    options.Scope.Add("api");
+                    options.Scope.Add("roles");
+                    options.Scope.Add("grades");
+
                     options.UsePkce = true;
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;

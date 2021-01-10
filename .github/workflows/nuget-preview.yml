@@ -21,7 +21,11 @@ jobs:
           - 5433:1433
     steps:
       - uses: actions/checkout@v1
-      - name: Setup .NET Core SDK
+      - name: Setup .NET Core SDK 5.0.101
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.101
+      - name: Setup .NET Core SDK 3.1.301
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
@@ -38,7 +42,7 @@ jobs:
       - name: dotnet pack [Balea.Api.Store]
         run: dotnet pack ./src/Balea.Api.Store/Balea.Api.Store.csproj -c $BUILD_CONFIG --version-suffix $VERSION_SUFFIX --no-build --include-source --include-symbols -o ./artifacts
       - name: setup nuget
-        uses: NuGet/setup-nuget@v1.0.2
+        uses: NuGet/setup-nuget@v1.0.5
         with:
           nuget-version: latest
       - name: Publish Balea nuget

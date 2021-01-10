@@ -1,2 +1,5 @@
-$SdkVersion = "3.1.301"
+$SdkVersion = "3.1.404"
+& "./dotnet-install.ps1" -Version $SdkVersion
+
+$SdkVersion = "5.0.101"
 & "./dotnet-install.ps1" -Version $SdkVersion
