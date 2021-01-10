@@ -14,10 +14,10 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
         {
             if (!db.Roles.Any())
             {
-                var john = new SubjectEntity("Alice", "1");
-                var bob = new SubjectEntity("Bob", "11");
+                var alice = new SubjectEntity("Alice", "818727");
+                var bob = new SubjectEntity("Bob", "88421113");
 
-                db.Add(john);
+                db.Add(alice);
                 db.Add(bob);
 
                 await db.SaveChangesAsync();
@@ -28,11 +28,15 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 application.Permissions.Add(viewGradesPermission);
                 application.Permissions.Add(editGradesPermission);
                 var teacherRole = new RoleEntity(nameof(Roles.Teacher), "Teacher role");
-                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = john.Id });
+                teacherRole.Subjects.Add(new RoleSubjectEntity { SubjectId = alice.Id });
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
                 application.Roles.Add(teacherRole);
-                application.Delegations.Add(new DelegationEntity(john.Id, bob.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddYears(1), true));
+                application.Delegations.Add(new DelegationEntity(alice.Id, bob.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddYears(1), true));
+                var studentRole = new RoleEntity(nameof(Roles.Student), "Student role");
+                var mapping = new MappingEntity("customer");
+                studentRole.Mappings.Add(new RoleMappingEntity { Mapping = mapping });
+                application.Roles.Add(studentRole);
                 db.Applications.Add(application);
                 await db.SaveChangesAsync();
             }
