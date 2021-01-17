@@ -35,7 +35,9 @@ namespace IdentityServerHost.Quickstart.UI
                         Claims =
                         {
                             new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.Role, "employee"),
+                            new Claim(JwtClaimTypes.Role, "Teacher"),
+                            new Claim("permission", "grades.read"),
+                            new Claim("permission", "grades.edit"),
                             new Claim(JwtClaimTypes.GivenName, "Alice"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
@@ -52,7 +54,8 @@ namespace IdentityServerHost.Quickstart.UI
                         Claims =
                         {
                             new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                            new Claim(JwtClaimTypes.Role, "external"),
+                            new Claim(JwtClaimTypes.Role, "Teacher"),
+                            new Claim("permission", "grades.read"),
                             new Claim(JwtClaimTypes.GivenName, "Bob"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
@@ -69,7 +72,8 @@ namespace IdentityServerHost.Quickstart.UI
                         Claims =
                         {
                             new Claim(JwtClaimTypes.Name, "Mary Sam"),
-                            new Claim(JwtClaimTypes.Role, "customer"),
+                            new Claim(JwtClaimTypes.Role, "Student"),
+                            new Claim("permission", "grades.read"),
                             new Claim(JwtClaimTypes.GivenName, "Mary"),
                             new Claim(JwtClaimTypes.FamilyName, "Sam"),
                             new Claim(JwtClaimTypes.Email, "MerySam@email.com"),

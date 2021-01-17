@@ -16,7 +16,8 @@ namespace ContosoUniversity.IdentityServer
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
-                new IdentityResource("roles", new [] { "role" })
+                new IdentityResource("roles", new [] { "role" }),
+                new IdentityResource("permissions", new [] { "permission" })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -53,7 +54,7 @@ namespace ContosoUniversity.IdentityServer
                     PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "email", "roles", "grades" },
+                    AllowedScopes = { "openid", "profile", "email", "roles", "permissions", "grades" },
                     AlwaysIncludeUserClaimsInIdToken = true
                 },
             };

@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using ContosoUniversity.EntityFrameworkCore.Store.Infrastructure;
 using ContosoUniversity.EntityFrameworkCore.Store.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +46,17 @@ namespace ContosoUniversity.Configuration.Store.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> Tokens()
+        {
+            var tokens = new Tokens
+            {
+                AccessToken = await HttpContext.GetTokenAsync("access_token"),
+                IdToken = await HttpContext.GetTokenAsync("id_token")
+            };
+
+            return View(tokens);
         }
     }
 }

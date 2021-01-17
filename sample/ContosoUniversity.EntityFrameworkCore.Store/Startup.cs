@@ -1,4 +1,5 @@
 using Balea;
+using ContosoUniversity.EntityFrameworkCore.Store.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -26,29 +27,19 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services                     
-                .AddBalea(options =>
+            services
+                .AddAuthorization(options =>
                 {
-                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                    options.AddPolicy(Policies.GradesRead, configure =>
                     {
-                        RoleClaimType = JwtClaimTypes.Role,
-                        NameClaimType = JwtClaimTypes.Name,
-                    };
+                        configure.RequireClaim("permission", Policies.GradesRead);
+                    });
 
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Clear();
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
-                })
-                .AddEntityFrameworkCoreStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
+                    options.AddPolicy(Policies.GradesEdit, configure =>
                     {
-                        builder.UseSqlServer(Configuration.GetConnectionString("Default"), sqlServerOptions =>
-                        {
-                            sqlServerOptions.MigrationsAssembly(typeof(Startup).Assembly.FullName);
-                        });
-                    };
+                        configure.RequireClaim("permission", Policies.GradesEdit);
+                    });
                 })
-                .Services
                 .AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -66,6 +57,7 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
                     options.Scope.Add("roles");
+                    options.Scope.Add("permissions");
                     options.Scope.Add("grades");
 
                     options.UsePkce = true;
