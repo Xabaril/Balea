@@ -36,6 +36,7 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 var studentRole = new RoleEntity(nameof(Roles.Student), "Student role");
                 var mapping = new MappingEntity("customer");
                 studentRole.Mappings.Add(new RoleMappingEntity { Mapping = mapping });
+                studentRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
                 application.Roles.Add(studentRole);
                 db.Applications.Add(application);
                 await db.SaveChangesAsync();
