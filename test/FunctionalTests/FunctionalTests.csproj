@@ -42,9 +42,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Balea.Configuration.Store\Balea.Configuration.Store.csproj" />
+    <ProjectReference Include="..\..\src\Balea\Balea.csproj" />
+    <ProjectReference Include="..\..\src\Balea.DSL\Balea.DSL.csproj" />
     <ProjectReference Include="..\..\src\Balea.EntityFrameworkCore.Store\Balea.EntityFrameworkCore.Store.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="balea.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

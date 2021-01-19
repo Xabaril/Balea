@@ -10,7 +10,7 @@ namespace FunctionalTests.Seedwork
     {
         public static async Task<ApplicationEntity> GivenAnApplication(
             this TestServerFixture fixture,
-            string applicationName = BaleaConstants.DefaultApplicationName)
+            string applicationName = global::Balea.BaleaConstants.DefaultApplicationName)
         {
             var application = new ApplicationEntity(applicationName, applicationName);
             await fixture.ExecuteDbContextAsync(async db =>
