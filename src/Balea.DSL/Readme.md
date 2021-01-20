@@ -83,8 +83,8 @@ end
 
 The main important features of BAL are:
 
-    .- Allow to write logical, aritmetic conditions, string comparison etc
-    .- Allow to PERMIT or DENY rules.
-    .- Allow to write multiple rules on the same policies.
-    .- Allow to express target conditions.
-    .- The rules can use a context to get information about the PEP, like Subject and Resource property bags.
+*  Allow to write logical, aritmetic conditions, string comparison etc.
+* Allow to PERMIT or DENY rules.
+* Allow to write multiple rules on the same policies.
+* Allow to express target conditions.
+* The rules can use a context to get information about the PEP, like Subject and Resource property bags.
