@@ -63,7 +63,7 @@ Instead of starting with ALFA as our default DSL, we decide to create a more sim
 
 ### BAL Examples
 
-´´´BAL
+```BAL
 policy Example begin
     rule CardiologyNurses (PERMIT) begin
         Subject.Role = ""Nurse"" 
@@ -71,15 +71,15 @@ policy Example begin
         AND Resource.Action = ""MedicalRecord""
     end
 end
-´´´
+```
 
-´´´BAL
+```BAL
  policy Example begin
     rule CardiologyNurses (DENY) begin
         Subject.Age < 20 AND  Subject.Id * 1000 >= 1000 * 1
     end
 end
-´´´
+```
 
 The main important features of BAL are:
 
