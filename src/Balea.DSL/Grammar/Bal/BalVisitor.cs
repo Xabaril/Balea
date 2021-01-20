@@ -89,7 +89,6 @@ namespace Balea.DSL.Grammar.Bal
 
             Expression __Bind(Expression left, Expression right) =>
                 left == null ? right : binder(left, right);
-
         }
 
         private Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)

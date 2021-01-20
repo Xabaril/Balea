@@ -2,6 +2,6 @@
 {
     public enum Grammars
     {
-        Bal =0, // Balea Authorization Language
+        Bal = 0, // Balea Authorization Language
     }
 }

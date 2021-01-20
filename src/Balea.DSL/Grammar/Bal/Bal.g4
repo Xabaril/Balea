@@ -34,12 +34,10 @@
  condition
  :
  	'(' condition ')'
- 	| 'not' condition
  	| condition bool_op condition
  	| condition bool_comp condition
  	| arit_val arit_comp arit_val
  	| str_val str_comp str_val
- 	| bool_val
  ;
 
  /** Possible actions to be defined */
@@ -93,13 +91,6 @@
  	| '>'
  	| '>='
  	| '<='
- ;
-
- /** Boolean values */
- bool_val
- :
- 	'TRUE'
- 	| 'FALSE'
  ;
 
  /** Attribute associated to a category */
