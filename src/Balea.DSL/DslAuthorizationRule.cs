@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Balea.DSL
@@ -32,7 +33,19 @@ namespace Balea.DSL
 
         internal bool Evaluate(DslAuthorizationContext context)
         {
-            return _expression(context);
+            try
+            {
+                return _expression(context);
+            }
+            catch(KeyNotFoundException keyNotFoundException)
+            {
+                //evaluating a expression that use a property that does not exist on context bag's
+                throw new InvalidOperationException($"The  rule {RuleName} is evaluating a property that does not exist on actual DslAuthorizationContext", keyNotFoundException);
+            }
+            catch(Exception exception)
+            {
+                throw new InvalidOperationException($"The rule {RuleName} is not evaluated succesfully.", exception);
+            }
         }
     }
 }

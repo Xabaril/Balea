@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Balea.DSL.Grammar;
+using System;
 using System.Collections.Generic;
 
 namespace Balea.DSL
@@ -9,7 +10,7 @@ namespace Balea.DSL
 
         public string PolicyName { get; private set; }
 
-        public DslAuthorizationPolicy(string policyName)
+        internal DslAuthorizationPolicy(string policyName)
         {
             PolicyName = policyName ?? throw new ArgumentNullException(nameof(policyName));
         }
@@ -40,6 +41,18 @@ namespace Balea.DSL
             }
 
             _authorizationRules.Add(rule);
+        }
+
+        public static DslAuthorizationPolicy CreateFromGrammar(string policy, Grammars grammar = Grammars.Bal)
+        {
+            try
+            {
+                return DSLParser.Parse(policy, grammar);
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException($"Policy can't be parsed using the  grammar {Enum.GetName(typeof(Grammars),grammar)} and policy is not created succcesfully.");
+            }
         }
     }
 }

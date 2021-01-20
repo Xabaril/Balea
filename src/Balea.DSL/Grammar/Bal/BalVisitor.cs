@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
-using static Balea.DSL.Grammar.BalParser;
+using static Balea.DSL.Grammar.Bal.BalParser;
 
 [assembly: CLSCompliant(false)]
 
@@ -38,6 +38,14 @@ namespace Balea.DSL.Grammar.Bal
                     if (ruleCondition.bool_op() is not null)
                     {
                         expression = ParseBooleanExpression(parameter, ruleCondition);
+                    }
+                    else if (ruleCondition.str_comp() is not null)
+                    {
+                        expression = ParseStringComparasionExpression(parameter, ruleCondition);
+                    }
+                    else if (ruleCondition.arit_comp() is not null )
+                    {
+                        expression = ParseAritmeticComparisonExpression(parameter, ruleCondition);
                     }
                 }
 
@@ -84,56 +92,68 @@ namespace Balea.DSL.Grammar.Bal
 
         }
 
-        Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)
+        private Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)
         {
-            var comparasion = stringComparerOperation.str_comp().GetText();
-            var conditionPropertyNameTokens = stringComparerOperation.str_val()[0].GetText().Split('.');
-            var conditionPropertyValue = stringComparerOperation.str_val()[1];
-            var bag = FormatName(conditionPropertyNameTokens[0]);
-            var property = FormatName(conditionPropertyNameTokens[1]);
+            var comparison = stringComparerOperation.str_comp().GetText();
 
-            var left = Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property));
-            var right = Expression.Constant(conditionPropertyValue.GetText().Replace("\"", ""));
+            Expression left, right;
 
-            return comparasion switch
+            // --- LEFT
+            left = CreatePropertyBagExpression(parameterExpression, stringComparerOperation.str_val()[LEFT].GetText());
+
+            // --- RIGHT
+            right = Expression.Constant(stringComparerOperation.str_val()[RIGHT].GetText().Replace("\"", ""));
+
+            return comparison switch
             {
                 "=" => Expression.Equal(left, right),
                 "!=" => Expression.NotEqual(left, right),
-                _ => throw new ArgumentException($"The comparasion operator is not currently allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
+                _ => throw new ArgumentException($"The comparison operator is not currently allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
             };
         }
 
-        Expression ParseAritmeticComparisonExpression(ParameterExpression parameterExpression, ConditionContext aritmeticComparerOperation)
+        private Expression ParseAritmeticComparisonExpression(ParameterExpression parameterExpression, ConditionContext aritmeticComparerOperation)
         {
             var aritmeticOperator = aritmeticComparerOperation.arit_comp().GetText();
-            var conditionPropertyNameTokens = aritmeticComparerOperation.arit_val()[0].GetText().Split('.');
-            var conditionPropertyValue = aritmeticComparerOperation.arit_val()[1];
 
-            var bag = FormatName(conditionPropertyNameTokens[0]);
-            var property = FormatName(conditionPropertyNameTokens[1]);
+            Expression left, right;
 
-            Expression left = Expression.Convert(
-                Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property)),
-                typeof(Int32));
+            // --- LEFT 
 
-            Expression right = null;
+            if (aritmeticComparerOperation.arit_val()[LEFT].arit_op() is not null)
+            {
+                //left expression on comparison is like Subject.Id * 100 > 1000
+                left = ParseAritmeticValueOperationExpression(parameterExpression, aritmeticComparerOperation.arit_val()[LEFT]);
+            }
+            else
+            {
+                //Is a simple assignation like Subject.Id > 1000
+                left = CreatePropertyBagExpression(
+                    parameterExpression,
+                    aritmeticComparerOperation.arit_val()[LEFT].GetText(),
+                    typeof(Int32));
+            }
+
+            // --- RIGHT
+
+            var conditionPropertyValue = aritmeticComparerOperation.arit_val()[RIGHT];
 
             if (conditionPropertyValue.arit_val().Length == 0)
             {
-                //aritmetic comparasion with simple number
-                right = ParseNumberValueExpression(conditionPropertyValue.GetText());
+                //aritmetic comparasion with simple number Subject.Id > 10
+                right = CreateNumberValueExpression(conditionPropertyValue.GetText());
             }
             else
             {
                 if (conditionPropertyValue.arit_op() is not null)
                 {
                     //the comparison is with a aritmetic operation ie, Subject.Id > 10 * 10
-                    right = ParseAritmeticValueOperationExpression(conditionPropertyValue);
+                    right = ParseAritmeticValueOperationExpression(parameterExpression, conditionPropertyValue);
                 }
                 else
                 {
                     //the comparison is with a expression ie, Subject.Id > (10*10) or Subject.Id > (10*10*10)
-                    right = ParseAritmeticValueOperationExpression(conditionPropertyValue.arit_val()[0]);
+                    right = ParseAritmeticValueOperationExpression(parameterExpression, conditionPropertyValue.arit_val()[0]);
                 }
             }
 
@@ -149,26 +169,34 @@ namespace Balea.DSL.Grammar.Bal
             };
         }
 
-        Expression ParseAritmeticValueOperationExpression(Arit_valContext aritmeticValueOperationContext)
+        private Expression ParseAritmeticValueOperationExpression(ParameterExpression parameterExpression, Arit_valContext aritmeticValueOperationContext)
         {
             Expression left, right;
 
+            // --- LEFT
+
             if (aritmeticValueOperationContext.arit_val()[LEFT].arit_op() is not null)
             {
-                left = ParseAritmeticValueOperationExpression(aritmeticValueOperationContext.arit_val()[LEFT]);
+                left = ParseAritmeticValueOperationExpression(parameterExpression, aritmeticValueOperationContext.arit_val()[LEFT]);
+            }
+            else if (aritmeticValueOperationContext.arit_val()[LEFT].categ_attr() is not null)
+            {
+                left = CreatePropertyBagExpression(parameterExpression, aritmeticValueOperationContext.arit_val()[LEFT].categ_attr().GetText(), typeof(Int32));
             }
             else
             {
-                left = ParseNumberValueExpression(aritmeticValueOperationContext.arit_val()[LEFT].GetText());
+                left = CreateNumberValueExpression(aritmeticValueOperationContext.arit_val()[LEFT].GetText());
             }
+
+            // --- RIGHT
 
             if (aritmeticValueOperationContext.arit_val()[RIGHT].arit_op() is not null)
             {
-                right = ParseAritmeticValueOperationExpression(aritmeticValueOperationContext.arit_val()[RIGHT]);
+                right = ParseAritmeticValueOperationExpression(parameterExpression, aritmeticValueOperationContext.arit_val()[RIGHT]);
             }
             else
             {
-                right = ParseNumberValueExpression(aritmeticValueOperationContext.arit_val()[RIGHT].GetText());
+                right = CreateNumberValueExpression(aritmeticValueOperationContext.arit_val()[RIGHT].GetText());
             }
 
             return aritmeticValueOperationContext.arit_op().GetText() switch
@@ -182,7 +210,26 @@ namespace Balea.DSL.Grammar.Bal
             };
         }
 
-        Expression ParseNumberValueExpression(string number)
+        private Expression CreatePropertyBagExpression(ParameterExpression parameterExpression, string propertyAccessor, Type conversionType = null)
+        {
+            var propertyNameTokens = propertyAccessor.Split('.');
+
+            var bag = FormatName(propertyNameTokens[LEFT]);
+            var property = FormatName(propertyNameTokens[RIGHT]);
+
+            if (conversionType != null)
+            {
+                return Expression.Convert(
+                    Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property)),
+                    conversionType);
+            }
+            else
+            {
+                return Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property));
+            }
+        }
+
+        private Expression CreateNumberValueExpression(string number)
         {
             if (number == null)
             {
@@ -192,7 +239,7 @@ namespace Balea.DSL.Grammar.Bal
             return Expression.Constant(Convert.ToInt32(number), typeof(Int32));
         }
 
-        string FormatName(string propertyName) =>
+        private string FormatName(string propertyName) =>
             CultureInfo.InvariantCulture
                 .TextInfo
                 .ToTitleCase(propertyName);
