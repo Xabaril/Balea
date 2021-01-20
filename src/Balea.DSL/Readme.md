@@ -88,3 +88,5 @@ The main important features of BAL are:
 * Allow to write multiple rules on the same policies.
 * Allow to express target conditions.
 * The rules can use a context to get information about the PEP, like Subject and Resource property bags.
+
+> BAL is inspired on YAAL with a simplification of some ANTLR terms, please follow https://github.com/bolilla/yaal repository to get more information, thanks @bolilla.
