@@ -20,7 +20,7 @@ ALFA, Abbreviated Language for Authorization, is a domain specific language used
 
 > ALFA: https://www.oasis-open.org/committees/download.php/55228/alfa-for-xacml-v1.0-wd01.doc 
 
-```xacml
+```alfa
 namespace hospital { 
    policyset topLevel {
       apply permitOverrides 
@@ -55,3 +55,36 @@ namespace hospital {
    }
 
 ```
+
+
+## BAL Balea Authorization Language
+
+Instead of starting with ALFA as our default DSL, we decide to create a more simple language with a reduce number of features. BAL, Balea Authorization Language, is this simplified language to define authorization policies.
+
+### BAL Examples
+
+´´´BAL
+policy Example begin
+    rule CardiologyNurses (PERMIT) begin
+        Subject.Role = ""Nurse"" 
+        AND Subject.Name = ""Mary Joe""
+        AND Resource.Action = ""MedicalRecord""
+    end
+end
+´´´
+
+´´´BAL
+ policy Example begin
+    rule CardiologyNurses (DENY) begin
+        Subject.Age < 20 AND  Subject.Id * 1000 >= 1000 * 1
+    end
+end
+´´´
+
+The main important features of BAL are:
+
+    .- Allow to write logical, aritmetic conditions, string comparison etc
+    .- Allow to PERMIT or DENY rules.
+    .- Allow to write multiple rules on the same policies.
+    .- Allow to express target conditions.
+    .- The rules can use a context to get information about the PEP, like Subject and Resource property bags.
