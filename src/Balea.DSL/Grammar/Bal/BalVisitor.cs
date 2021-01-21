@@ -13,16 +13,23 @@ namespace Balea.DSL.Grammar.Bal
     {
         const int LEFT = 0;
         const int RIGHT = 1;
+        const char ID_SEPARATOR = '.';
 
         public override DslAuthorizationPolicy VisitPolicy([NotNull] BalParser.PolicyContext context)
         {
-            var policy = new DslAuthorizationPolicy(context.ID().Symbol.Text);
+            //create the policy and assign the rules on it
+
+            var policy = new DslAuthorizationPolicy(
+                FormatName(context.ID().Symbol.Text));
 
             foreach (var ruleItem in context.pol_rule())
             {
-                Expression expression = null;
+                //this create a lambda expression with the rule spec and set if rule is PERMIT or DENY rule
 
-                var ruleName = FormatName(ruleItem.ID().Symbol.Text);
+
+                ParameterExpression parameter = Expression.Parameter(typeof(DslAuthorizationContext));
+                Expression ruleExpression = null;
+
                 var isDenyAction = ruleItem.action_id().GetText() switch
                 {
                     "PERMIT" => false,
@@ -30,26 +37,25 @@ namespace Balea.DSL.Grammar.Bal
                     _ => throw new ArgumentNullException($"The action identifier is not allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
                 };
 
-                var parameter = Expression.Parameter(typeof(DslAuthorizationContext));
-                var rule = new DslAuthorizationRule(ruleName, isDenyAction);
+                var rule = new DslAuthorizationRule(FormatName(ruleItem.ID().Symbol.Text), isDenyAction);
 
-                foreach (var ruleCondition in ruleItem.condition())
+                var ruleCondition = ruleItem.condition();
+
+                if (ruleCondition.bool_op() is not null)
                 {
-                    if (ruleCondition.bool_op() is not null)
-                    {
-                        expression = ParseBooleanExpression(parameter, ruleCondition);
-                    }
-                    else if (ruleCondition.str_comp() is not null)
-                    {
-                        expression = ParseStringComparasionExpression(parameter, ruleCondition);
-                    }
-                    else if (ruleCondition.arit_comp() is not null )
-                    {
-                        expression = ParseAritmeticComparisonExpression(parameter, ruleCondition);
-                    }
+                    ruleExpression = ParseBooleanExpression(parameter, ruleCondition);
+                }
+                else if (ruleCondition.str_comp() is not null)
+                {
+                    ruleExpression = ParseStringComparasionExpression(parameter, ruleCondition);
+                }
+                else if (ruleCondition.arit_comp() is not null)
+                {
+                    ruleExpression = ParseAritmeticComparisonExpression(parameter, ruleCondition);
                 }
 
-                rule.SetExpression(Expression.Lambda<Func<DslAuthorizationContext, bool>>(expression, parameter));
+                rule.SetExpression(
+                    Expression.Lambda<Func<DslAuthorizationContext, bool>>(ruleExpression, parameter));
 
                 policy.AddRule(rule);
             }
@@ -118,7 +124,6 @@ namespace Balea.DSL.Grammar.Bal
             Expression left, right;
 
             // --- LEFT 
-
             if (aritmeticComparerOperation.arit_val()[LEFT].arit_op() is not null)
             {
                 //left expression on comparison is like Subject.Id * 100 > 1000
@@ -134,7 +139,6 @@ namespace Balea.DSL.Grammar.Bal
             }
 
             // --- RIGHT
-
             var conditionPropertyValue = aritmeticComparerOperation.arit_val()[RIGHT];
 
             if (conditionPropertyValue.arit_val().Length == 0)
@@ -173,7 +177,6 @@ namespace Balea.DSL.Grammar.Bal
             Expression left, right;
 
             // --- LEFT
-
             if (aritmeticValueOperationContext.arit_val()[LEFT].arit_op() is not null)
             {
                 left = ParseAritmeticValueOperationExpression(parameterExpression, aritmeticValueOperationContext.arit_val()[LEFT]);
@@ -188,7 +191,6 @@ namespace Balea.DSL.Grammar.Bal
             }
 
             // --- RIGHT
-
             if (aritmeticValueOperationContext.arit_val()[RIGHT].arit_op() is not null)
             {
                 right = ParseAritmeticValueOperationExpression(parameterExpression, aritmeticValueOperationContext.arit_val()[RIGHT]);
@@ -211,7 +213,7 @@ namespace Balea.DSL.Grammar.Bal
 
         private Expression CreatePropertyBagExpression(ParameterExpression parameterExpression, string propertyAccessor, Type conversionType = null)
         {
-            var propertyNameTokens = propertyAccessor.Split('.');
+            var propertyNameTokens = propertyAccessor.Split(ID_SEPARATOR);
 
             var bag = FormatName(propertyNameTokens[LEFT]);
             var property = FormatName(propertyNameTokens[RIGHT]);
