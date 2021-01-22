@@ -1,6 +1,8 @@
 ﻿using Balea.DSL;
 using Balea.DSL.Grammar;
+using Balea.DSL.PropertyBags;
 using FluentAssertions;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -19,21 +21,24 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Role", "Nurse" }
-                },
-                Resource = new Dictionary<string, object>()
+                       {"Role", "Nurse" }
+                }),
+                 new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
-                    {"Action", "MedicalRecord" }
-                }
+                       {"Action", "MedicalRecord" }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
+
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -48,28 +53,31 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Name", "Scott Hunter" }
-                }
+                      {"Name", "Scott Hunter" }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
 
-            context = new DslAuthorizationContext()
+            propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Name", "Mary Joe" }
-                }
+                      {"Name", "Mary Joe" }
+                })
             };
 
+            context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -83,21 +91,23 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Role", "Nurse" }
-                },
-                Resource = new Dictionary<string, object>()
+                     {"Role", "Nurse" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
                     {"Action", "MedicalRecord" }
-                }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -114,22 +124,24 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Role", "Nurse" },
-                    {"Name", "Jhon Doe" },
-                },
-                Resource = new Dictionary<string, object>()
+                     {"Name", "Jhon Doe" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
                     {"Action", "MedicalRecord" }
-                }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
@@ -145,19 +157,25 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Role", "Nurse" },
-                    {"Name", "Mary Joe" },
-                }
+                     {"Role", "Nurse" },
+                     {"Name", "Mary Joe" },
+                }),
+                 new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
+                {
+                     {"Action", "MedicalRecord" }
+                })
             };
 
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
 
@@ -177,38 +195,40 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Role", "Nurse" },
                     {"Name", "Mary Joe" },
-                },
-                Resource = new Dictionary<string, object>()
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
                     {"Action", "medicalreports" }
-                }
+                })
             };
 
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
 
-            context = new DslAuthorizationContext()
+            propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Role", "Nurse" },
                     {"Name", "Jhon Doe" },
-                },
-                Resource = new Dictionary<string, object>()
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
                     {"Action", "medicalreports" }
-                }
+                })
             };
 
+            context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
 
@@ -222,21 +242,23 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Age", 19 }
-                },
-                Resource = new Dictionary<string, object>()
+                    {"Age", 19 },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
-                    {"Id", 1001}
-                }
+                    {"Id", 1001 },
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -251,21 +273,23 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
-                    {"Role", "Nurse" }
-                },
-                Resource = new Dictionary<string, object>()
+                    {"Role", "Nurse" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
                 {
-                    {"Id", 999}
-                }
+                    {"Id", 999 },
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
@@ -280,18 +304,21 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Age", 19 },
-                    {"Id", 1 },
-                }
+                    {"Id",1 }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
+
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -306,17 +333,19 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Age", 19 },
-                }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -331,17 +360,19 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Name", "Mary Joe" },
-                }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
@@ -356,22 +387,45 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, Grammars.Bal);
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var context = new DslAuthorizationContext()
+            var propertyBuilders = new List<IPropertyBagBuilder>()
             {
-                Subject = new Dictionary<string, object>()
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
                 {
                     {"Name", "Mary Joe" },
-                }
+                })
             };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
 
             Assert.Throws<InvalidOperationException>(() =>
             {
                 dslAuthorizationPolicy.IsSatisfied(context);
             }).Message.Should().BeEquivalentTo("The  rule CardiologyNurses is evaluating a property that does not exist on actual DslAuthorizationContext");
+        }
+
+
+        private class TestPropertyBagBuilder
+            : IPropertyBagBuilder
+        {
+            private string _bagName;
+            private Dictionary<string, object> _items;
+
+            public TestPropertyBagBuilder(string bagName, Dictionary<string, object> items)
+            {
+                _bagName = bagName;
+                _items = items;
+            }
+
+            public string BagName => _bagName;
+
+            public Dictionary<string, object> Build(AuthorizationHandlerContext state)
+            {
+                return _items;
+            }
         }
     }
 }

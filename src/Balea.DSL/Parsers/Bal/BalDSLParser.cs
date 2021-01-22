@@ -1,13 +1,16 @@
 ﻿using Antlr4.Runtime;
+using Balea.DSL.Grammar;
+using Balea.DSL.Grammar.Bal;
+using Balea.DSL.Grammars.Bal;
 
-namespace Balea.DSL.Grammar.Bal
+namespace Balea.DSL.Parsers.Bal
 {
     internal class BalDSLParser
         : IDSLParser
     {
-        public bool CanParse(Grammars grammar)
+        public bool CanParse(AllowedGrammars grammar)
         {
-            return grammar == Grammars.Bal;
+            return grammar == AllowedGrammars.Bal;
         }
 
         public DslAuthorizationPolicy Parse(string policy)

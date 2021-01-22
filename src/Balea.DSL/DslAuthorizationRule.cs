@@ -6,7 +6,7 @@ namespace Balea.DSL
 {
     internal class DslAuthorizationRule
     {
-        private Func<DslAuthorizationContext, bool> _expression;
+        private Func<DslAuthorizationContext, bool> _ruleExpression;
 
         public string RuleName { get; private set; }
 
@@ -18,7 +18,7 @@ namespace Balea.DSL
             IsDenyRule = isDenyRule;
         }
 
-        internal void SetExpression(Expression<Func<DslAuthorizationContext, bool>> expression)
+        internal void SetRuleExpression(Expression<Func<DslAuthorizationContext, bool>> expression)
         {
             if (expression != null)
             {
@@ -27,7 +27,7 @@ namespace Balea.DSL
                     expression.ReduceAndCheck();
                 }
 
-                _expression = expression.Compile();
+                _ruleExpression = expression.Compile();
             }
         }
 
@@ -35,7 +35,7 @@ namespace Balea.DSL
         {
             try
             {
-                return _expression(context);
+                return _ruleExpression(context);
             }
             catch(KeyNotFoundException keyNotFoundException)
             {

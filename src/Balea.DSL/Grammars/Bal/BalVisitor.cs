@@ -1,8 +1,9 @@
 ﻿using Antlr4.Runtime.Misc;
+using Balea.DSL.Grammars.Bal;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
-using static Balea.DSL.Grammar.Bal.BalParser;
+using static Balea.DSL.Grammars.Bal.BalParser;
 
 [assembly: CLSCompliant(false)]
 
@@ -54,7 +55,7 @@ namespace Balea.DSL.Grammar.Bal
                     ruleExpression = ParseAritmeticComparisonExpression(parameter, ruleCondition);
                 }
 
-                rule.SetExpression(
+                rule.SetRuleExpression(
                     Expression.Lambda<Func<DslAuthorizationContext, bool>>(ruleExpression, parameter));
 
                 policy.AddRule(rule);
@@ -215,30 +216,27 @@ namespace Balea.DSL.Grammar.Bal
         {
             var propertyNameTokens = propertyAccessor.Split(ID_SEPARATOR);
 
-            var bag = FormatName(propertyNameTokens[LEFT]);
-            var property = FormatName(propertyNameTokens[RIGHT]);
+            var propertyBag = FormatName(propertyNameTokens[LEFT]);
+            var propertyName = FormatName(propertyNameTokens[RIGHT]);
+
+            // -> DslAuthorizationContext["PropertyBag"]
+            var propertyBagExpression = Expression.Property(parameterExpression, "Item", Expression.Constant(propertyBag));
 
             if (conversionType != null)
             {
+                // -> (conversionType) DslAuthorizationContext["propertyBag"]["propertyName"] == 
                 return Expression.Convert(
-                    Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property)),
-                    conversionType);
+                    Expression.Property(propertyBagExpression, "Item", Expression.Constant(propertyName)), conversionType);
             }
             else
             {
-                return Expression.Property(Expression.Property(parameterExpression, bag), "Item", Expression.Constant(property));
+                // -> DslAuthorizationContext["propertyBag"]["propertyName"] == 
+                return Expression.Property(propertyBagExpression, "Item", Expression.Constant(propertyName));
             }
         }
 
-        private Expression CreateNumberValueExpression(string number)
-        {
-            if (number == null)
-            {
-                throw new ArgumentNullException(nameof(number));
-            }
-
-            return Expression.Constant(Convert.ToInt32(number), typeof(Int32));
-        }
+        private Expression CreateNumberValueExpression(string number) =>
+            Expression.Constant(Convert.ToInt32(number), typeof(Int32));
 
         private string FormatName(string propertyName) =>
             CultureInfo.InvariantCulture

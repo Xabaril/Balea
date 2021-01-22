@@ -1,8 +1,9 @@
-﻿using Balea.DSL.Grammar.Bal;
+﻿using Balea.DSL.Grammar;
+using Balea.DSL.Parsers.Bal;
 using System;
 using System.Collections.Generic;
 
-namespace Balea.DSL.Grammar
+namespace Balea.DSL.Parsers
 {
     internal static class DSLParser
     {
@@ -11,7 +12,7 @@ namespace Balea.DSL.Grammar
             new BalDSLParser()
         };
 
-        public static DslAuthorizationPolicy Parse(string policy, Grammars grammar)
+        public static DslAuthorizationPolicy Parse(string policy, AllowedGrammars grammar)
         {
             foreach (var parser in _parsers)
             {
@@ -21,7 +22,7 @@ namespace Balea.DSL.Grammar
                 }
             }
 
-            throw new InvalidOperationException($"The grammar {Enum.GetName(typeof(Grammars), grammar)} does not contain any parser registered.");
+            throw new InvalidOperationException($"The grammar {Enum.GetName(typeof(AllowedGrammars), grammar)} does not contain any parser registered.");
         }
     }
 }
