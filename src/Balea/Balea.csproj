@@ -19,4 +19,8 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Balea.DSL\Balea.DSL.csproj" />
+  </ItemGroup>
 </Project>

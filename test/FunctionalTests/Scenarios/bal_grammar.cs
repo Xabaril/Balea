@@ -38,8 +38,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -108,7 +106,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -142,7 +139,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
 
@@ -160,7 +156,6 @@ namespace FunctionalTests.Scenarios
             var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
-
 
             var propertyBuilders = new List<IPropertyBagBuilder>()
             {
@@ -259,7 +254,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -290,7 +284,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
         }
 
@@ -318,8 +311,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -346,7 +337,6 @@ namespace FunctionalTests.Scenarios
             };
 
             var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
-
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeTrue();
         }
 
@@ -404,7 +394,7 @@ namespace FunctionalTests.Scenarios
             Assert.Throws<InvalidOperationException>(() =>
             {
                 dslAuthorizationPolicy.IsSatisfied(context);
-            }).Message.Should().BeEquivalentTo("The  rule CardiologyNurses is evaluating a property that does not exist on actual DslAuthorizationContext");
+            }).Message.Should().BeEquivalentTo("The rule CardiologyNurses is evaluating a property that does not exist on actual DslAuthorizationContext");
         }
 
 

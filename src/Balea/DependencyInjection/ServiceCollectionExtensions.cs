@@ -5,6 +5,8 @@ using Balea;
 using Balea.Abstractions;
 using Balea.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
+using Balea.DSL.PropertyBags;
+using Balea.DSL;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -24,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             _ = services ?? throw new ArgumentNullException(nameof(services));
 
+            //add balea required services
             services.AddAuthorization();
             services.AddHttpContextAccessor();
             services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
@@ -31,6 +34,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
+
+            //add balea dsl required services
+            services.AddScoped<IPropertyBagBuilder, UserPropertyBagBuilder>();
+            services.AddScoped<IPropertyBagBuilder, EndpointPropertyBagBuilder>();
+            services.AddScoped<IPropertyBagBuilder, AuthorizationFilterContextPropertyBagBuilder>();
+            services.AddScoped<DslAuthorizationContextFactory>();
 
             return new BaleaBuilder(services);
         }

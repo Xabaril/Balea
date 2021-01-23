@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq.Expressions;
 using static Balea.DSL.Grammars.Bal.BalParser;
 
-[assembly: CLSCompliant(false)]
 
 namespace Balea.DSL.Grammar.Bal
 {
