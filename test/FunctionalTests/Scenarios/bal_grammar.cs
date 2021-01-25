@@ -397,6 +397,74 @@ namespace FunctionalTests.Scenarios
             }).Message.Should().BeEquivalentTo("The rule CardiologyNurses is evaluating a property that does not exist on actual DslAuthorizationContext");
         }
 
+        [Fact]
+        public void visitor_allow_to_parse_complex_expressions()
+        {
+            const string policy = @"
+            policy Example begin
+                rule CardiologyNurses (PERMIT) begin
+                     ( Subject.Role = ""Nurse"" OR Subject.Role = ""Doctor"" ) AND Resource.Action = ""medicalreports""
+                end
+            end";
+
+            var dslAuthorizationPolicy = DslAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+
+            dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
+
+            var propertyBuilders = new List<IPropertyBagBuilder>()
+            {
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
+                {
+                    {"Role", "Nurse" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
+                {
+                    {"Action", "medicalreports" }
+                })
+            };
+
+            var context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
+
+            dslAuthorizationPolicy.IsSatisfied(context)
+                .Should()
+                .BeTrue();
+
+            propertyBuilders = new List<IPropertyBagBuilder>()
+            {
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
+                {
+                    {"Role", "Doctor" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
+                {
+                    {"Action", "medicalreports" }
+                })
+            };
+
+            context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
+
+            dslAuthorizationPolicy.IsSatisfied(context)
+                .Should()
+                .BeTrue();
+
+            propertyBuilders = new List<IPropertyBagBuilder>()
+            {
+                new TestPropertyBagBuilder("Subject", new Dictionary<string, object>()
+                {
+                    {"Role", "Doctor" },
+                }),
+                new TestPropertyBagBuilder("Resource", new Dictionary<string, object>()
+                {
+                    {"Action", "schedulingreports" }
+                })
+            };
+
+            context = new DslAuthorizationContextFactory(propertyBuilders).Create(null);
+
+            dslAuthorizationPolicy.IsSatisfied(context)
+                .Should()
+                .BeFalse();
+        }
 
         private class TestPropertyBagBuilder
             : IPropertyBagBuilder

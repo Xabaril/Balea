@@ -5,15 +5,14 @@ using System.Globalization;
 using System.Linq.Expressions;
 using static Balea.DSL.Grammars.Bal.BalParser;
 
-
 namespace Balea.DSL.Grammar.Bal
 {
-    public class BalVisitor
+    internal class BalVisitor
         : BalBaseVisitor<DslAuthorizationPolicy>
     {
-        const int LEFT = 0;
-        const int RIGHT = 1;
-        const char ID_SEPARATOR = '.';
+        private const int LEFT = 0;
+        private const int RIGHT = 1;
+        private const char ID_SEPARATOR = '.';
 
         public override DslAuthorizationPolicy VisitPolicy([NotNull] BalParser.PolicyContext context)
         {
@@ -88,6 +87,31 @@ namespace Balea.DSL.Grammar.Bal
                 {
                     var right = ParseAritmeticComparisonExpression(expression, condition);
                     left = __Bind(left, right);
+                }
+                else
+                {
+                    // It is a new expression like " ( some condition ) " and we need to evaluate again
+                    // all inner conditions on this expression
+                    var innerConditions = condition.condition();
+                    
+                    foreach(var innerCondition in innerConditions)
+                    {
+                        if (innerCondition.str_comp() is not null)
+                        {
+                            var right = ParseStringComparasionExpression(expression, innerCondition);
+                            left = __Bind(left, right);
+                        }
+                        else if (innerCondition.bool_op() is not null)
+                        {
+                            var right = ParseBooleanExpression(expression, innerCondition);
+                            left = __Bind(left, right);
+                        }
+                        else if (innerCondition.arit_comp() is not null)
+                        {
+                            var right = ParseAritmeticComparisonExpression(expression, innerCondition);
+                            left = __Bind(left, right);
+                        }
+                    }
                 }
             }
 
