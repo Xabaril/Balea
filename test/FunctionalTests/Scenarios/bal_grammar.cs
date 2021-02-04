@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,7 +13,6 @@ namespace FunctionalTests.Scenarios
 #pragma warning disable IDE1006
 #pragma warning disable IDE0044
     public class bal_grammar
-
     {
         [Fact]
         public async Task visitor_allow_to_parse_and_logical_conditions()
@@ -30,13 +30,13 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                       {"Role", "Nurse" }
+                       {"Role", new []{"Nurse" } }
                 }),
-                 new TestPropertyBag("Resource", new Dictionary<string, object>()
+                 new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                       {"Action", "MedicalRecord" }
+                       {"Action", new []{"MedicalRecord" } }
                 })
             };
 
@@ -62,9 +62,9 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                      {"Name", "Scott Hunter" }
+                      {"Name", new[]{"Scott Hunter" } }
                 })
             };
 
@@ -75,9 +75,9 @@ namespace FunctionalTests.Scenarios
 
             propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                      {"Name", "Mary Joe" }
+                      {"Name", new []{"Mary Joe" } }
                 })
             };
 
@@ -103,13 +103,13 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                     {"Role", "Nurse" },
+                     {"Role", new[]{ "Nurse" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "MedicalRecord" }
+                    {"Action", new[]{ "MedicalRecord" } }
                 })
             };
 
@@ -137,14 +137,14 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Nurse" },
-                     {"Name", "Jhon Doe" },
+                    {"Role", new[] { "Nurse" } },
+                     {"Name", new[] { "Jhon Doe" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "MedicalRecord" }
+                    {"Action", new [] {"MedicalRecord" } }
                 })
             };
 
@@ -171,14 +171,14 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                     {"Role", "Nurse" },
-                     {"Name", "Mary Joe" },
+                     {"Role", new [] {"Nurse" } },
+                     {"Name", new[] { "Mary Joe" } },
                 }),
-                 new TestPropertyBag("Resource", new Dictionary<string, object>()
+                 new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                     {"Action", "MedicalRecord" }
+                     {"Action", new[] {"MedicalRecord" } }
                 })
             };
 
@@ -210,14 +210,14 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Nurse" },
-                    {"Name", "Mary Joe" },
+                    {"Role", new[]{"Nurse" } },
+                    {"Name", new[] {"Mary Joe" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "medicalreports" }
+                    {"Action", new[]{"medicalreports" } }
                 })
             };
 
@@ -229,14 +229,14 @@ namespace FunctionalTests.Scenarios
 
             propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Nurse" },
-                    {"Name", "Jhon Doe" },
+                    {"Role", new[] { "Nurse" } },
+                    {"Name", new[] { "Jhon Doe" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "medicalreports" }
+                    {"Action", new[] {"medicalreports" } }
                 })
             };
 
@@ -262,13 +262,13 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Age", 19 },
+                    {"Age", new object[] { 19 } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Id", 1001 },
+                    {"Id", new object[] { 1001 } },
                 })
             };
 
@@ -294,13 +294,13 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Nurse" },
+                    {"Role", new [] { "Nurse" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Id", 999 },
+                    {"Id", new object[] { 999 } },
                 })
             };
 
@@ -326,10 +326,10 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Age", 19 },
-                    {"Id",1 }
+                    {"Age",new object[] { 19 } },
+                    {"Id",new object[] { 1 } }
                 })
             };
 
@@ -355,9 +355,9 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Age", 19 },
+                    {"Age", new object[] { 19 } },
                 })
             };
 
@@ -383,9 +383,9 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Name", "Mary Joe" },
+                    {"Name", new []{ "Mary Joe" } },
                 })
             };
 
@@ -411,9 +411,9 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Name", "Mary Joe" },
+                    {"Name", new [] { "Mary Joe" } },
                 })
             };
 
@@ -442,13 +442,13 @@ namespace FunctionalTests.Scenarios
 
             var propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Nurse" },
+                    {"Role", new [] { "Nurse" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "medicalreports" }
+                    {"Action", new [] { "medicalreports" } }
                 })
             };
 
@@ -461,13 +461,13 @@ namespace FunctionalTests.Scenarios
 
             propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Doctor" },
+                    {"Role", new [] { "Doctor" }  },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "medicalreports" }
+                    {"Action",new [] { "medicalreports" } }
                 })
             };
 
@@ -480,13 +480,13 @@ namespace FunctionalTests.Scenarios
 
             propertyBags = new List<IPropertyBag>()
             {
-                new TestPropertyBag("Subject", new Dictionary<string, object>()
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Role", "Doctor" },
+                    {"Role", new[] { "Doctor" } },
                 }),
-                new TestPropertyBag("Resource", new Dictionary<string, object>()
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
                 {
-                    {"Action", "schedulingreports" }
+                    {"Action", new[] { "schedulingreports" } }
                 })
             };
 
@@ -498,13 +498,48 @@ namespace FunctionalTests.Scenarios
                 .BeFalse();
         }
 
+        [Fact]
+        public async Task visitor_allow_to_parse_contains_bool_operators()
+        {
+            const string policy = @"
+            policy Example begin
+                rule CardiologyNurses (PERMIT) begin
+                       Subject.Role CONTAINS ""Nurse""  AND Resource.Action <> ""internalreports""
+                end
+            end";
+
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+
+            dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
+
+            var propertyBags = new List<IPropertyBag>()
+            {
+                new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
+                {
+                    {"Role", new [] { "Doctor" , "Nurse" } },
+                }),
+                new TestPropertyBag("Resource", new Dictionary<string, IEnumerable<object>>()
+                {
+                    {"Action", new[] {  "medicalreports" } }
+                })
+            };
+
+            var contextFactory = new AbacAuthorizationContextFactory(propertyBags);
+            var context = await contextFactory.Create(null);
+
+            dslAuthorizationPolicy.IsSatisfied(context)
+                .Should()
+                .BeTrue();
+
+        }
+
         private class TestPropertyBag
             : IPropertyBag
         {
             private string _name;
-            private Dictionary<string, object> _items;
+            private Dictionary<string, IEnumerable<object>> _items;
 
-            public TestPropertyBag(string name, Dictionary<string, object> items)
+            public TestPropertyBag(string name, Dictionary<string, IEnumerable<object>> items)
             {
                 _name = name;
                 _items = items;
@@ -517,11 +552,17 @@ namespace FunctionalTests.Scenarios
                 return Task.CompletedTask;
             }
 
+            public bool Contains(string propertyName, object value)
+            {
+                return _items[propertyName]
+                    .Contains(value);
+            }
+
             public object this[string name]
             {
                 get
                 {
-                    return _items[name];
+                    return _items[name].FirstOrDefault();
                 }
             }
         }

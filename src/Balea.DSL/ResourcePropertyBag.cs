@@ -53,6 +53,14 @@ namespace Balea.DSL
         }
 
         ///<inheritdoc/>
+        public bool Contains(string propertyName, object value)
+        {
+            return _entries
+                .Where(c => c.Key == propertyName && c.Value == value)
+                .Any();
+        }
+
+        ///<inheritdoc/>
         public Task Initialize(AuthorizationHandlerContext authorizationHandlerContext)
         {
             _logger.PopulatePropertyBag(Name);
@@ -64,7 +72,7 @@ namespace Balea.DSL
                     .FirstOrDefault();
 
                 if (actionDescriptor is ControllerActionDescriptor action)
-                {  
+                {
                     _entries.Add(DisplayName, action.DisplayName);
 
                     if (action.AttributeRouteInfo is object)

@@ -124,21 +124,28 @@ namespace Balea.DSL.Grammar.Bal
         private static Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)
         {
             var comparison = stringComparerOperation.str_comp().GetText();
-
-            Expression left, right;
-
-            // --- LEFT
-            left = CreatePropertyBagExpression(parameterExpression, stringComparerOperation.str_val()[LEFT].GetText(), typeof(String));
-
-            // --- RIGHT
-            right = Expression.Constant(stringComparerOperation.str_val()[RIGHT].GetText().Replace("\"", ""));
-
-            return comparison switch
+            
+            if (comparison.Equals("CONTAINS",StringComparison.InvariantCultureIgnoreCase))
             {
-                "=" => Expression.Equal(left, right),
-                "!=" => Expression.NotEqual(left, right),
-                _ => throw new ArgumentException($"The comparison operator is not currently allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
-            };
+                return CreatePropertyBagContains(parameterExpression, 
+                    stringComparerOperation.str_val()[LEFT].GetText(),
+                    stringComparerOperation.str_val()[RIGHT].GetText().Replace("\"", ""));
+            }
+            else
+            {
+                // --- LEFT
+                var left = CreatePropertyBagExpression(parameterExpression, stringComparerOperation.str_val()[LEFT].GetText(), typeof(String));
+                // --- right 
+                var right = Expression.Constant(stringComparerOperation.str_val()[RIGHT].GetText().Replace("\"", ""));
+
+                return comparison switch
+                {
+                    "=" => Expression.Equal(left, right),
+                    "<>" => Expression.NotEqual(left, right),
+                    "!=" => Expression.NotEqual(left, right),
+                    _ => throw new ArgumentException($"The comparison operator is not currently allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
+                };
+            }
         }
 
         private static Expression ParseAritmeticComparisonExpression(ParameterExpression parameterExpression, ConditionContext aritmeticComparerOperation)
@@ -256,6 +263,19 @@ namespace Balea.DSL.Grammar.Bal
                 // -> DslAuthorizationContext["propertyBag"]["propertyName"] == 
                 return Expression.Property(propertyBagExpression, "Item", Expression.Constant(propertyName));
             }
+        }
+
+        private static Expression CreatePropertyBagContains(ParameterExpression parameterExpression, string propertyAccessor, object value)
+        {
+            var propertyNameTokens = propertyAccessor.Split(ID_SEPARATOR);
+
+            var propertyBag = FormatName(propertyNameTokens[LEFT]);
+            var propertyName = FormatName(propertyNameTokens[RIGHT]);
+
+            // -> DslAuthorizationContext["PropertyBag"]
+            var propertyBagExpression = Expression.Property(parameterExpression, "Item", Expression.Constant(propertyBag));
+
+            return Expression.Call(propertyBagExpression, typeof(IPropertyBag).GetMethod("Contains"),Expression.Constant(propertyName), Expression.Constant(value));
         }
 
         private static Expression CreateNumberValueExpression(string number) =>

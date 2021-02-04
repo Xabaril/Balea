@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,9 +20,22 @@ namespace Balea.DSL
     public class ParameterPropertyBag
         : IPropertyBag
     {
-        private readonly Dictionary<string, object> _entries = new Dictionary<string, object>();
+        private readonly Dictionary<string, StringValues> _entries = new Dictionary<string, StringValues>();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<ParameterPropertyBag> _logger;
+
+        ///<inheritdoc/>
+        public string Name => "Parameters";
+
+        ///<inheritdoc/>
+        public object this[string propertyName]
+        {
+            get
+            {
+                return _entries[propertyName]
+                    .FirstOrDefault();
+            }
+        }
 
         /// <summary>
         /// Create a new instance.
@@ -34,18 +48,16 @@ namespace Balea.DSL
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        ///<inheritdoc/>
-        public object this[string propertyName]
-        {
-            get
-            {
-                //TODO: parameters will be multiple values and support for IN 
-                return _entries[propertyName];
-            }
-        }
+
 
         ///<inheritdoc/>
-        public string Name => "Parameters";
+        public bool Contains(string propertyName, object value)
+        {
+            return _entries
+                .Where(c => c.Key == propertyName && c.Value.Contains(value.ToString()))
+                .Any();
+        }
+
 
         ///<inheritdoc/>
         public Task Initialize(AuthorizationHandlerContext authorizationHandlerContext)
@@ -65,7 +77,7 @@ namespace Balea.DSL
             }
             else if (authorizationHandlerContext != null && authorizationHandlerContext.Resource is AuthorizationFilterContext authorizationFilterContext)
             {
-                if(authorizationFilterContext.ActionDescriptor is ControllerActionDescriptor action)
+                if (authorizationFilterContext.ActionDescriptor is ControllerActionDescriptor action)
                 {
                     FillParameters(action);
                 }

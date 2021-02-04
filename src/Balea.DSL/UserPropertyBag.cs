@@ -35,16 +35,6 @@ namespace Balea.DSL
         private IEnumerable<Claim> _claims;
         private readonly ILogger<UserPropertyBag> _logger;
 
-        /// <summary>
-        /// Create a new instance.
-        /// </summary>
-        /// <param name="logger">The logger to be used.</param>
-        public UserPropertyBag(ILogger<UserPropertyBag> logger)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _claims = new List<Claim>();
-        }
-
         ///<inheritdoc/>
         public string Name { get; } = "Subject";
 
@@ -67,6 +57,28 @@ namespace Balea.DSL
 
                 return string.Empty; // TODO: Thinking on semantic of NULL on DSL
             }
+        }
+
+        /// <summary>
+        /// Create a new instance.
+        /// </summary>
+        /// <param name="logger">The logger to be used.</param>
+        public UserPropertyBag(ILogger<UserPropertyBag> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _claims = new List<Claim>();
+        }
+
+
+        ///<inheritdoc/>
+        public bool Contains(string propertyName, object value)
+        {
+            IEnumerable<string> claimTypes = ClaimMapping.ContainsKey(propertyName)
+                   ? ClaimMapping[propertyName] : new string[] { propertyName };
+
+            return _claims
+                .Where(c => claimTypes.Contains(c.Type) && c.Value.Equals(value.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                .Any();
         }
 
         ///<inheritdoc/>
