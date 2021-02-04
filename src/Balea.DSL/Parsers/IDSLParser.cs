@@ -5,6 +5,6 @@ namespace Balea.DSL.Parsers
     interface IDSLParser
     {
         bool CanParse(AllowedGrammars grammar);
-        DslAuthorizationPolicy Parse(string policy);
+        AbacAuthorizationPolicy Parse(string policy);
     }
 }

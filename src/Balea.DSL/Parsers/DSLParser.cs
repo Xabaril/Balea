@@ -12,7 +12,7 @@ namespace Balea.DSL.Parsers
             new BalDSLParser()
         };
 
-        public static DslAuthorizationPolicy Parse(string policy, AllowedGrammars grammar)
+        public static AbacAuthorizationPolicy Parse(string policy, AllowedGrammars grammar)
         {
             foreach (var parser in _parsers)
             {

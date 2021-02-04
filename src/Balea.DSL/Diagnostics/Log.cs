@@ -5,34 +5,25 @@ namespace Balea.DSL.Diagnostics
 {
     static class Log
     {
-        public static void PopulateUserPropertyBag(this ILogger logger, string propertyBag)
+        public static void PopulatePropertyBag(this ILogger logger, string propertyBag)
         {
-            _claimsPopulatePropertyBag(logger, propertyBag, null);
+            _populatePropertyBag(logger, propertyBag, null);
         }
 
-        public static void PopulateEndpointPropertyBag(this ILogger logger, string propertyBag)
+        public static void PropertyBagCantBePopulated(this ILogger logger, string propertyBag)
         {
-            _endpointPopulatePropertyBag(logger, propertyBag, null);
+            _propertyBagCantBePopulated(logger, propertyBag, null);
         }
 
-        public static void PopulateAuthorizationFilterContextPropertyBag(this ILogger logger, string propertyBag)
-        {
-            _authorizationFilterContextPopulatePropertyBag(logger, propertyBag, null);
-        }
+        private static readonly Action<ILogger, string, Exception> _populatePropertyBag = LoggerMessage.Define<string>(
+            LogLevel.Information,
+            EventIds.PropertyBag,
+            "Populating property bag {bag}.");
 
-        private static readonly Action<ILogger, string, Exception> _claimsPopulatePropertyBag = LoggerMessage.Define<string>(
-            LogLevel.Debug,
-            EventIds.UserPropertyBag,
-            "Populating property bag {bag} from user claims.");
 
-        private static readonly Action<ILogger, string, Exception> _endpointPopulatePropertyBag = LoggerMessage.Define<string>(
-            LogLevel.Debug,
-            EventIds.EndpointPropertyBag,
-            "Populating property bag {bag} from endpoint.");
-
-        private static readonly Action<ILogger, string, Exception> _authorizationFilterContextPopulatePropertyBag = LoggerMessage.Define<string>(
-            LogLevel.Debug,
-            EventIds.AuthorizationFilterContextPropertyBag,
+        private static readonly Action<ILogger, string, Exception> _propertyBagCantBePopulated = LoggerMessage.Define<string>(
+            LogLevel.Warning,
+            EventIds.PropertyBagCantBePopulated,
             "Populating property bag {bag} from authorization filter context.");
 
     }

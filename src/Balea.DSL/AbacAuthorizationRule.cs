@@ -4,21 +4,21 @@ using System.Linq.Expressions;
 
 namespace Balea.DSL
 {
-    internal class DslAuthorizationRule
+    internal class AbacAuthorizationRule
     {
-        private Func<DslAuthorizationContext, bool> _ruleExpression;
+        private Func<AbacAuthorizationContext, bool> _ruleExpression;
 
         public string RuleName { get; private set; }
 
         public bool IsDenyRule { get; private set; }
 
-        public DslAuthorizationRule(string ruleName, bool isDenyRule = false)
+        public AbacAuthorizationRule(string ruleName, bool isDenyRule = false)
         {
             RuleName = ruleName ?? throw new ArgumentNullException(nameof(ruleName));
             IsDenyRule = isDenyRule;
         }
 
-        internal void SetRuleExpression(Expression<Func<DslAuthorizationContext, bool>> expression)
+        internal void SetRuleExpression(Expression<Func<AbacAuthorizationContext, bool>> expression)
         {
             if (expression != null)
             {
@@ -31,7 +31,7 @@ namespace Balea.DSL
             }
         }
 
-        internal bool Evaluate(DslAuthorizationContext context)
+        internal bool Evaluate(AbacAuthorizationContext context)
         {
             try
             {
@@ -44,6 +44,7 @@ namespace Balea.DSL
             }
             catch(Exception exception)
             {
+                //other exception out of scope
                 throw new InvalidOperationException($"The rule {RuleName} is not evaluated succesfully.", exception);
             }
         }

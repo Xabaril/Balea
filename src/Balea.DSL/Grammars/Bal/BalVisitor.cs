@@ -8,25 +8,24 @@ using static Balea.DSL.Grammars.Bal.BalParser;
 namespace Balea.DSL.Grammar.Bal
 {
     internal class BalVisitor
-        : BalBaseVisitor<DslAuthorizationPolicy>
+        : BalBaseVisitor<AbacAuthorizationPolicy>
     {
         private const int LEFT = 0;
         private const int RIGHT = 1;
         private const char ID_SEPARATOR = '.';
 
-        public override DslAuthorizationPolicy VisitPolicy([NotNull] BalParser.PolicyContext context)
+        public override AbacAuthorizationPolicy VisitPolicy([NotNull] BalParser.PolicyContext context)
         {
             //create the policy and assign the rules on it
 
-            var policy = new DslAuthorizationPolicy(
+            var policy = new AbacAuthorizationPolicy(
                 FormatName(context.ID().Symbol.Text));
 
             foreach (var ruleItem in context.pol_rule())
             {
                 //this create a lambda expression with the rule spec and set if rule is PERMIT or DENY rule
 
-
-                ParameterExpression parameter = Expression.Parameter(typeof(DslAuthorizationContext));
+                ParameterExpression parameter = Expression.Parameter(typeof(AbacAuthorizationContext));
                 Expression ruleExpression = null;
 
                 var isDenyAction = ruleItem.action_id().GetText() switch
@@ -36,7 +35,7 @@ namespace Balea.DSL.Grammar.Bal
                     _ => throw new ArgumentNullException($"The action identifier is not allowed to be parsed on {typeof(BalVisitor).Name} visitor.")
                 };
 
-                var rule = new DslAuthorizationRule(FormatName(ruleItem.ID().Symbol.Text), isDenyAction);
+                var rule = new AbacAuthorizationRule(FormatName(ruleItem.ID().Symbol.Text), isDenyAction);
 
                 var ruleCondition = ruleItem.condition();
 
@@ -54,7 +53,7 @@ namespace Balea.DSL.Grammar.Bal
                 }
 
                 rule.SetRuleExpression(
-                    Expression.Lambda<Func<DslAuthorizationContext, bool>>(ruleExpression, parameter));
+                    Expression.Lambda<Func<AbacAuthorizationContext, bool>>(ruleExpression, parameter));
 
                 policy.AddRule(rule);
             }
@@ -69,7 +68,8 @@ namespace Balea.DSL.Grammar.Bal
             Expression left = null;
 
             var boolCondition = logicOperation.bool_op().GetText();
-            var binder = boolCondition.Equals(and, StringComparison.InvariantCultureIgnoreCase) ? Expression.And : (Binder)Expression.Or;
+            var binder = boolCondition.Equals(and, StringComparison.InvariantCultureIgnoreCase) 
+                ? Expression.And : (Binder)Expression.Or;
 
             foreach (var condition in logicOperation.condition())
             {
@@ -93,8 +93,8 @@ namespace Balea.DSL.Grammar.Bal
                     // It is a new expression like " ( some condition ) " and we need to evaluate again
                     // all inner conditions on this expression
                     var innerConditions = condition.condition();
-                    
-                    foreach(var innerCondition in innerConditions)
+
+                    foreach (var innerCondition in innerConditions)
                     {
                         if (innerCondition.str_comp() is not null)
                         {
@@ -121,14 +121,14 @@ namespace Balea.DSL.Grammar.Bal
                 left == null ? right : binder(left, right);
         }
 
-        private Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)
+        private static Expression ParseStringComparasionExpression(ParameterExpression parameterExpression, ConditionContext stringComparerOperation)
         {
             var comparison = stringComparerOperation.str_comp().GetText();
 
             Expression left, right;
 
             // --- LEFT
-            left = CreatePropertyBagExpression(parameterExpression, stringComparerOperation.str_val()[LEFT].GetText());
+            left = CreatePropertyBagExpression(parameterExpression, stringComparerOperation.str_val()[LEFT].GetText(), typeof(String));
 
             // --- RIGHT
             right = Expression.Constant(stringComparerOperation.str_val()[RIGHT].GetText().Replace("\"", ""));
@@ -141,7 +141,7 @@ namespace Balea.DSL.Grammar.Bal
             };
         }
 
-        private Expression ParseAritmeticComparisonExpression(ParameterExpression parameterExpression, ConditionContext aritmeticComparerOperation)
+        private static Expression ParseAritmeticComparisonExpression(ParameterExpression parameterExpression, ConditionContext aritmeticComparerOperation)
         {
             var aritmeticOperator = aritmeticComparerOperation.arit_comp().GetText();
 
@@ -196,7 +196,7 @@ namespace Balea.DSL.Grammar.Bal
             };
         }
 
-        private Expression ParseAritmeticValueOperationExpression(ParameterExpression parameterExpression, Arit_valContext aritmeticValueOperationContext)
+        private static Expression ParseAritmeticValueOperationExpression(ParameterExpression parameterExpression, Arit_valContext aritmeticValueOperationContext)
         {
             Expression left, right;
 
@@ -235,7 +235,7 @@ namespace Balea.DSL.Grammar.Bal
             };
         }
 
-        private Expression CreatePropertyBagExpression(ParameterExpression parameterExpression, string propertyAccessor, Type conversionType = null)
+        private static Expression CreatePropertyBagExpression(ParameterExpression parameterExpression, string propertyAccessor, Type conversionType = null)
         {
             var propertyNameTokens = propertyAccessor.Split(ID_SEPARATOR);
 
@@ -258,10 +258,10 @@ namespace Balea.DSL.Grammar.Bal
             }
         }
 
-        private Expression CreateNumberValueExpression(string number) =>
+        private static Expression CreateNumberValueExpression(string number) =>
             Expression.Constant(Convert.ToInt32(number), typeof(Int32));
 
-        private string FormatName(string propertyName) =>
+        private static string FormatName(string propertyName) =>
             CultureInfo.InvariantCulture
                 .TextInfo
                 .ToTitleCase(propertyName);

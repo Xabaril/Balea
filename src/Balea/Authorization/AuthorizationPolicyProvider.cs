@@ -32,10 +32,15 @@ namespace Balea.Authorization
             {
                 _logger.AuthorizationPolicyNotFound(policyName);
 
+                var requirement = policyName.Contains("abac__")
+                    ? (IAuthorizationRequirement) new AbacPolicyRequirement(policyName)
+                    :  new PermissionRequirement(policyName);
+
                 if (_baleaOptions.Schemes.Any())
                 {
+
                     policy = new AuthorizationPolicyBuilder()
-                        .AddRequirements(new PermissionRequirement(policyName))
+                        .AddRequirements(requirement)
                         .AddAuthenticationSchemes(_baleaOptions.Schemes.ToArray())
                         .Build();
 
@@ -44,7 +49,7 @@ namespace Balea.Authorization
                 else
                 {
                     policy = new AuthorizationPolicyBuilder()
-                        .AddRequirements(new PermissionRequirement(policyName))
+                        .AddRequirements(requirement)
                         .Build();
 
                     _logger.CreatingAuthorizationPolicy(policyName);

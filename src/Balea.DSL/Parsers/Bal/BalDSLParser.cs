@@ -13,7 +13,7 @@ namespace Balea.DSL.Parsers.Bal
             return grammar == AllowedGrammars.Bal;
         }
 
-        public DslAuthorizationPolicy Parse(string policy)
+        public AbacAuthorizationPolicy Parse(string policy)
         {
             var inputStream = new AntlrInputStream(policy);
             var lexer = new BalLexer(inputStream);

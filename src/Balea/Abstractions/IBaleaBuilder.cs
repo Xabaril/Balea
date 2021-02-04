@@ -1,4 +1,4 @@
-﻿using Balea.DSL.PropertyBags;
+﻿using Balea.DSL;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Balea.Abstractions
@@ -16,10 +16,10 @@ namespace Balea.Abstractions
         /// <summary>
         /// Allow to register a new <see cref="IPropertyBagBuilder"/> to be used on Balea DSL policies.
         /// </summary>
-        /// <typeparam name="TPropertyBagBuilder">The <see cref="IPropertyBagBuilder"/> to be used.</typeparam>
+        /// <typeparam name="TPropertyBag">The <see cref="IPropertyBuilder"/> to be used.</typeparam>
         /// <returns>A new <see cref="IBaleaBuilder"/> that can be chained for register services.</returns>
-        IBaleaBuilder AddDSLPropertyBagBuilder<TPropertyBagBuilder>() 
-            where TPropertyBagBuilder : class, IPropertyBagBuilder;
+        IBaleaBuilder AddPropertyBag<TPropertyBag>() 
+            where TPropertyBag : class, IPropertyBag;
     }
 
     internal sealed class BaleaBuilder : IBaleaBuilder
@@ -31,9 +31,9 @@ namespace Balea.Abstractions
 
         public IServiceCollection Services { get; }
 
-        public IBaleaBuilder AddDSLPropertyBagBuilder<TPropertyBagBuilder>() where TPropertyBagBuilder : class, IPropertyBagBuilder
+        public IBaleaBuilder AddPropertyBag<TPropertyBag>() where TPropertyBag: class, IPropertyBag
         {
-            Services.AddScoped<IPropertyBagBuilder, TPropertyBagBuilder>();
+            Services.AddScoped<IPropertyBag, TPropertyBag>();
             return this;
         }
     }

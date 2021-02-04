@@ -83,9 +83,18 @@ end
 
 The main important features of BAL are:
 
-*  Allow to write logical, aritmetic conditions, string comparison etc.
+* Allow to write logical, aritmetic conditions, string comparison etc.
 * Allow to PERMIT or DENY rules.
 * Allow to write multiple rules on the same policies.
 * The rules can use a context to get information about the PEP, like Subject and Resource property bags.
 
 > BAL is inspired on YAAL with a simplification of some ANTLR terms, please follow https://github.com/bolilla/yaal repository to get more information, thanks @bolilla.
+
+
+//TODO
+
+ - Create a attribute to add parameter to Resource Property Bag ( Inject IHttpContextAccessor on the resource property bag)
+ - Add this parameters to resource o new Action | Parameters property bag ??
+ - Add IN on grammar for string parameters
+ - Sample custom property bag
+ - NULL semantic

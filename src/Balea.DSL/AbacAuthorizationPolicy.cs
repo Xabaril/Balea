@@ -7,18 +7,18 @@ namespace Balea.DSL
 {
     /// <summary>
     /// This is the representation on code of the DSL language and allow
-    /// to check if the policy is satisfied depending on <see cref="DslAuthorizationContext"/> used.
+    /// to check if the policy is satisfied depending on <see cref="AbacAuthorizationContext"/> used.
     /// </summary>
-    public class DslAuthorizationPolicy
+    public class AbacAuthorizationPolicy
     {
-        private List<DslAuthorizationRule> _authorizationRules = new List<DslAuthorizationRule>();
+        private readonly List<AbacAuthorizationRule> _authorizationRules = new List<AbacAuthorizationRule>();
 
         /// <summary>
         /// Get the policy name.
         /// </summary>
         public string PolicyName { get; private set; }
 
-        internal DslAuthorizationPolicy(string policyName)
+        internal AbacAuthorizationPolicy(string policyName)
         {
             PolicyName = policyName ?? throw new ArgumentNullException(nameof(policyName));
         }
@@ -26,13 +26,13 @@ namespace Balea.DSL
         /// <summary>
         /// Check if the current policy is satisfied.
         /// </summary>
-        /// <param name="dslAuthorizationContext">The current <see cref="DslAuthorizationContext"/>.</param>
+        /// <param name="abacAuthorizationContext">The current <see cref="AbacAuthorizationContext"/>.</param>
         /// <returns></returns>
-        public bool IsSatisfied(DslAuthorizationContext dslAuthorizationContext)
+        public bool IsSatisfied(AbacAuthorizationContext abacAuthorizationContext)
         {
-            if (dslAuthorizationContext == null)
+            if (abacAuthorizationContext == null)
             {
-                throw new ArgumentNullException(nameof(dslAuthorizationContext));
+                throw new ArgumentNullException(nameof(abacAuthorizationContext));
             }
 
             bool isSatisfied = true;
@@ -40,13 +40,13 @@ namespace Balea.DSL
             foreach (var rule in _authorizationRules)
             {
                 //evaluate all rules in the policy, checking if is a deny rule
-                isSatisfied = isSatisfied && !(rule.Evaluate(dslAuthorizationContext) ^ !rule.IsDenyRule);
+                isSatisfied = isSatisfied && !(rule.Evaluate(abacAuthorizationContext) ^ !rule.IsDenyRule);
             }
 
             return isSatisfied;
         }
 
-        internal void AddRule(DslAuthorizationRule rule)
+        internal void AddRule(AbacAuthorizationRule rule)
         {
             if (rule == null)
             {
@@ -57,12 +57,12 @@ namespace Balea.DSL
         }
 
         /// <summary>
-        /// Create a <see cref="DslAuthorizationPolicy"/> using a specified grammar.
+        /// Create a <see cref="AbacAuthorizationPolicy"/> using a specified grammar.
         /// </summary>
         /// <param name="policy">The policy.</param>
         /// <param name="grammar">The grammar to be used.</param>
-        /// <returns>A <see cref="DslAuthorizationPolicy"/> created.</returns>
-        public static DslAuthorizationPolicy CreateFromGrammar(string policy, AllowedGrammars grammar = AllowedGrammars.Bal)
+        /// <returns>A <see cref="AbacAuthorizationPolicy"/> created.</returns>
+        public static AbacAuthorizationPolicy CreateFromGrammar(string policy, AllowedGrammars grammar = AllowedGrammars.Bal)
         {
             try
             {
