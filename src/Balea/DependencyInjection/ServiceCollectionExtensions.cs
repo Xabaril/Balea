@@ -1,7 +1,9 @@
 ﻿using Balea;
 using Balea.Abstractions;
 using Balea.Authorization;
-using Balea.DSL;
+using Balea.Authorization.Abac;
+using Balea.Authorization.Abac.Context;
+using Balea.Authorization.Rbac;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.Extensions.Options;
@@ -32,10 +34,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
-            services.AddTransient<IAuthorizationHandler, AbacPolicyAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, AbacAuthorizationHandler>();
             services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
-
-            //add balea dsl required services
             services.AddScoped<IPropertyBag, UserPropertyBag>();
             services.AddScoped<IPropertyBag, ResourcePropertyBag>();
             services.AddScoped<IPropertyBag, ParameterPropertyBag>();

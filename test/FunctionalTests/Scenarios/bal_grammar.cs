@@ -1,5 +1,5 @@
-﻿using Balea.DSL;
-using Balea.DSL.Grammar;
+﻿using Balea.Authorization.Abac.Context;
+using Balea.Authorization.Abac.Grammars;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -24,7 +24,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -56,7 +56,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -97,7 +97,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -131,7 +131,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -165,7 +165,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -204,7 +204,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -256,7 +256,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -288,7 +288,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -320,7 +320,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -349,7 +349,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -377,7 +377,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -405,7 +405,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -436,7 +436,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
@@ -508,7 +508,7 @@ namespace FunctionalTests.Scenarios
                 end
             end";
 
-            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, AllowedGrammars.Bal);
+            var dslAuthorizationPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy, WellKnownGrammars.Bal);
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 

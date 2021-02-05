@@ -15,15 +15,12 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Authorization\PolicyAuthorizationHandler.cs~RF2441cf9d.TMP" />
-  </ItemGroup>
-
+ 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Antlr4.CodeGenerator" />
+    <PackageReference Include="Antlr4.Runtime" />
   </ItemGroup>
+      
 
-  <ItemGroup>
-    <ProjectReference Include="..\Balea.DSL\Balea.DSL.csproj" />
-  </ItemGroup>
 </Project>

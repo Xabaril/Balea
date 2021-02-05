@@ -1,4 +1,4 @@
-﻿using Balea.DSL;
+﻿using Balea.Authorization.Abac.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Balea.Abstractions

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Balea.Authorization.Abac;
 using ContosoUniversity.Configuration.Store.Models;
-using Balea.Authorization;
-using Balea.DSL.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoUniversity.Configuration.Store.Controllers
 {
@@ -14,7 +13,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
             return View();
         }
 
-        [AbacPolicy("Example")]
+        [AbacAuthorize("Example")]
         public IActionResult Complex([AbacParameter]string tenant)
         {
             return View("Read");

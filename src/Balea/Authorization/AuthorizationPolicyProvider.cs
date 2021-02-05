@@ -1,9 +1,11 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
+﻿using Balea.Authorization.Abac;
+using Balea.Authorization.Rbac;
 using Balea.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Balea.Authorization
 {
@@ -32,13 +34,13 @@ namespace Balea.Authorization
             {
                 _logger.AuthorizationPolicyNotFound(policyName);
 
+                //setup abac or rbac requirement
                 var requirement = policyName.Contains("abac__")
-                    ? (IAuthorizationRequirement) new AbacPolicyRequirement(policyName)
+                    ? (IAuthorizationRequirement) new AbacRequirement(policyName)
                     :  new PermissionRequirement(policyName);
 
                 if (_baleaOptions.Schemes.Any())
                 {
-
                     policy = new AuthorizationPolicyBuilder()
                         .AddRequirements(requirement)
                         .AddAuthenticationSchemes(_baleaOptions.Schemes.ToArray())

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System;
 
-namespace Balea.Authorization
+namespace Balea.Authorization.Rbac
 {
-    internal class AbacPolicyRequirement : IAuthorizationRequirement
+    internal class PermissionRequirement : IAuthorizationRequirement
     {
-        public AbacPolicyRequirement(string name)
+        public PermissionRequirement(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

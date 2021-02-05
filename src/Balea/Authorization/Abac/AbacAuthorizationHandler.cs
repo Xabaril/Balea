@@ -1,21 +1,21 @@
-﻿using Balea.DSL;
-using Balea.DSL.Grammar;
+﻿using Balea.Authorization.Abac.Context;
+using Balea.Authorization.Abac.Grammars;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 
-namespace Balea.Authorization
+namespace Balea.Authorization.Abac
 {
-    internal class AbacPolicyAuthorizationHandler : AuthorizationHandler<AbacPolicyRequirement>
+    internal class AbacAuthorizationHandler : AuthorizationHandler<AbacRequirement>
     {
         private readonly AbacAuthorizationContextFactory _abacAuthorizationContextFactory;
 
-        public AbacPolicyAuthorizationHandler(AbacAuthorizationContextFactory abacAuthorizationContextFactory)
+        public AbacAuthorizationHandler(AbacAuthorizationContextFactory abacAuthorizationContextFactory)
         {
             Ensure.Argument.NotNull(abacAuthorizationContextFactory, nameof(abacAuthorizationContextFactory));
             _abacAuthorizationContextFactory = abacAuthorizationContextFactory;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AbacPolicyRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AbacRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)
             {
@@ -24,9 +24,9 @@ namespace Balea.Authorization
                 var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(
 @"policy example begin
     rule A (PERMIT) begin
-        Subject.Role = ""customer"" AND Resource.Controller = ""Grades"" AND Parameters.Tenant = ""tenant1""    
+        Subject.Role CONTAINS ""customer"" AND Resource.Controller = ""Grades"" AND Parameters.Tenant = ""tenant1""    
     end
-end", AllowedGrammars.Bal);
+end", WellKnownGrammars.Bal);
 
                 if ( abacPolicy.IsSatisfied(abacContext))
                 {
