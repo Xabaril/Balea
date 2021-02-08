@@ -35,8 +35,9 @@ namespace Balea.Authorization
                 _logger.AuthorizationPolicyNotFound(policyName);
 
                 //setup abac or rbac requirement
-                var requirement = policyName.Contains("abac__")
-                    ? (IAuthorizationRequirement) new AbacRequirement(policyName)
+                var abacPrefix = new AbacPrefix(policyName);
+                var requirement = policyName.Equals(abacPrefix.ToString())
+                    ? (IAuthorizationRequirement) new AbacRequirement(abacPrefix.PolicyName)
                     :  new PermissionRequirement(policyName);
 
                 if (_baleaOptions.Schemes.Any())

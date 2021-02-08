@@ -14,7 +14,7 @@ namespace Balea.Authorization.Abac
         /// </summary>
         /// <param name="policyName">The ABAC policy name registered on Balea to be used.</param>
         public AbacAuthorizeAttribute(string policyName) :
-            base($"abac__{policyName}")
+            base(new AbacPrefix(policyName).ToString())
         { }
     }
 }

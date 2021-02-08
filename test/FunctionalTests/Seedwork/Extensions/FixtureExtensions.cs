@@ -1,5 +1,4 @@
-﻿using Balea;
-using Balea.EntityFrameworkCore.Store.Entities;
+﻿using Balea.EntityFrameworkCore.Store.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;

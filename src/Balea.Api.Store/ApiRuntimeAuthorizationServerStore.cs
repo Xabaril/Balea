@@ -65,12 +65,46 @@ namespace Balea.Api.Store
             return response.To();
         }
 
-        private async Task<HttpClientStoreResponse> GetAuthorizationContext(ClaimsPrincipal user)
+        public async Task<Policy> GetPolicyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            if (_storeOptions.CacheEnabled)
+            {
+                var key = $"balea:1.0:application:{_baleaOptions.ApplicationName}:policy:{name}";
+
+                var cachedResponse = await _cache.GetOrSet(
+                    key,
+                    miss: () =>
+                    {
+                        Log.CacheMiss(_logger, key);
+                        return GetPolicy(name);
+                    },
+                    hit: _ => Log.CacheHit(_logger, key),
+                    _storeOptions.AbsoluteExpirationRelativeToNow,
+                    _storeOptions.SlidingExpiration,
+                    cancellationToken);
+
+                return cachedResponse.To();
+            }
+
+            var response = await GetPolicy(name);
+
+            return response.To();
+        }
+
+        private async Task<HttpClientStoreAuthorizationResponse> GetAuthorizationContext(ClaimsPrincipal user)
         {
             var client = _httpClientFactory.CreateClient(Constants.BaleaClient);
 
-            return await client.GetJsonAsync<HttpClientStoreResponse>(
+            return await client.GetJsonAsync<HttpClientStoreAuthorizationResponse>(
                 $"api/users/{user.GetSubjectId(_baleaOptions)}/applications/{_baleaOptions.ApplicationName}/authorization?api-version=1.0{GetMappings(user)}");
+        }
+
+        private async Task<HttpClientStorePolicyResponse> GetPolicy(string name)
+        {
+            var client = _httpClientFactory.CreateClient(Constants.BaleaClient);
+
+            return await client.GetJsonAsync<HttpClientStorePolicyResponse>(
+                $"api/applications/{_baleaOptions.ApplicationName}/policies/{name}?api-version=1.0");
         }
 
         private string GetMappings(ClaimsPrincipal user)
