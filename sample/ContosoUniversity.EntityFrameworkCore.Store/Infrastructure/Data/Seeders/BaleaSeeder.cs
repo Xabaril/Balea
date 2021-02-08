@@ -37,6 +37,13 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 var mapping = new MappingEntity("customer");
                 studentRole.Mappings.Add(new RoleMappingEntity { Mapping = mapping });
                 application.Roles.Add(studentRole);
+                var policy = new PolicyEntity("ValidateGrades",
+@"policy validate_grades begin
+    rule A (PERMIT) begin
+        Subject.Role = ""teacher"" AND Resource.Controller = ""Grades"" AND Parameters.GradesValue > 7    
+    end
+end");
+                application.Policies.Add(policy);
                 db.Applications.Add(application);
                 await db.SaveChangesAsync();
             }

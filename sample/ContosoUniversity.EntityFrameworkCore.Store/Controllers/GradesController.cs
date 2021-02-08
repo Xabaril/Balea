@@ -1,5 +1,4 @@
 ﻿using ContosoUniversity.EntityFrameworkCore.Store.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

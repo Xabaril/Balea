@@ -3,7 +3,6 @@
 
 
 using Duende.IdentityServer.Models;
-using IdentityModel;
 using System.Collections.Generic;
 
 namespace ContosoUniversity.IdentityServer

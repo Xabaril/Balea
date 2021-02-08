@@ -60,5 +60,15 @@ namespace Balea.EntityFrameworkCore.Store.Entities
                         d.Application.Name == applicationName, 
                     cancellationToken);
         }
+
+        public static Policy To(this PolicyEntity policy)
+        {
+            if (policy is null)
+            {
+                return null;
+            }
+
+            return new Policy(policy.Name, policy.Content);
+        }
     }
 }

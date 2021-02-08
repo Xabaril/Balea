@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Balea.Api.Store.Model
 {
-    public class HttpClientStoreResponse
+    public class HttpClientStoreAuthorizationResponse
     {
-        public HttpClientStoreResponse()
+        public HttpClientStoreAuthorizationResponse()
         {
         }
 

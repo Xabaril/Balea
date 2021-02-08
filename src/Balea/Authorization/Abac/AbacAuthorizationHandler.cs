@@ -1,4 +1,5 @@
-﻿using Balea.Authorization.Abac.Context;
+﻿using Balea.Abstractions;
+using Balea.Authorization.Abac.Context;
 using Balea.Authorization.Abac.Grammars;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
@@ -8,25 +9,32 @@ namespace Balea.Authorization.Abac
     internal class AbacAuthorizationHandler : AuthorizationHandler<AbacRequirement>
     {
         private readonly AbacAuthorizationContextFactory _abacAuthorizationContextFactory;
+        private readonly IRuntimeAuthorizationServerStore runtimeAuthorizationServerStore;
 
-        public AbacAuthorizationHandler(AbacAuthorizationContextFactory abacAuthorizationContextFactory)
+        public AbacAuthorizationHandler(
+            AbacAuthorizationContextFactory abacAuthorizationContextFactory,
+            IRuntimeAuthorizationServerStore runtimeAuthorizationServerStore)
         {
             Ensure.Argument.NotNull(abacAuthorizationContextFactory, nameof(abacAuthorizationContextFactory));
+            Ensure.Argument.NotNull(runtimeAuthorizationServerStore, nameof(abacAuthorizationContextFactory));
             _abacAuthorizationContextFactory = abacAuthorizationContextFactory;
+            this.runtimeAuthorizationServerStore = runtimeAuthorizationServerStore;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AbacRequirement requirement)
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                //evaluate policy
+                var policy = await runtimeAuthorizationServerStore.GetPolicyAsync(requirement.Name);
+                
+                if (policy is null)
+                {
+                    context.Fail();
+                    return;
+                }
+
                 var abacContext = await  _abacAuthorizationContextFactory.Create(context);
-                var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(
-@"policy example begin
-    rule A (PERMIT) begin
-        Subject.Role CONTAINS ""customer"" AND Resource.Controller = ""Grades"" AND Parameters.Tenant = ""tenant1""    
-    end
-end", WellKnownGrammars.Bal);
+                var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy.Content, WellKnownGrammars.Bal);
 
                 if ( abacPolicy.IsSatisfied(abacContext))
                 {
