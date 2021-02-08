@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Balea.Authorization.Abac.Context
     public class ParameterPropertyBag
         : IPropertyBag
     {
-        private readonly Dictionary<string, StringValues> _entries = new Dictionary<string, StringValues>();
+        private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries = new Dictionary<string, (Type parameterType, StringValues parameterValues)>();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<ParameterPropertyBag> _logger;
 
@@ -31,8 +32,12 @@ namespace Balea.Authorization.Abac.Context
         {
             get
             {
-                return _entries[propertyName]
+                var parameterType = _entries[propertyName].parameterType;
+                var parameterValue = _entries[propertyName].parameterValues
                     .FirstOrDefault();
+
+                return TypeDescriptor.GetConverter(parameterType)
+                    .ConvertFromString(parameterValue);
             }
         }
 
@@ -53,7 +58,7 @@ namespace Balea.Authorization.Abac.Context
         public bool Contains(string propertyName, object value)
         {
             return _entries
-                .Where(c => c.Key == propertyName && c.Value.Contains(value.ToString()))
+                .Where(c => c.Key == propertyName && c.Value.parameterValues.Contains(value.ToString()))
                 .Any();
         }
 
@@ -106,7 +111,7 @@ namespace Balea.Authorization.Abac.Context
                     {
                         _entries.Add(
                             key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
-                            value: value);
+                            value: (parameter.ParameterType, value));
                     }
                 }
             }

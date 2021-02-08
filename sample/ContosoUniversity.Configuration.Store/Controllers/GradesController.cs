@@ -14,7 +14,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
         }
 
         [AbacAuthorize("Example")]
-        public IActionResult Complex([AbacParameter]string tenant)
+        public IActionResult Complex([AbacParameter]int value)
         {
             return View("Read");
         }

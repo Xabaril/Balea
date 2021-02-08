@@ -24,7 +24,7 @@ namespace Balea.Authorization.Abac
                 var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(
 @"policy example begin
     rule A (PERMIT) begin
-        Subject.Role CONTAINS ""customer"" AND Resource.Controller = ""Grades"" AND Parameters.Tenant = ""tenant1""    
+        Subject.Role CONTAINS ""customer"" AND Resource.Controller = ""Grades"" AND Parameters.value > 6  
     end
 end", WellKnownGrammars.Bal);
 
