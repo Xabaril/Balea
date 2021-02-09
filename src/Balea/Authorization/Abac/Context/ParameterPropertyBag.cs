@@ -105,6 +105,8 @@ namespace Balea.Authorization.Abac.Context
                     .Where(attribute => typeof(AbacParameterAttribute).IsAssignableFrom(attribute.AttributeType))
                     .Any())
                 {
+                    //TODO: support only primitive types o bien json serialization
+
                     var values = _httpContextAccessor.HttpContext
                         .Request
                         .Query[parameter.Name];

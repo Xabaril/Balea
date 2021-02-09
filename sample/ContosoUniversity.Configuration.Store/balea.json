@@ -60,7 +60,7 @@
         "policies": [
           {
             "name": "ValidateGrades",
-            "content": "policy example begin\r\n    rule A (PERMIT) begin\r\n        Subject.Role CONTAINS \"Teacher\" AND Resource.Controller = \"Grades\" AND Parameters.Value = \"6\"    \r\n    end\r\nend"
+            "content": "policy example begin\r\n    rule A (PERMIT) begin\r\n        Subject.Role CONTAINS \"Student\" AND Resource.Controller = \"Grades\" AND Parameters.Value = 6    \r\n    end\r\nend"
           }
         ]
       }
