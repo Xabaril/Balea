@@ -32,6 +32,8 @@ namespace Balea.Authorization.Abac.Context
         {
             get
             {
+                //convert to the specified type discovered on the request information
+
                 var parameterType = _entries[propertyName].parameterType;
                 var parameterValue = _entries[propertyName].parameterValues
                     .FirstOrDefault();
@@ -52,8 +54,6 @@ namespace Balea.Authorization.Abac.Context
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-
-
         ///<inheritdoc/>
         public bool Contains(string propertyName, object value)
         {
@@ -61,7 +61,6 @@ namespace Balea.Authorization.Abac.Context
                 .Where(c => c.Key == propertyName && c.Value.parameterValues.Contains(value.ToString()))
                 .Any();
         }
-
 
         ///<inheritdoc/>
         public Task Initialize(AuthorizationHandlerContext authorizationHandlerContext)
@@ -96,22 +95,25 @@ namespace Balea.Authorization.Abac.Context
 
         void FillParameters(ControllerActionDescriptor action)
         {
+            // just collect all the parameter values on the request on and type info decorated
+            // with attribute and use it on this property bag
+
             foreach (var parameter in action.Parameters.OfType<ControllerParameterDescriptor>())
             {
                 if (parameter.ParameterInfo
                     .CustomAttributes
-                    .Where(ca => typeof(AbacParameterAttribute).IsAssignableFrom(ca.AttributeType))
+                    .Where(attribute => typeof(AbacParameterAttribute).IsAssignableFrom(attribute.AttributeType))
                     .Any())
                 {
-                    var value = _httpContextAccessor.HttpContext
+                    var values = _httpContextAccessor.HttpContext
                         .Request
                         .Query[parameter.Name];
 
-                    if (value.Any())
+                    if (values.Any())
                     {
                         _entries.Add(
                             key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
-                            value: (parameter.ParameterType, value));
+                            value: (parameter.ParameterType, values));
                     }
                 }
             }
