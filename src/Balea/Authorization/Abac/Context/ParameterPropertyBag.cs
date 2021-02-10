@@ -20,7 +20,9 @@ namespace Balea.Authorization.Abac.Context
     public class ParameterPropertyBag
         : IPropertyBag
     {
-        private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries = new Dictionary<string, (Type parameterType, StringValues parameterValues)>();
+        private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries 
+            = new Dictionary<string, (Type parameterType, StringValues parameterValues)>();
+
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<ParameterPropertyBag> _logger;
 
@@ -32,14 +34,23 @@ namespace Balea.Authorization.Abac.Context
         {
             get
             {
-                //convert to the specified type discovered on the request information
+                // You use equal expression for this property bag but the item can 
+                // contain multiple elements, probably in this case CONTAINS will be 
+                // a more apropiate operator but we need to solve this scenario, for that
+                // we use the first element on the collection if exist converted to the specified type
+                // discovered on the ControllerParameterDescription.
 
-                var parameterType = _entries[propertyName].parameterType;
-                var parameterValue = _entries[propertyName].parameterValues
-                    .FirstOrDefault();
+                if (_entries.ContainsKey(propertyName))
+                {
+                    var parameterType = _entries[propertyName].parameterType;
+                    var parameterValue = _entries[propertyName].parameterValues
+                        .FirstOrDefault();
 
-                return TypeDescriptor.GetConverter(parameterType)
-                    .ConvertFromString(parameterValue);
+                    return TypeDescriptor.GetConverter(parameterType)
+                        .ConvertFromString(parameterValue);
+                }
+
+                throw new ArgumentException($"The property name {propertyName} does not exist on the {Name}  property bag.");
             }
         }
 
@@ -57,6 +68,10 @@ namespace Balea.Authorization.Abac.Context
         ///<inheritdoc/>
         public bool Contains(string propertyName, object value)
         {
+            // This method is used when the grammar use CONTAINS operator, in this we don't need
+            // to perfrom conversion type operations and check only if the StringValues of the selected parameter 
+            // exist and the value is on this collection
+
             return _entries
                 .Where(c => c.Key == propertyName && c.Value.parameterValues.Contains(value.ToString()))
                 .Any();
@@ -105,8 +120,6 @@ namespace Balea.Authorization.Abac.Context
                     .Where(attribute => typeof(AbacParameterAttribute).IsAssignableFrom(attribute.AttributeType))
                     .Any())
                 {
-                    //TODO: support only primitive types o bien json serialization
-
                     var values = _httpContextAccessor.HttpContext
                         .Request
                         .Query[parameter.Name];

@@ -43,6 +43,11 @@ namespace Balea.Authorization.Abac.Context
         {
             get
             {
+                // You use equal expression for this property bag but the item can 
+                // contain multiple elements ( multiple role values for example ) , probably in this case CONTAINS will be 
+                // a more apropiate operator but we need to solve this scenario, for that
+                // we use the first element on the collection.
+
                 IEnumerable<string> claimTypes = ClaimMapping.ContainsKey(propertyName) 
                     ? ClaimMapping[propertyName] : new string[] { propertyName };
 
@@ -55,7 +60,7 @@ namespace Balea.Authorization.Abac.Context
                     return value.Value;
                 }
 
-                return string.Empty; // TODO: Thinking on semantic of NULL on DSL
+                throw new ArgumentException($"The property name {propertyName} does not exist on the {Name}  property bag.");
             }
         }
 
@@ -69,10 +74,13 @@ namespace Balea.Authorization.Abac.Context
             _claims = new List<Claim>();
         }
 
-
         ///<inheritdoc/>
         public bool Contains(string propertyName, object value)
         {
+            // This method is used when the grammar use CONTAINS operator, in this we don't need
+            // to perfrom conversion type operations and check only if the Claims of the selected user 
+            // exist and the value is on this collection.
+
             IEnumerable<string> claimTypes = ClaimMapping.ContainsKey(propertyName)
                    ? ClaimMapping[propertyName] : new string[] { propertyName };
 
