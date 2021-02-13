@@ -23,7 +23,7 @@ namespace Balea.Authorization.Abac.Context
                 throw new ArgumentNullException(nameof(abacAuthorizationContext));
             }
 
-            bool isSatisfied = true;
+            var isSatisfied = true;
 
             foreach (var rule in _authorizationRules)
             {

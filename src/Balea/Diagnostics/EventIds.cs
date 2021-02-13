@@ -15,5 +15,7 @@ namespace Balea.Diagnostics
         internal static readonly EventId PropertyBag = new EventId(242, nameof(PropertyBag));
         internal static readonly EventId PropertyBagCantBePopulated = new EventId(243, nameof(PropertyBagCantBePopulated));
         internal static readonly EventId AbacAuthorizationHandlerThrow = new EventId(244, nameof(AbacAuthorizationHandlerThrow));
+        internal static readonly EventId AbacDiscoverPropertyBagParameter = new EventId(245, nameof(AbacDiscoverPropertyBagParameter));
+        internal static readonly EventId AbacAuthorizationHandlerIsEvaluationPolicy = new EventId(246, nameof(AbacAuthorizationHandlerIsEvaluationPolicy));
     }
 }

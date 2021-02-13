@@ -76,11 +76,20 @@ namespace Balea.Diagnostics
             _abacAuthorizationHandlerThrow(logger, exception);
         }
 
+        public static void AbacAuthorizationHandlerIsEvaluatingPolicy(this ILogger logger, string policyName, string content)
+        {
+            _abacAuthorizationHandlerIsEvaluatingPolicy(logger, policyName, content, null);
+        }
+
+        public static void AbacDiscoverPropertyBagParameter(this ILogger logger, string propertyName, string propertyType)
+        {
+            _abacDiscoverPropertyBagParameter(logger, propertyName, propertyType, null);
+        }
+
         private static readonly Action<ILogger, string, Exception> _populatePropertyBag = LoggerMessage.Define<string>(
             LogLevel.Information,
             EventIds.PropertyBag,
             "Populating property bag {bag}.");
-
 
         private static readonly Action<ILogger, string, Exception> _propertyBagCantBePopulated = LoggerMessage.Define<string>(
             LogLevel.Warning,
@@ -140,6 +149,16 @@ namespace Balea.Diagnostics
         private static readonly Action<ILogger, Exception> _abacAuthorizationHandlerThrow = LoggerMessage.Define(
            logLevel: LogLevel.Error,
            eventId: EventIds.AbacAuthorizationHandlerThrow,
-           formatString: "The ABAC authorization handler throw!.");
+           formatString: "The Abac authorization handler throw!.");
+
+        private static readonly Action<ILogger, string, string, Exception> _abacDiscoverPropertyBagParameter = LoggerMessage.Define<string, string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacDiscoverPropertyBagParameter,
+           formatString: "Parameter property bag discover a new property with name {propertyName} and type {propertyType}.");
+
+        private static readonly Action<ILogger, string, string, Exception> _abacAuthorizationHandlerIsEvaluatingPolicy = LoggerMessage.Define<string, string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacAuthorizationHandlerIsEvaluationPolicy,
+           formatString: "the Abac authorization handler is evaluating the policy {policyName} with content {policyContent}.");
     }
 }

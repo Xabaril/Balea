@@ -20,7 +20,7 @@ namespace Balea.Authorization.Abac.Context
     public class ParameterPropertyBag
         : IPropertyBag
     {
-        private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries 
+        private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries
             = new Dictionary<string, (Type parameterType, StringValues parameterValues)>();
 
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -120,12 +120,23 @@ namespace Balea.Authorization.Abac.Context
                     .Where(attribute => typeof(AbacParameterAttribute).IsAssignableFrom(attribute.AttributeType))
                     .Any())
                 {
-                    var values = _httpContextAccessor.HttpContext
+                    Log.AbacDiscoverPropertyBagParameter(_logger, parameter.Name, parameter.ParameterType.Name);
+
+                    StringValues values;
+
+                    if (_httpContextAccessor.HttpContext
+                        .Request
+                        .Query
+                        .ContainsKey(parameter.Name))
+                    {
+                        // find value on query string
+                        values = _httpContextAccessor.HttpContext
                         .Request
                         .Query[parameter.Name];
-
-                    if (!values.Any())
+                    }
+                    else
                     {
+                        //find the value on body form
                         values = _httpContextAccessor.HttpContext
                             .Request
                             .Form[parameter.Name];

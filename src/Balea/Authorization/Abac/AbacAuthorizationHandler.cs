@@ -38,6 +38,8 @@ namespace Balea.Authorization.Abac
                 {
                     if (policy is object)
                     {
+                        Log.AbacAuthorizationHandlerIsEvaluatingPolicy(_logger, policy.Name, policy.Content);
+
                         var abacContext = await _abacAuthorizationContextFactory.Create(context);
                         var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy.Content, WellKnownGrammars.Bal);
 
