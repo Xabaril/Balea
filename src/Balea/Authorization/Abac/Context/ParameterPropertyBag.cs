@@ -102,6 +102,13 @@ namespace Balea.Authorization.Abac.Context
                         .Request
                         .Query[parameter.Name];
 
+                    if (!value.Any())
+                    {
+                        value = _httpContextAccessor.HttpContext
+                            .Request
+                            .Form[parameter.Name];
+                    }
+
                     if (value.Any())
                     {
                         _entries.Add(

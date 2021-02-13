@@ -13,10 +13,17 @@ namespace ContosoUniversity.Configuration.Store.Controllers
             return View();
         }
 
-        [AbacAuthorize("ValidateGrades")]
-        public IActionResult Validate([AbacParameter]int value)
+        [Authorize(Policies.GradesEdit)]
+        public IActionResult Validate()
         {
-            return View("Read");
+            return View();
+        }
+
+        [AbacAuthorize("Validate")]
+        [HttpPost]
+        public IActionResult Validate([AbacParameter] string value)
+        {
+            return View();
         }
 
         [Authorize(Policies.GradesEdit)]

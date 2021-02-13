@@ -59,8 +59,8 @@
         ],
         "policies": [
           {
-            "name": "ValidateGrades",
-            "content": "policy example begin\r\n    rule A (PERMIT) begin\r\n        Subject.Role CONTAINS \"Teacher\" AND Resource.Controller = \"Grades\" AND Parameters.Value = \"6\"    \r\n    end\r\nend"
+            "name": "Validate",
+            "content": "policy substitute begin\r\n    rule A (DENY) begin\r\n        Subject.Role CONTAINS \"substitute\" AND Resource.Controller = \"Grades\" AND Parameters.Value > 6    \r\n    end\r\nend"
           }
         ]
       }
