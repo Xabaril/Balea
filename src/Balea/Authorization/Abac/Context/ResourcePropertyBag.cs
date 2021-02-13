@@ -39,7 +39,7 @@ namespace Balea.Authorization.Abac.Context
                     return _entries[propertyName];
                 }
 
-                return string.Empty; // TODO: check the null semantic on DSL
+                throw new ArgumentException($"The property name {propertyName} does not exist on the {Name}  property bag.");
             }
         }
 
@@ -55,6 +55,9 @@ namespace Balea.Authorization.Abac.Context
         ///<inheritdoc/>
         public bool Contains(string propertyName, object value)
         {
+            // CONTAINS operator for thsi property bag is not really interesting
+            // because the property bag doesn't allow multiple values for the same key.
+
             return _entries
                 .Where(c => c.Key == propertyName && c.Value == value)
                 .Any();

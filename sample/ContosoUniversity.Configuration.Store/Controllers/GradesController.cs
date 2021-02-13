@@ -19,9 +19,9 @@ namespace ContosoUniversity.Configuration.Store.Controllers
             return View();
         }
 
-        [AbacAuthorize("Validate")]
         [HttpPost]
-        public IActionResult Validate([AbacParameter] string value)
+        [AbacAuthorize("Validate")]
+        public IActionResult Validate([AbacParameter] int value)
         {
             return View();
         }

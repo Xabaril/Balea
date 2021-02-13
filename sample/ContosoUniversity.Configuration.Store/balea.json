@@ -60,7 +60,7 @@
         "policies": [
           {
             "name": "Validate",
-            "content": "policy substitute begin\r\n    rule A (DENY) begin\r\n        Subject.Role CONTAINS \"substitute\" AND Resource.Controller = \"Grades\" AND Parameters.Value > 6    \r\n    end\r\nend"
+            "content": "policy substitute begin\r\n    rule A (DENY) begin\r\n        Subject.Role CONTAINS \"substitute\" AND Resource.Controller = \"Grades\" AND Parameters.Value > 5    \r\n    end\r\nend"
           }
         ]
       }

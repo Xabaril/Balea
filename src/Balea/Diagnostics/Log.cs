@@ -71,6 +71,11 @@ namespace Balea.Diagnostics
             _propertyBagCantBePopulated(logger, propertyBag, null);
         }
 
+        public static void AbacAuthorizationHandlerThrow(this ILogger logger, Exception exception)
+        {
+            _abacAuthorizationHandlerThrow(logger, exception);
+        }
+
         private static readonly Action<ILogger, string, Exception> _populatePropertyBag = LoggerMessage.Define<string>(
             LogLevel.Information,
             EventIds.PropertyBag,
@@ -131,5 +136,10 @@ namespace Balea.Diagnostics
             logLevel: LogLevel.Debug,
             eventId: EventIds.PolicyFail,
             formatString: "Policy failed. {policyResult}");
+
+        private static readonly Action<ILogger, Exception> _abacAuthorizationHandlerThrow = LoggerMessage.Define(
+           logLevel: LogLevel.Error,
+           eventId: EventIds.AbacAuthorizationHandlerThrow,
+           formatString: "The ABAC authorization handler throw!.");
     }
 }
