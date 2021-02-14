@@ -32,10 +32,10 @@ namespace Balea.Authorization.Abac
         {
             if (context.User.Identity.IsAuthenticated)
             {
-                var policy = await _runtimeAuthorizationServerStore.GetPolicyAsync(requirement.Name);
-
                 try
                 {
+                    var policy = await _runtimeAuthorizationServerStore.GetPolicyAsync(requirement.Name);
+
                     if (policy is object)
                     {
                         Log.AbacAuthorizationHandlerIsEvaluatingPolicy(_logger, policy.Name, policy.Content);
@@ -49,7 +49,6 @@ namespace Balea.Authorization.Abac
                             return;
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
