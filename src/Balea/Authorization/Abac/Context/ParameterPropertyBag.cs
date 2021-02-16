@@ -122,6 +122,10 @@ namespace Balea.Authorization.Abac.Context
                 {
                     Log.AbacDiscoverPropertyBagParameter(_logger, parameter.Name, parameter.ParameterType.Name);
 
+                    var parameterAttribute  = (AbacParameterAttribute)parameter.ParameterInfo
+                        .GetCustomAttributes(typeof(AbacParameterAttribute), false)
+                        .SingleOrDefault();
+
                     StringValues values;
 
                     if (_httpContextAccessor.HttpContext
@@ -145,7 +149,7 @@ namespace Balea.Authorization.Abac.Context
                     if (values.Any())
                     {
                         _entries.Add(
-                            key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
+                            key: parameterAttribute.Name ?? CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
                             value: (parameter.ParameterType, values));
                     }
                 }
