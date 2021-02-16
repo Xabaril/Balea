@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Balea.Authorization.Abac;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,14 @@ namespace FunctionalTests.Seedwork
                 .Select(i => i.AuthenticationType);
 
             return Ok(authenticatedSchemes);
+        }
+
+        [HttpGet]
+        [Route("abac")]
+        [AbacAuthorize("abac-policy")]
+        public IActionResult GetAbac()
+        {
+            return Ok();
         }
     }
 }

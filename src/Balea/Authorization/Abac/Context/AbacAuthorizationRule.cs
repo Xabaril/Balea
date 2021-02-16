@@ -14,7 +14,9 @@ namespace Balea.Authorization.Abac.Context
 
         public AbacAuthorizationRule(string ruleName, bool isDenyRule = false)
         {
-            RuleName = ruleName ?? throw new ArgumentNullException(nameof(ruleName));
+            Ensure.NotNull(ruleName);
+
+            RuleName = ruleName;
             IsDenyRule = isDenyRule;
         }
 
@@ -37,12 +39,12 @@ namespace Balea.Authorization.Abac.Context
             {
                 return _ruleExpression(context);
             }
-            catch(KeyNotFoundException keyNotFoundException)
+            catch (KeyNotFoundException keyNotFoundException)
             {
                 //evaluating a expression that use a property that does not exist on context bag's
                 throw new InvalidOperationException($"The rule {RuleName} is evaluating a property that does not exist on actual DslAuthorizationContext", keyNotFoundException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 //other exception out of scope
                 throw new InvalidOperationException($"The rule {RuleName} is not evaluated succesfully.", exception);
