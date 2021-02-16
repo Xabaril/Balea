@@ -20,7 +20,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
         }
 
         [HttpPost]
-        [AbacAuthorize("Validate")]
+        [AbacAuthorize(nameof(GradesController.Validate))]
         public IActionResult Validate([AbacParameter(Name = "Value")] int value)
         {
             return View();
