@@ -107,6 +107,31 @@ namespace Balea.Authorization.Abac.Context
                         value: routeValue.Value);
                 }
             }
+            else if (authorizationHandlerContext != null && authorizationHandlerContext.Resource is DefaultHttpContext defaultHttpContext)
+            {
+                var httpContextEndpoint = defaultHttpContext.GetEndpoint();
+
+                var actionDescriptor = httpContextEndpoint.Metadata
+                     .Where(m => typeof(ControllerActionDescriptor).IsAssignableFrom(m.GetType()))
+                     .FirstOrDefault();
+
+                if (actionDescriptor is ControllerActionDescriptor action)
+                {
+                    _entries.Add(DisplayName, action.DisplayName);
+
+                    if (action.AttributeRouteInfo is object)
+                    {
+                        _entries.Add(Template, action.AttributeRouteInfo.Template);
+                    }
+
+                    foreach (var routeValue in action.RouteValues)
+                    {
+                        _entries.Add(
+                            key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(routeValue.Key),
+                            value: routeValue.Value);
+                    }
+                }
+            }
             else
             {
                 _logger.PropertyBagCantBePopulated(Name);
