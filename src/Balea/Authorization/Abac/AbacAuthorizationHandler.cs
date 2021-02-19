@@ -34,17 +34,19 @@ namespace Balea.Authorization.Abac
             {
                 try
                 {
-                    var policy = await _runtimeAuthorizationServerStore.GetPolicyAsync(requirement.Name);
-
+                    var policy = await _runtimeAuthorizationServerStore
+                        .GetPolicyAsync(requirement.Name);
+                    
                     if (policy is object)
                     {
                         Log.AbacAuthorizationHandlerIsEvaluatingPolicy(_logger, policy.Name, policy.Content);
 
                         var abacContext = await _abacAuthorizationContextFactory.Create(context);
                         var abacPolicy = AbacAuthorizationPolicy.CreateFromGrammar(policy.Content, WellKnownGrammars.Bal);
-
+                        
                         if (abacPolicy.IsSatisfied(abacContext))
                         {
+                            Log.AbacAuthorizationHandlerEvaluationSuccesss(_logger,policy.Name);
                             context.Succeed(requirement);
                             return;
                         }
