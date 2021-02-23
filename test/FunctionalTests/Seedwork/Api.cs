@@ -10,6 +10,7 @@
             public static string GetSchemes => "api/school/schemes";
             public static string GetCustomPolicy => "api/school/custom-policy";
             public static string GetAbacPolicy => "api/school/abac";
+            public static string GetAbacPolicyWithNullConvention => "api/school/abac-null";
         }
     }
 }

@@ -47,7 +47,7 @@ namespace FunctionalTests.Scenarios
             var subject = await fixture.GivenAnSubject(Subs.Teacher);
             await fixture.GivenARole(Roles.Teacher, application, subject);
 
-            await fixture.GivenAPolicy(application, "abac-policy", AbacPolicies.Validate);
+            await fixture.GivenAPolicy(application, "abac-policy", AbacPolicies.Substitute);
 
             foreach (var server in servers)
             {

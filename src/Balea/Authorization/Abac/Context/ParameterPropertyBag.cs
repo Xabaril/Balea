@@ -21,7 +21,7 @@ namespace Balea.Authorization.Abac.Context
         : IPropertyBag
     {
         private readonly Dictionary<string, (Type parameterType, StringValues parameterValues)> _entries
-            = new Dictionary<string, (Type parameterType, StringValues parameterValues)>();
+            = new Dictionary<string, (Type parameterType, StringValues parameterValues)>(StringComparer.InvariantCultureIgnoreCase);
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<ParameterPropertyBag> _logger;
@@ -73,7 +73,7 @@ namespace Balea.Authorization.Abac.Context
             // exist and the value is on this collection
 
             return _entries
-                .Where(c => c.Key == propertyName && c.Value.parameterValues.Contains(value.ToString()))
+                .Where(c => c.Key.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase) && c.Value.parameterValues.Contains(value.ToString()))
                 .Any();
         }
 
@@ -122,36 +122,37 @@ namespace Balea.Authorization.Abac.Context
                 {
                     Log.AbacDiscoverPropertyBagParameter(_logger, parameter.Name, parameter.ParameterType.Name);
 
-                    var parameterAttribute  = (AbacParameterAttribute)parameter.ParameterInfo
+                    var parameterAttribute = (AbacParameterAttribute)parameter.ParameterInfo
                         .GetCustomAttributes(typeof(AbacParameterAttribute), false)
                         .SingleOrDefault();
 
-                    StringValues values;
+                    StringValues values = default;
 
-                    if (_httpContextAccessor.HttpContext
-                        .Request
+                    if (_httpContextAccessor.HttpContext.Request
                         .Query
                         .ContainsKey(parameter.Name))
                     {
                         // find value on query string
                         values = _httpContextAccessor.HttpContext
-                        .Request
-                        .Query[parameter.Name];
+                            .Request
+                            .Query[parameter.Name];
                     }
-                    else
+
+                    if (!HttpMethods.IsGet(_httpContextAccessor.HttpContext.Request.Method)
+                        &&
+                        !HttpMethods.IsHead(_httpContextAccessor.HttpContext.Request.Method)
+                        &&
+                        !HttpMethods.IsOptions(_httpContextAccessor.HttpContext.Request.Method))
                     {
-                        //find the value on body form
+                        //find the value on body form if is not a get, head or options http method
                         values = _httpContextAccessor.HttpContext
                             .Request
                             .Form[parameter.Name];
                     }
 
-                    if (values.Any())
-                    {
-                        _entries.Add(
-                            key: parameterAttribute.Name ?? CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
-                            value: (parameter.ParameterType, values));
-                    }
+                    _entries.Add(
+                        key: parameterAttribute.Name ?? CultureInfo.InvariantCulture.TextInfo.ToTitleCase(parameter.Name),
+                        value: (parameter.ParameterType, values));
                 }
             }
         }
