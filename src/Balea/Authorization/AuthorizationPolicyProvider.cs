@@ -37,7 +37,7 @@ namespace Balea.Authorization
                 //setup abac or rbac requirement
                 var abacPrefix = new AbacPrefix(policyName);
                 var requirement = policyName.Equals(abacPrefix.ToString())
-                    ? (IAuthorizationRequirement) new AbacRequirement(abacPrefix.PolicyName)
+                    ? (IAuthorizationRequirement) new AbacRequirement(abacPrefix.Policy)
                     :  new PermissionRequirement(policyName);
 
                 if (_baleaOptions.Schemes.Any())
