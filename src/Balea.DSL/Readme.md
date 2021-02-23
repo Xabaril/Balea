@@ -92,5 +92,7 @@ The main important features of BAL are:
 
 ### Current BAL limitations
 
- * NULL semantics is not implemented yet on BAL.
- * Numbers are limited to Int32.
+At this moment, BAL contains some limitations that we are planned to be be addressed on future versions of Balea.
+
+ * NULL semantics.
+ * Numbers to non integer conversions.
