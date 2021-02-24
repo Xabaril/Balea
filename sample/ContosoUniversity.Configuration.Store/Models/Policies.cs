@@ -1,4 +1,4 @@
-﻿namespace ContosoUniversity.EntityFrameworkCore.Store.Models
+﻿namespace ContosoUniversity.Configuration.Store.Models
 {
     public static class Policies
     {

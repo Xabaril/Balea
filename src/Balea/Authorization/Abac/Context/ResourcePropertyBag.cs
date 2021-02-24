@@ -23,7 +23,8 @@ namespace Balea.Authorization.Abac.Context
         const string DisplayName = nameof(DisplayName);
         const string Template = nameof(Template);
 
-        private readonly Dictionary<string, object> _entries = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _entries
+            = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger<ResourcePropertyBag> _logger;
 
         ///<inheritdoc/>
@@ -59,7 +60,7 @@ namespace Balea.Authorization.Abac.Context
             // because the property bag doesn't allow multiple values for the same key.
 
             return _entries
-                .Where(c => c.Key == propertyName && c.Value == value)
+                .Where(c => c.Key.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase) && c.Value == value)
                 .Any();
         }
 
@@ -105,6 +106,31 @@ namespace Balea.Authorization.Abac.Context
                     _entries.Add(
                         key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(routeValue.Key),
                         value: routeValue.Value);
+                }
+            }
+            else if (authorizationHandlerContext != null && authorizationHandlerContext.Resource is DefaultHttpContext defaultHttpContext)
+            {
+                var httpContextEndpoint = defaultHttpContext.GetEndpoint();
+
+                var actionDescriptor = httpContextEndpoint.Metadata
+                     .Where(m => typeof(ControllerActionDescriptor).IsAssignableFrom(m.GetType()))
+                     .FirstOrDefault();
+
+                if (actionDescriptor is ControllerActionDescriptor action)
+                {
+                    _entries.Add(DisplayName, action.DisplayName);
+
+                    if (action.AttributeRouteInfo is object)
+                    {
+                        _entries.Add(Template, action.AttributeRouteInfo.Template);
+                    }
+
+                    foreach (var routeValue in action.RouteValues)
+                    {
+                        _entries.Add(
+                            key: CultureInfo.InvariantCulture.TextInfo.ToTitleCase(routeValue.Key),
+                            value: routeValue.Value);
+                    }
                 }
             }
             else

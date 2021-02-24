@@ -12,9 +12,9 @@ namespace Balea.Authorization.Abac
         /// <summary>
         /// Initialize a new instance.
         /// </summary>
-        /// <param name="policyName">The ABAC policy name registered on Balea to be used.</param>
-        public AbacAuthorizeAttribute(string policyName) :
-            base(new AbacPrefix(policyName).ToString())
+        /// <param name="policy">The ABAC policy  registered on Balea to be used.</param>
+        public AbacAuthorizeAttribute(string policy) :
+            base(new AbacPrefix(policy).ToString())
         { }
     }
 }

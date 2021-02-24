@@ -33,30 +33,32 @@ Write-Output "build: Version suffix is $buildSuffix"
 
 exec { & dotnet build Balea.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
 	
-# echo "Running unit tests"
-
-# try {
-
-# Push-Location -Path .\tests\UnitTests
-#         exec { & dotnet test}
-# } finally {
-#         Pop-Location
-# }
-
 Write-Output "Starting docker containers"
 
 exec { & docker-compose -f build\docker-compose-infrastructure.yml up -d }
 
-Write-Output "Running functional tests"
+Write-Output "Running functional tests [NETCOREAPP3.1]"
 
 try {
 
   Push-Location -Path .\test\FunctionalTests
-  exec { & dotnet test }
+  exec { & dotnet test --framework netcoreapp3.1}
 }
 finally {
   Pop-Location
 }
+
+Write-Output "Running functional tests [NET5.0]"
+
+try {
+
+  Push-Location -Path .\test\FunctionalTests
+  exec { & dotnet test --framework net5.0}
+}
+finally {
+  Pop-Location
+}
+
 
 Write-Output "Finalizing docker containers"
 exec { & docker-compose -f build\docker-compose-infrastructure.yml down }

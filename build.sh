@@ -17,14 +17,14 @@ echo "build: Version suffix is $buildSuffix"
 
 dotnet build -c Release --version-suffix "$buildSuffix"  -v q /nologo
 
-# echo "Running unit tests"
-# dotnet test ./tests/UnitTests/UnitTests.csproj
-
 echo "Starting docker containers"
 docker-compose -f build/docker-compose-infrastructure.yml up -d
 
-echo "Runing functional tests"
-dotnet test ./test/FunctionalTests/FunctionalTests.csproj
+echo "Runing functional tests [NETCOREAPP3.1]"
+dotnet test --framework netcoreapp3.1 ./test/FunctionalTests/FunctionalTests.csproj
+
+echo "Runing functional tests [NET5.0]"
+dotnet test --framework net5.0 ./test/FunctionalTests/FunctionalTests.csproj
 
 echo "Finalizing docker containers"
 docker-compose -f build/docker-compose-infrastructure.yml down

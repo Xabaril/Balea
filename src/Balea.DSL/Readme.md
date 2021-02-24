@@ -90,11 +90,9 @@ The main important features of BAL are:
 
 > BAL is inspired on YAAL with a simplification of some ANTLR terms, please follow https://github.com/bolilla/yaal repository to get more information, thanks @bolilla.
 
+### Current BAL limitations
 
-//TODO
+At this moment, BAL contains some limitations that we are planned to be be addressed on future versions of Balea.
 
- - Create a attribute to add parameter to Resource Property Bag ( Inject IHttpContextAccessor on the resource property bag)
- - Add this parameters to resource o new Action | Parameters property bag ??
- - Add IN on grammar for string parameters
- - Sample custom property bag
- - NULL semantic
+ * NULL semantics.
+ * Numbers to non integer conversions.

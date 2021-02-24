@@ -19,6 +19,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
             return View();
         }
 
+        [HttpGet]
         [Authorize(Permissions.GradesEdit)]
         public IActionResult Validate()
         {
@@ -27,7 +28,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
 
         [HttpPost]
         [AbacAuthorize(Policies.ValidateGrades)]
-        public IActionResult Validate([AbacParameter] int value)
+        public IActionResult Validate([AbacParameter(Name = "Value")] int value)
         {
             return View();
         }

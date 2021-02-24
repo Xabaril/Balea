@@ -1,19 +1,19 @@
 ﻿namespace Balea.Authorization.Abac
 {
-    public class AbacPrefix
+    internal class AbacPrefix
     {
         private const string Prefix = "abac__";
 
-        public AbacPrefix(string policyName)
+        public AbacPrefix(string policy)
         {
-            PolicyName = policyName.Replace(Prefix, string.Empty);
+            Policy = policy.Replace(Prefix, string.Empty);
         }
 
-        public string PolicyName { get; }
+        public string Policy { get; }
 
         public override string ToString()
         {
-            return $"{Prefix}{PolicyName}";
+            return $"{Prefix}{Policy}";
         }
     }
 }

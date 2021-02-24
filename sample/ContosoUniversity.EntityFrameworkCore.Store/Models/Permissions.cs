@@ -1,4 +1,4 @@
-﻿namespace ContosoUniversity.Configuration.Store.Models
+﻿namespace ContosoUniversity.EntityFrameworkCore.Store.Models
 {
     public static class Permissions
     {

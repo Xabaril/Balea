@@ -81,6 +81,11 @@ namespace Balea.Diagnostics
             _abacAuthorizationHandlerIsEvaluatingPolicy(logger, policyName, content, null);
         }
 
+        public static void AbacAuthorizationHandlerEvaluationSuccesss(this ILogger logger, string policyName)
+        {
+            _abacAuthorizationHandlerEvaluationSuccess(logger, policyName, null);
+        }
+
         public static void AbacDiscoverPropertyBagParameter(this ILogger logger, string propertyName, string propertyType)
         {
             _abacDiscoverPropertyBagParameter(logger, propertyName, propertyType, null);
@@ -159,6 +164,11 @@ namespace Balea.Diagnostics
         private static readonly Action<ILogger, string, string, Exception> _abacAuthorizationHandlerIsEvaluatingPolicy = LoggerMessage.Define<string, string>(
            logLevel: LogLevel.Debug,
            eventId: EventIds.AbacAuthorizationHandlerIsEvaluationPolicy,
-           formatString: "the Abac authorization handler is evaluating the policy {policyName} with content {policyContent}.");
+           formatString: "The Abac authorization handler is evaluating the policy {policyName} with content {policyContent}.");
+
+        private static readonly Action<ILogger, string, Exception> _abacAuthorizationHandlerEvaluationSuccess = LoggerMessage.Define<string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacAuthorizationHandlerEvaluationSuccess,
+           formatString: "The Abac authorization handler evaluate success the policy {policyName}.");
     }
 }
