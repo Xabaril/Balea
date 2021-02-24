@@ -22,6 +22,7 @@ namespace ContosoUniversity.Configuration.Store
             services  
                 .AddBalea(options =>
                 {
+                    //options.SetApplicationName("ContosoUniversity");
                     options.UnauthorizedFallback = AuthorizationFallbackAction.RedirectToAction("Account", "AccessDenied");
                     options.DefaultClaimTypeMap = new DefaultClaimTypeMap
                     {
@@ -29,6 +30,11 @@ namespace ContosoUniversity.Configuration.Store
                     };
                 })
                 .AddConfigurationStore(Configuration)
+                //.AddApiStore(cfg =>
+                //{
+                //    cfg.UseApiKey("YynDwPwcxlS6+3gV/p3rCxMGMDDuO+zPc/gI4JA02jU=");
+                //    cfg.UseBaseAddress(new System.Uri("https://baleaserverdev.azurewebsites.net"));
+                //})
                 .Services
                 .AddAuthentication(configureOptions =>
                 {

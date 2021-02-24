@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Balea.Api.Store\Balea.Api.Store.csproj" />
     <ProjectReference Include="..\..\src\Balea.Configuration.Store\Balea.Configuration.Store.csproj" />
   </ItemGroup>
 

@@ -7,27 +7,27 @@ namespace ContosoUniversity.Configuration.Store.Controllers
 {
     public class GradesController : Controller
     {
-        [Authorize(Policies.GradesRead)]
+        [Authorize(Permissions.GradesRead)]
         public IActionResult Read()
         {
             return View();
         }
 
-        [Authorize(Policies.GradesEdit)]
+        [Authorize(Permissions.GradesEdit)]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        [Authorize(Permissions.GradesEdit)]
         public IActionResult Validate()
         {
             return View();
         }
 
         [HttpPost]
-        [AbacAuthorize("Validate")]
+        [AbacAuthorize(Policies.ValidateGrades)]
         public IActionResult Validate([AbacParameter] int value)
-        {
-            return View();
-        }
-
-        [Authorize(Policies.GradesEdit)]
-        public IActionResult Edit()
         {
             return View();
         }
