@@ -170,6 +170,9 @@ namespace FunctionalTests.Seedwork.Data.Migrations
 
                     b.HasIndex("ApplicationId");
 
+                    b.HasIndex("Name", "ApplicationId")
+                        .IsUnique();
+
                     b.ToTable("Policies");
                 });
 

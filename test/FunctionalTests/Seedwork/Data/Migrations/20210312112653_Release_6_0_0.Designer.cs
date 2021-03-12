@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrations
+namespace FunctionalTests.Seedwork.Data.Migrations
 {
     [DbContext(typeof(BaleaDbContext))]
-    [Migration("20210207080044_Release_5_1_0")]
-    partial class Release_5_1_0
+    [Migration("20210312112653_Release_6_0_0")]
+    partial class Release_6_0_0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,6 +171,9 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrat
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
+
+                    b.HasIndex("Name", "ApplicationId")
+                        .IsUnique();
 
                     b.ToTable("Policies");
                 });

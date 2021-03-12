@@ -170,6 +170,9 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Migrat
 
                     b.HasIndex("ApplicationId");
 
+                    b.HasIndex("Name", "ApplicationId")
+                        .IsUnique();
+
                     b.ToTable("Policies");
                 });
 

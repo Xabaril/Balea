@@ -2,7 +2,7 @@
 
 namespace FunctionalTests.Seedwork.Data.Migrations
 {
-    public partial class Release_5_1_0 : Migration
+    public partial class Release_6_0_0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,12 @@ namespace FunctionalTests.Seedwork.Data.Migrations
                 name: "IX_Policies_ApplicationId",
                 table: "Policies",
                 column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Policies_Name_ApplicationId",
+                table: "Policies",
+                columns: new[] { "Name", "ApplicationId" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
