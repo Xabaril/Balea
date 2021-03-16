@@ -34,7 +34,7 @@ namespace ContosoUniversity.Configuration.Store.Controllers
             return View();
         }
 
-        [AuthorizeRoles(Roles.Teacher,Roles.Student)]
+        [AuthorizeRoles(Roles.Teacher,Roles.Substitute,Roles.Student)]
         public IActionResult Courses()
         {
             return View();

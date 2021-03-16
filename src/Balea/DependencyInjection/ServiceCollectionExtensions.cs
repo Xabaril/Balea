@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using System;
-using Balea;
+﻿using Balea;
 using Balea.Abstractions;
 using Balea.Authorization;
+using Balea.Authorization.Abac;
+using Balea.Authorization.Abac.Context;
+using Balea.Authorization.Rbac;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
+using Microsoft.Extensions.Options;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -24,13 +27,19 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             _ = services ?? throw new ArgumentNullException(nameof(services));
 
+            //add balea required services
             services.AddAuthorization();
             services.AddHttpContextAccessor();
             services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
             services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, AbacAuthorizationHandler>();
             services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
+            services.AddScoped<IPropertyBag, UserPropertyBag>();
+            services.AddScoped<IPropertyBag, ResourcePropertyBag>();
+            services.AddScoped<IPropertyBag, ParameterPropertyBag>();
+            services.AddScoped<AbacAuthorizationContextFactory>();
 
             return new BaleaBuilder(services);
         }

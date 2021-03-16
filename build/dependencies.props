@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Balea Versions">
-    <Balea>5.0.0$(VersionSuffix)</Balea>
+    <Balea>6.0.0$(VersionSuffix)</Balea>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Dependencies">

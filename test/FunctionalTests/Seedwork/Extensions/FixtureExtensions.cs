@@ -1,5 +1,4 @@
-﻿using Balea;
-using Balea.EntityFrameworkCore.Store.Entities;
+﻿using Balea.EntityFrameworkCore.Store.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace FunctionalTests.Seedwork
     {
         public static async Task<ApplicationEntity> GivenAnApplication(
             this TestServerFixture fixture,
-            string applicationName = BaleaConstants.DefaultApplicationName)
+            string applicationName = global::Balea.BaleaConstants.DefaultApplicationName)
         {
             var application = new ApplicationEntity(applicationName, applicationName);
             await fixture.ExecuteDbContextAsync(async db =>
@@ -51,7 +50,7 @@ namespace FunctionalTests.Seedwork
             await fixture.ExecuteDbContextAsync(async db =>
             {
                 role.Subjects.Add(new RoleSubjectEntity { SubjectId = subject.Id });
-                
+
                 if (withPermissions)
                 {
                     foreach (var permission in application.Permissions)
@@ -66,6 +65,23 @@ namespace FunctionalTests.Seedwork
             });
 
             return role;
+        }
+
+        public static async Task GivenAPolicy(
+            this TestServerFixture fixture,
+            ApplicationEntity application,
+            string policyName,
+            string policyContent)
+        {
+            var policy = new PolicyEntity(policyName, policyContent);
+            policy.ApplicationId = application.Id;
+
+            await fixture.ExecuteDbContextAsync(async db =>
+            {
+                db.Add(policy);
+
+                await db.SaveChangesAsync();
+            });
         }
 
         public static async Task GivenAnUserWithADelegation(

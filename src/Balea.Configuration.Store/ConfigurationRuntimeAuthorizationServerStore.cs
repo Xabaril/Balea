@@ -24,6 +24,12 @@ namespace Balea.Configuration.Store
         {
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
+
+            if (application is null)
+            {
+                return Task.FromResult(new AuthorizationContext(new Role[0], null));
+            }
+
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options));
             var subject = GetSubject(user, delegation);
             var roles = application.Roles
@@ -36,6 +42,25 @@ namespace Balea.Configuration.Store
             var authorization = new AuthorizationContext(roles, delegation.To());
 
             return Task.FromResult(authorization);
+        }
+
+        public Task<Policy> GetPolicyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var application = _configuration.Applications.GetByName(_options.ApplicationName);
+
+            if (application is null)
+            {
+                return null;
+            }
+
+            var policy = application.Policies.FirstOrDefault(p => p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (policy is null)
+            {
+                return null;
+            }
+
+            return Task.FromResult(new Policy(policy.Name, policy.Content));
         }
 
         private string GetSubject(ClaimsPrincipal user, DelegationConfiguration delegation)

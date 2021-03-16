@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Balea.Authorization.Abac;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +47,7 @@ namespace FunctionalTests.Seedwork
 
         [HttpGet]
         [Route("custom-policy")]
-        [Authorize(Policies.Custom)] 
+        [Authorize(Policies.Custom)]
         public IActionResult GetCustomPolicy()
         {
             var authenticatedSchemes = User.Identities
@@ -54,6 +55,22 @@ namespace FunctionalTests.Seedwork
                 .Select(i => i.AuthenticationType);
 
             return Ok(authenticatedSchemes);
+        }
+
+        [HttpGet]
+        [Route("abac")]
+        [AbacAuthorize("abac-policy")]
+        public IActionResult GetAbac()
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("abac-null")]
+        [AbacAuthorize("abac-null-policy")]
+        public IActionResult GetAbac([AbacParameter(Name = "ParamName")] string parameter)
+        {
+            return Ok();
         }
     }
 }
