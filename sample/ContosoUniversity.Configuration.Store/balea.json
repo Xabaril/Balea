@@ -18,6 +18,18 @@
             ]
           },
           {
+            "name": "Substitute",
+            "enabled": true,
+            "description": "Substitute role",
+            "permissions": [
+              "grades.read",
+              "grades.edit"
+            ],
+            "subjects": [
+              "2"
+            ]
+          },
+          {
             "name": "Student",
             "description": "Student role",
             "enabled": true,
@@ -46,7 +58,7 @@
             "who": "1",
             "whom": "2",
             "from": "2020-01-15 00:00:00",
-            "to": "2020-12-31 23:59:59",
+            "to": "2021-12-31 23:59:59",
             "selected": true
           },
           {
@@ -55,6 +67,12 @@
             "from": "2020-01-15 00:00:00",
             "to": "2020-12-31 23:59:59",
             "selected": false
+          }
+        ],
+        "policies": [
+          {
+            "name": "Validate",
+            "content": "policy substitute begin\r\n    rule A (DENY) begin\r\n        Subject.Role CONTAINS \"Substitute\" AND Resource.Controller = \"Grades\" AND Parameters.Value > 9    \r\n    end\r\nend"
           }
         ]
       }

@@ -23,8 +23,8 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 await db.SaveChangesAsync();
 
                 var application = new ApplicationEntity(BaleaConstants.DefaultApplicationName, "Default application");
-                var viewGradesPermission = new PermissionEntity(Policies.GradesRead);
-                var editGradesPermission = new PermissionEntity(Policies.GradesEdit);
+                var viewGradesPermission = new PermissionEntity(Permissions.GradesRead);
+                var editGradesPermission = new PermissionEntity(Permissions.GradesEdit);
                 application.Permissions.Add(viewGradesPermission);
                 application.Permissions.Add(editGradesPermission);
                 var teacherRole = new RoleEntity(nameof(Roles.Teacher), "Teacher role");
@@ -32,12 +32,23 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
                 application.Roles.Add(teacherRole);
-                application.Delegations.Add(new DelegationEntity(alice.Id, bob.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddYears(1), true));
+                var substituteRole = new RoleEntity(nameof(Roles.Substitute), "Substitute role");
+                substituteRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
+                substituteRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
+                substituteRole.Subjects.Add(new RoleSubjectEntity { SubjectId = bob.Id });
+                application.Roles.Add(substituteRole);
+                application.Delegations.Add(new DelegationEntity(alice.Id, bob.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddYears(1), false));
                 var studentRole = new RoleEntity(nameof(Roles.Student), "Student role");
                 var mapping = new MappingEntity("customer");
                 studentRole.Mappings.Add(new RoleMappingEntity { Mapping = mapping });
-                studentRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
                 application.Roles.Add(studentRole);
+                var policy = new PolicyEntity("ValidateGrades",
+@"policy substitute begin
+    rule A (DENY) begin
+        Subject.Role CONTAINS ""Substitute"" AND Resource.Controller = ""Grades"" AND Parameters.Value > 6
+    end
+end");
+                application.Policies.Add(policy);
                 db.Applications.Add(application);
                 await db.SaveChangesAsync();
             }

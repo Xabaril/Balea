@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 
-namespace Balea.Authorization
+namespace Balea.Authorization.Rbac
 {
     internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {

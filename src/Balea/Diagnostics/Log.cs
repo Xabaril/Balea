@@ -61,6 +61,46 @@ namespace Balea.Diagnostics
             _policyFail(logger, "Challenge", null);
         }
 
+        public static void PopulatePropertyBag(this ILogger logger, string propertyBag)
+        {
+            _populatePropertyBag(logger, propertyBag, null);
+        }
+
+        public static void PropertyBagCantBePopulated(this ILogger logger, string propertyBag)
+        {
+            _propertyBagCantBePopulated(logger, propertyBag, null);
+        }
+
+        public static void AbacAuthorizationHandlerThrow(this ILogger logger, Exception exception)
+        {
+            _abacAuthorizationHandlerThrow(logger, exception);
+        }
+
+        public static void AbacAuthorizationHandlerIsEvaluatingPolicy(this ILogger logger, string policyName, string content)
+        {
+            _abacAuthorizationHandlerIsEvaluatingPolicy(logger, policyName, content, null);
+        }
+
+        public static void AbacAuthorizationHandlerEvaluationSuccesss(this ILogger logger, string policyName)
+        {
+            _abacAuthorizationHandlerEvaluationSuccess(logger, policyName, null);
+        }
+
+        public static void AbacDiscoverPropertyBagParameter(this ILogger logger, string propertyName, string propertyType)
+        {
+            _abacDiscoverPropertyBagParameter(logger, propertyName, propertyType, null);
+        }
+
+        private static readonly Action<ILogger, string, Exception> _populatePropertyBag = LoggerMessage.Define<string>(
+            LogLevel.Information,
+            EventIds.PropertyBag,
+            "Populating property bag {bag}.");
+
+        private static readonly Action<ILogger, string, Exception> _propertyBagCantBePopulated = LoggerMessage.Define<string>(
+            LogLevel.Warning,
+            EventIds.PropertyBagCantBePopulated,
+            "Populating property bag {bag} from authorization filter context.");
+
         private static readonly Action<ILogger, string, Exception> _authorizationPolicyFound = LoggerMessage.Define<string>(
             logLevel: LogLevel.Debug,
             eventId: EventIds.AuthorizationPolicyFound,
@@ -110,5 +150,25 @@ namespace Balea.Diagnostics
             logLevel: LogLevel.Debug,
             eventId: EventIds.PolicyFail,
             formatString: "Policy failed. {policyResult}");
+
+        private static readonly Action<ILogger, Exception> _abacAuthorizationHandlerThrow = LoggerMessage.Define(
+           logLevel: LogLevel.Error,
+           eventId: EventIds.AbacAuthorizationHandlerThrow,
+           formatString: "The Abac authorization handler throw!.");
+
+        private static readonly Action<ILogger, string, string, Exception> _abacDiscoverPropertyBagParameter = LoggerMessage.Define<string, string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacDiscoverPropertyBagParameter,
+           formatString: "Parameter property bag discover a new property with name {propertyName} and type {propertyType}.");
+
+        private static readonly Action<ILogger, string, string, Exception> _abacAuthorizationHandlerIsEvaluatingPolicy = LoggerMessage.Define<string, string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacAuthorizationHandlerIsEvaluationPolicy,
+           formatString: "The Abac authorization handler is evaluating the policy {policyName} with content {policyContent}.");
+
+        private static readonly Action<ILogger, string, Exception> _abacAuthorizationHandlerEvaluationSuccess = LoggerMessage.Define<string>(
+           logLevel: LogLevel.Debug,
+           eventId: EventIds.AbacAuthorizationHandlerEvaluationSuccess,
+           formatString: "The Abac authorization handler evaluate success the policy {policyName}.");
     }
 }

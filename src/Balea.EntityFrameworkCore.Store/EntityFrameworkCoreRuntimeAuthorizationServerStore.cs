@@ -51,6 +51,16 @@ namespace Balea.EntityFrameworkCore.Store
             return new AuthorizationContext(roles.Select(r => r.To()), delegation.To());
         }
 
+        public async Task<Policy> GetPolicyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var policy = await _context
+                .Policies
+                .Include(p => p.Application)
+                .SingleOrDefaultAsync(p => p.Application.Name == _options.ApplicationName && p.Name == name);
+
+            return policy.To();
+        }
+
         private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
         {
             return delegation?.Who?.Sub ?? user.GetSubjectId(_options);

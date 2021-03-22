@@ -18,6 +18,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Update="Antlr4.Runtime" Version="4.6.6" />
+    <PackageReference Update="Antlr4.CodeGenerator" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
@@ -28,6 +34,11 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(NetCoreVersion5)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="Antlr4.Runtime" Version="4.6.6" />
+    <PackageReference Update="Antlr4.CodeGenerator" Version="4.6.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

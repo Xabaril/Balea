@@ -11,7 +11,7 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<BaleaDbContext>(db => BaleaSeeder.Seed(db).Wait())
+                //.MigrateDbContext<BaleaDbContext>(db => BaleaSeeder.Seed(db).Wait())
                 .Run();
         }
 

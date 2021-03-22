@@ -18,5 +18,6 @@ namespace Balea.EntityFrameworkCore.Store.Entities
         public ICollection<RoleEntity> Roles { get; set; } = new List<RoleEntity>();
         public ICollection<DelegationEntity> Delegations { get; set; } = new List<DelegationEntity>();
         public ICollection<PermissionEntity> Permissions { get; set; } = new List<PermissionEntity>();
+        public ICollection<PolicyEntity> Policies { get; set; } = new List<PolicyEntity>();
     }
 }

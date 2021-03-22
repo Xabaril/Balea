@@ -30,14 +30,14 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
             services
                 .AddAuthorization(options =>
                 {
-                    options.AddPolicy(Policies.GradesRead, configure =>
+                    options.AddPolicy(Permissions.GradesRead, configure =>
                     {
-                        configure.RequireClaim("permission", Policies.GradesRead);
+                        configure.RequireClaim("permission", Permissions.GradesRead);
                     });
 
-                    options.AddPolicy(Policies.GradesEdit, configure =>
+                    options.AddPolicy(Permissions.GradesEdit, configure =>
                     {
-                        configure.RequireClaim("permission", Policies.GradesEdit);
+                        configure.RequireClaim("permission", Permissions.GradesEdit);
                     });
                 })
                 .AddAuthentication(options =>

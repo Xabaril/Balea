@@ -12,5 +12,11 @@ namespace Balea.Diagnostics
         public static readonly EventId NoBaleaRolesForUserAndNoUnauthorizedFallback = new EventId(232, nameof(NoBaleaRolesForUserAndNoUnauthorizedFallback));
         public static readonly EventId PolicySucceed = new EventId(240, nameof(PolicySucceed));
         public static readonly EventId PolicyFail = new EventId(241, nameof(PolicyFail));
+        internal static readonly EventId PropertyBag = new EventId(242, nameof(PropertyBag));
+        internal static readonly EventId PropertyBagCantBePopulated = new EventId(243, nameof(PropertyBagCantBePopulated));
+        internal static readonly EventId AbacAuthorizationHandlerThrow = new EventId(244, nameof(AbacAuthorizationHandlerThrow));
+        internal static readonly EventId AbacDiscoverPropertyBagParameter = new EventId(245, nameof(AbacDiscoverPropertyBagParameter));
+        internal static readonly EventId AbacAuthorizationHandlerIsEvaluationPolicy = new EventId(246, nameof(AbacAuthorizationHandlerIsEvaluationPolicy));
+        internal static readonly EventId AbacAuthorizationHandlerEvaluationSuccess = new EventId(247, nameof(AbacAuthorizationHandlerEvaluationSuccess));
     }
 }

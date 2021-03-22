@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System;
 
-namespace Balea.Authorization
+namespace Balea.Authorization.Rbac
 {
     internal class PermissionRequirement : IAuthorizationRequirement
     {
