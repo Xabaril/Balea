@@ -33,8 +33,6 @@ namespace ContosoUniversity.EntityFrameworkCore.Store.Infrastructure.Data.Seeder
                 teacherRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
                 application.Roles.Add(teacherRole);
                 var substituteRole = new RoleEntity(nameof(Roles.Substitute), "Substitute role");
-                substituteRole.Permissions.Add(new RolePermissionEntity { Permission = viewGradesPermission });
-                substituteRole.Permissions.Add(new RolePermissionEntity { Permission = editGradesPermission });
                 substituteRole.Subjects.Add(new RoleSubjectEntity { SubjectId = bob.Id });
                 application.Roles.Add(substituteRole);
                 application.Delegations.Add(new DelegationEntity(alice.Id, bob.Id, DateTime.UtcNow.AddDays(-1), DateTime.UtcNow.AddYears(1), false));
