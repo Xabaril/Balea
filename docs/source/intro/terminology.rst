@@ -16,12 +16,12 @@ Are similar to security groups, to which users can become members and acquire a 
 Permissions
 ^^^^^^^^^^^
 
-A permission is the ability to perform some specific operation, like view grades, edit grades, etc.
+A permission is the ability to perform some specific operation like view grades, edit grades, etc.
 
 Subjects
 ^^^^^^^^
 
-Subjects (Users) are grouped into roles an each defined role access permissions based upon the role not individual.
+Subjects (Users) are grouped into roles and role access permissions are based upon the role, not individual.
 
 Mappings
 ^^^^^^^^
