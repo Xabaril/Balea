@@ -29,6 +29,9 @@ Balea is built against the latest NET Core 3.
 - [Install](https://www.microsoft.com/net/download/core#/current) the [required](https://github.com/Xabaril/Balea/blob/master/global.json) .NET Core SDK
 - Run [build.ps1](https://github.com/Xabaril/Balea/blob/master/build.ps1) in the root of the repo.
 
+## Kudos
+This project was inspired by Dominick Baier's & Brock Allen PolicyServer (local version) https://github.com/PolicyServer/PolicyServer.Local Thank you to all who have contributed in the project!
+
 ## Acknowledgements
 
 Balea is built using the following great open source projects and free services:
