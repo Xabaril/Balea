@@ -21,7 +21,7 @@ namespace Balea.Authorization.Abac
             ILogger<AbacAuthorizationHandler> logger)
         {
             Ensure.Argument.NotNull(abacAuthorizationContextFactory, nameof(abacAuthorizationContextFactory));
-            Ensure.Argument.NotNull(runtimeAuthorizationServerStore, nameof(abacAuthorizationContextFactory));
+            Ensure.Argument.NotNull(runtimeAuthorizationServerStore, nameof(runtimeAuthorizationServerStore));
             Ensure.Argument.NotNull(logger, nameof(logger));
             _abacAuthorizationContextFactory = abacAuthorizationContextFactory;
             _runtimeAuthorizationServerStore = runtimeAuthorizationServerStore;
