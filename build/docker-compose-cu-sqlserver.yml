@@ -14,7 +14,7 @@ services:
             - ConnectionStrings__Default=Server=tcp:sqlserver,1433;Initial Catalog=ContosoUniversity;User Id=sa;Password=Password12!
             - ASPNETCORE_ENVIRONMENT=Development
     sqlserver:
-        image: microsoft/mssql-server-linux
+        image: mcr.microsoft.com/mssql/server
         restart: always
         ports:
             - 5433:1433
