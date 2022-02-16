@@ -31,15 +31,17 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAuthorization();
             services.AddHttpContextAccessor();
             services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
-            services.AddTransient<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
-            services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
-            services.AddTransient<IAuthorizationHandler, AbacAuthorizationHandler>();
-            services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
             services.AddScoped<IPropertyBag, UserPropertyBag>();
             services.AddScoped<IPropertyBag, ResourcePropertyBag>();
             services.AddScoped<IPropertyBag, ParameterPropertyBag>();
             services.AddScoped<AbacAuthorizationContextFactory>();
+
+            services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, AbacAuthorizationHandler>();
+            services.AddTransient<IPolicyEvaluator, BaleaPolicyEvaluator>();
 
             return new BaleaBuilder(services);
         }
