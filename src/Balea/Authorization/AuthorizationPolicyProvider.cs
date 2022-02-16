@@ -15,6 +15,8 @@ namespace Balea.Authorization
         private readonly BaleaOptions _baleaOptions;
         private readonly ILogger<AuthorizationPolicyProvider> _logger;
 
+        private object sync_root = new object();
+
         public AuthorizationPolicyProvider(
             IOptions<AuthorizationOptions> options,
             BaleaOptions baleaOptions,
@@ -58,9 +60,14 @@ namespace Balea.Authorization
                     _logger.CreatingAuthorizationPolicy(policyName);
                 }
 
-                // By default, policies are stored in the AuthorizationOptions instance (singleton),
-                // so we can cache all the policies created at runtime there to create the policies only once
-                _options.AddPolicy(policyName, policy);
+                lock (sync_root)
+                {
+                    // By default, policies are stored in the AuthorizationOptions instance (singleton),
+                    // so we can cache all the policies created at runtime there to create the policies only once
+                    // the internal dictionary is a plain dictionary ( not concurrent ), we need to ensure
+                    // a thread safe access 
+                    _options.AddPolicy(policyName, policy);
+                }
             }
             else
             {
