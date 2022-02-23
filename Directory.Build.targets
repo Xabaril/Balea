@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+	<PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
 	<PackageReference Update="Duende.IdentityServer" Version="5.0.0-preview.2" />
 	<PackageReference Update="Serilog.AspNetCore" Version="3.4.0" />
 	<PackageReference Update="Microsoft.Extensions.Options" Version="$(NetCoreVersion3)" />
@@ -29,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+	<PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
 	<PackageReference Update="Duende.IdentityServer" Version="5.0.0-preview.2" />
 	<PackageReference Update="Serilog.AspNetCore" Version="3.4.0" />
 	<PackageReference Update="Microsoft.Extensions.Options" Version="5.0.0" />
