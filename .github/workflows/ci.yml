@@ -35,11 +35,11 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.200
-      - name: dotnet build
+      - name: dotnet build dotNET 3.1
         run: dotnet build Balea.sln -c $BUILD_CONFIG --framework netcoreapp3.1
-      - name: dotnet build
+      - name: dotnet build  dotNET 5.0
         run: dotnet build Balea.sln -c $BUILD_CONFIG --framework net5.0
-      - name: dotnet build
+      - name: dotnet build  dotNET 6.0
         run: dotnet build Balea.sln -c $BUILD_CONFIG --framework net6.0
       - name: dotnet test [FunctionalTests]
         run: dotnet test ./test/FunctionalTests/FunctionalTests.csproj -c $BUILD_CONFIG --no-build
