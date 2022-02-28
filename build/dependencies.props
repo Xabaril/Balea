@@ -13,7 +13,7 @@
   <PropertyGroup Label="Package Dependencies">
     <NetCoreVersion3>3.1.10</NetCoreVersion3>
     <NetCoreVersion5>5.0.1</NetCoreVersion5>
-    <MicrosoftSourceLinkGithub>1.0.0</MicrosoftSourceLinkGithub>
+    <MicrosoftSourceLinkGithub>1.1.1</MicrosoftSourceLinkGithub>
   </PropertyGroup>
 
 </Project>

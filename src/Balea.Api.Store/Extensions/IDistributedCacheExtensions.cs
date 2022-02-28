@@ -12,7 +12,11 @@ namespace Microsoft.Extensions.Caching.Distributed
             AllowTrailingCommas = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             PropertyNameCaseInsensitive = true,
+#if NET5_0_OR_GREATER
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+#else
             IgnoreNullValues = false,
+#endif
             ReadCommentHandling = JsonCommentHandling.Disallow
         };
 
