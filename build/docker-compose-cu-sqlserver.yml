@@ -1,6 +1,6 @@
 version: "3"
 services:
-    web:
+    web-balea:
         image: web
         container_name: web
         ports:
