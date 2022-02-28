@@ -8,7 +8,10 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <PackageReference Update="Microsoft.Extensions.Options" Version="$(NetCoreVersion3)" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Update="Duende.IdentityServer" Version="5.0.0-preview.2" />
+    <PackageReference Update="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="$(NetCoreVersion3)"/>
     <PackageReference Update="Microsoft.Extensions.Http.Polly" Version="$(NetCoreVersion3)" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(NetCoreVersion3)" />
     <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion3)" />
@@ -27,13 +30,37 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-    <PackageReference Update="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Update="Duende.IdentityServer" Version="5.0.0-preview.2" />
+    <PackageReference Update="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="5.0.0"/>
     <PackageReference Update="Microsoft.Extensions.Http.Polly" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NetCoreVersion5)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(NetCoreVersion5)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="Antlr4.Runtime" Version="4.6.6" />
+    <PackageReference Update="Antlr4.CodeGenerator" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Update="Duende.IdentityServer" Version="6.0.4" />
+    <PackageReference Update="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="6.0.0"/>
+    <PackageReference Update="Microsoft.Extensions.Http.Polly" Version="6.0.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.2" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="6.0.0" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

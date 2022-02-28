@@ -1,11 +1,11 @@
 #Docker file for Contoso University configuration demo.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.8-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.402-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0  AS build
 WORKDIR /src
 COPY ./NuGet.config ./NuGet.config
 COPY ./Directory.Build.props ./Directory.Build.props
@@ -15,10 +15,10 @@ COPY ./src ./src
 COPY ./sample ./sample
 WORKDIR /src/sample/ContosoUniversity.Configuration.Store
 RUN dotnet restore
-RUN dotnet build -c Release -o /app/build
+RUN dotnet build -c Release --framework net6.0 -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release --framework net6.0 -o /app/publish
 
 FROM base AS final
 WORKDIR /app
