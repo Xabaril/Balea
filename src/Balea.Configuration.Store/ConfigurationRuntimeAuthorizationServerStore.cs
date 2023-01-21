@@ -50,14 +50,14 @@ namespace Balea.Configuration.Store
 
             if (application is null)
             {
-                return null;
+                return Task.FromResult<Policy>(null);
             }
 
             var policy = application.Policies.FirstOrDefault(p => p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 
             if (policy is null)
             {
-                return null;
+                return Task.FromResult<Policy>(null);
             }
 
             return Task.FromResult(new Policy(policy.Name, policy.Content));
