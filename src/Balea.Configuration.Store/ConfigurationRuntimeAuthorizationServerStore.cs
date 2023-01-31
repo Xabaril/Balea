@@ -22,7 +22,7 @@ namespace Balea.Configuration.Store
 
         public Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.ClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
 
             if (application is null)

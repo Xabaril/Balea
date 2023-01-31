@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.Caching.Distributed
 
         public static async Task<T> Get<T>(this IDistributedCache cache, string key, CancellationToken token = default)
         {
-            var json = await cache.GetStringAsync(key, token);
+            var json = await cache.GetStringAsync(key);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -99,12 +99,12 @@ namespace Microsoft.Extensions.Caching.Distributed
 
         public static Task Remove(this IDistributedCache cache, string key, CancellationToken token = default)
         {
-            return cache.RemoveAsync(key, token);
+            return cache.RemoveAsync(key);
         }
 
         public static Task Refresh(this IDistributedCache cache, string key, CancellationToken token = default)
         {
-            return cache.RefreshAsync(key, token);
+            return cache.RefreshAsync(key);
         }
     }
 }

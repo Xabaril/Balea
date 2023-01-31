@@ -28,14 +28,14 @@ namespace ContosoUniversity.EntityFrameworkCore.Store
             services                     
                 .AddBalea(options =>
                 {
-                    options.DefaultClaimTypeMap = new DefaultClaimTypeMap
+                    options.Common.ClaimTypeMap = new ClaimTypeMap
                     {
                         RoleClaimType = JwtClaimTypes.Role,
                         NameClaimType = JwtClaimTypes.Name,
                     };
 
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Clear();
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
+                    options.Common.ClaimTypeMap.AllowedSubjectClaimTypes.Clear();
+                    options.Common.ClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
                 })
                 .AddEntityFrameworkCoreStore(options =>
                 {
