@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{58F16D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "test\FunctionalTests\FunctionalTests.csproj", "{154541BC-3DF7-4B9C-B104-A3AE598C0FD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea.Core", "src\Balea.Core\Balea.Core.csproj", "{32784D58-1B36-4083-ABF4-4EDB02761110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Balea", "src\Balea\Balea.csproj", "{32784D58-1B36-4083-ABF4-4EDB02761110}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balea.AspNetCore", "src\Balea.AspNetCore\Balea.AspNetCore.csproj", "{B6AE3CFE-F70D-420A-B71C-85D4D4A48B09}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Balea.Authorization.Abac.Context;
 using Balea.Authorization.Abac.Grammars;
-using Balea.Core.Authorization.Abac.Grammars.BAL;
+using Balea.Authorization.Abac.Grammars.BAL;
 using Balea.DSL.Grammar.Bal;
 
 namespace Balea.Authorization.Abac.Parsers

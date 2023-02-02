@@ -1,10 +1,10 @@
 ﻿using Antlr4.Runtime.Misc;
 using Balea.Authorization.Abac.Context;
-using Balea.Core.Authorization.Abac.Grammars.BAL;
+using Balea.Authorization.Abac.Grammars.BAL;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
-using static Balea.Core.Authorization.Abac.Grammars.BAL.BalParser;
+using static Balea.Authorization.Abac.Grammars.BAL.BalParser;
 
 namespace Balea.DSL.Grammar.Bal
 {
