@@ -86,6 +86,11 @@ namespace Balea.Api.Store.Options
             return this;
         }
 
+        /// <summary>
+        /// Set the request headers for the client.
+        /// </summary>
+        /// <param name="headers">A HttpRequestHeaders object with the desired headers</param>
+        /// <returns>StoreOptions</returns>
         public StoreOptions UseRequestHeaders(HttpRequestHeaders headers)
         {
             Headers = headers;
