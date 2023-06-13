@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 
 namespace Balea.Api.Store.Options
 {
@@ -12,6 +13,7 @@ namespace Balea.Api.Store.Options
         internal int DurationOfBreak = 30;
         internal string ApiKey;
         internal Uri BaseAddress;
+        internal HttpRequestHeaders Headers;
 
         /// <summary>
         /// Set the base addres for the Balea Server.
@@ -81,6 +83,17 @@ namespace Balea.Api.Store.Options
         public StoreOptions UseDurationOfBreak(int durationOfBreak)
         {
             DurationOfBreak = durationOfBreak;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the request headers for the client.
+        /// </summary>
+        /// <param name="headers">A HttpRequestHeaders object with the desired headers</param>
+        /// <returns>StoreOptions</returns>
+        public StoreOptions UseRequestHeaders(HttpRequestHeaders headers)
+        {
+            Headers = headers;
             return this;
         }
     }

@@ -5,6 +5,7 @@ using Balea.Api.Store.Options;
 using Microsoft.Extensions.Options;
 using Polly;
 using System;
+using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -38,6 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     var options = sp.GetRequiredService<IOptions<StoreOptions>>().Value;
                     client.BaseAddress = options.BaseAddress;
+                    options.Headers?.ToList().ForEach(h => client.DefaultRequestHeaders.Add(h.Key, h.Value));
                     client.DefaultRequestHeaders.Add(API_KEY_HEADER, options.ApiKey);
                 })
                 .AddHttpMessageHandler<LoggingHandler>()
