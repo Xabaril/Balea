@@ -43,9 +43,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     client.DefaultRequestHeaders.Add(API_KEY_HEADER, options.ApiKey);
                 })
                 .AddHttpMessageHandler<LoggingHandler>()
-                .AddTransientHttpErrorPolicy(p => p.RetryAsync(options.RetryCount))
-                .AddTransientHttpErrorPolicy(p =>
-                    p.CircuitBreakerAsync(options.HandledEventsAllowedBeforeBreaking, TimeSpan.FromSeconds(options.DurationOfBreak)));
+                .AddTransientHttpErrorPolicy(p => p.RetryAsync(options.RetryCount));
 
             builder.Services.AddScoped<IRuntimeAuthorizationServerStore, ApiRuntimeAuthorizationServerStore>();
 
