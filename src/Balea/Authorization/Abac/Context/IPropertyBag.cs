@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
-
-namespace Balea.Authorization.Abac.Context
+﻿namespace Balea.Authorization.Abac.Context
 {
     public interface IPropertyBag
     {
@@ -9,13 +6,6 @@ namespace Balea.Authorization.Abac.Context
         /// Get the name of the property bag.
         /// </summary>
         string Name { get; }
-
-        /// <summary>
-        /// Initialize the property bag.
-        /// </summary>
-        /// <param name="authorizationHandlerContext">The authorization handler context to use.</param>
-        /// <returns>A Task that complete when service finished.</returns>
-        Task Initialize(AuthorizationHandlerContext authorizationHandlerContext);
 
         /// <summary>
         /// The property bag indexer to get single values of property

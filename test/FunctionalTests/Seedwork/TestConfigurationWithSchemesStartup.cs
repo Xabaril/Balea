@@ -21,10 +21,10 @@ namespace FunctionalTests.Seedwork
             services
                 .AddBalea(options =>
                 {
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
-                    options.DefaultClaimTypeMap.AllowedSubjectClaimTypes.Add(ClaimTypes.Upn);
+                    options.Common.ClaimTypeMap.AllowedSubjectClaimTypes.Add(JwtClaimTypes.Subject);
+                    options.Common.ClaimTypeMap.AllowedSubjectClaimTypes.Add(ClaimTypes.Upn);
 
-                    options.AddAuthenticationSchemes("scheme2");
+                    options.WebHost.Schemes.Add("scheme2");
                 })
                 .AddConfigurationStore(configuration)
                 .Services

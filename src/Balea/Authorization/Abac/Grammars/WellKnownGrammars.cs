@@ -1,6 +1,6 @@
 ﻿namespace Balea.Authorization.Abac.Grammars
 {
-    internal enum WellKnownGrammars
+    public enum WellKnownGrammars
     {
         Bal = 0, // Balea Authorization Language
     }

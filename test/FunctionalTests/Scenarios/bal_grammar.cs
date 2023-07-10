@@ -28,7 +28,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -60,7 +60,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -73,7 +73,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.IsSatisfied(context).Should().BeFalse();
 
-            propertyBags = new List<IPropertyBag>()
+            propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -101,7 +101,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -135,7 +135,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -169,7 +169,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -208,7 +208,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -227,7 +227,7 @@ namespace FunctionalTests.Scenarios
             dslAuthorizationPolicy.IsSatisfied(context)
                 .Should().BeTrue();
 
-            propertyBags = new List<IPropertyBag>()
+            propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -260,7 +260,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -292,7 +292,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -324,7 +324,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -353,7 +353,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -381,7 +381,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -409,7 +409,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -440,7 +440,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -459,7 +459,7 @@ namespace FunctionalTests.Scenarios
                 .Should()
                 .BeTrue();
 
-            propertyBags = new List<IPropertyBag>()
+            propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -478,7 +478,7 @@ namespace FunctionalTests.Scenarios
                 .Should()
                 .BeTrue();
 
-            propertyBags = new List<IPropertyBag>()
+            propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -512,7 +512,7 @@ namespace FunctionalTests.Scenarios
 
             dslAuthorizationPolicy.PolicyName.Should().BeEquivalentTo("Example");
 
-            var propertyBags = new List<IPropertyBag>()
+            var propertyBags = new List<IAspNetPropertyBag>()
             {
                 new TestPropertyBag("Subject", new Dictionary<string, IEnumerable<object>>()
                 {
@@ -534,7 +534,7 @@ namespace FunctionalTests.Scenarios
         }
 
         private class TestPropertyBag
-            : IPropertyBag
+            : IAspNetPropertyBag
         {
             private string _name;
             private Dictionary<string, IEnumerable<object>> _items;

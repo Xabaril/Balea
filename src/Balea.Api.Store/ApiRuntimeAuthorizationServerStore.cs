@@ -110,7 +110,7 @@ namespace Balea.Api.Store
         private string GetMappings(ClaimsPrincipal user)
         {
             return string.Concat(user
-                .GetClaimValues(_baleaOptions.DefaultClaimTypeMap.RoleClaimType)
+                .GetClaimValues(_baleaOptions.ClaimTypeMap.RoleClaimType)
                 .Select(role => $"&roles={role}"));
         }
     }

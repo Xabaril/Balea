@@ -3,8 +3,8 @@
     <TargetFrameworks>$(NetCoreTargetVersion)</TargetFrameworks>
     <PackageLicenseUrl>$(PackageLicenseUrl)</PackageLicenseUrl>
     <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
-    <Description>Authorization Framework Library for ASP.NET Core. For more information see http://github.com/Xabaril/Balea </Description>
-    <PackageTags>Authorization;Roles;Permissions;Delegations;AspNetCore</PackageTags>
+    <Description>Authorization Framework Library. For more information see http://github.com/Xabaril/Balea </Description>
+    <PackageTags>Authorization;Roles;Permissions;Delegations</PackageTags>
     <Version>$(Balea)</Version>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
     <Company>$(Company)</Company>
@@ -17,10 +17,9 @@
   </PropertyGroup>
  
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Antlr4.CodeGenerator" />
     <PackageReference Include="Antlr4.Runtime" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" />
   </ItemGroup>
-      
 
 </Project>
