@@ -40,7 +40,7 @@ namespace FunctionalTests.Scenarios
                     .CreateRequest(Api.School.GetGrades)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Unauthorized);
             }
         }
 
@@ -54,7 +54,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Unauthorized);
             }
         }
 
@@ -68,7 +68,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub), BaleaScheme)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Forbidden);
             }
         }
 
@@ -82,7 +82,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Unauthorized);
             }
         }
 
@@ -121,7 +121,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub), DefaultScheme)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Unauthorized);
             }
         }
 
@@ -135,7 +135,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub), BaleaScheme)
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Forbidden);
             }
         }
 

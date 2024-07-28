@@ -37,23 +37,23 @@ Write-Output "Starting docker containers"
 
 exec { & docker-compose -f build\docker-compose-infrastructure.yml up -d }
 
-Write-Output "Running functional tests [NETCOREAPP3.1]"
+Write-Output "Running functional tests [NET6.0]"
 
 try {
 
   Push-Location -Path .\test\FunctionalTests
-  exec { & dotnet test --framework netcoreapp3.1}
+  exec { & dotnet test --framework net6.0}
 }
 finally {
   Pop-Location
 }
 
-Write-Output "Running functional tests [NET5.0]"
+Write-Output "Running functional tests [NET8.0]"
 
 try {
 
   Push-Location -Path .\test\FunctionalTests
-  exec { & dotnet test --framework net5.0}
+  exec { & dotnet test --framework net8.0}
 }
 finally {
   Pop-Location

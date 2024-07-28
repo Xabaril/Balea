@@ -8,7 +8,7 @@ namespace FunctionalTests.Seedwork
     {
         public override void Before(MethodInfo methodUnderTest)
         {
-            TestServerFixture.ResetDatabase();
+            TestServerFixture.ResetDatabase().Wait();
         }
     }
 }

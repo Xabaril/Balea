@@ -35,7 +35,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(InvalidSub))
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status403Forbidden);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.Forbidden);
             }
         }
 
@@ -56,7 +56,7 @@ namespace FunctionalTests.Scenarios
                     .WithIdentity(new Fixture().Sub(subject.Sub))
                     .GetAsync();
 
-                response.StatusCode.Should().Be(StatusCodes.Status200OK);
+                response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
             }
         }
     }

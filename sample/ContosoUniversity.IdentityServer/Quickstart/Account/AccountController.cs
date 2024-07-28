@@ -2,6 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityServer;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores;
+using Duende.IdentityServer.Test;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -10,13 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Duende.IdentityServer;
-using Duende.IdentityServer.Events;
-using Duende.IdentityServer.Extensions;
-using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Stores;
-using Duende.IdentityServer.Test;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -33,12 +33,14 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
+        private readonly IAuthenticationHandlerProvider _handlerProvider;
         private readonly IEventService _events;
 
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
+            IAuthenticationHandlerProvider handlerProvider,
             IEventService events,
             TestUserStore users = null)
         {
@@ -49,6 +51,7 @@ namespace IdentityServerHost.Quickstart.UI
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
+            _handlerProvider = handlerProvider;
             _events = events;
         }
 
@@ -164,7 +167,7 @@ namespace IdentityServerHost.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -173,7 +176,7 @@ namespace IdentityServerHost.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -346,16 +349,15 @@ namespace IdentityServerHost.Quickstart.UI
                 var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
                 if (idp != null && idp != Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider)
                 {
-                    var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
+                    var handler = await _handlerProvider.GetHandlerAsync(HttpContext, idp);
+                    var providerSupportsSignout = handler is IAuthenticationSignOutHandler;
+
                     if (providerSupportsSignout)
                     {
-                        if (vm.LogoutId == null)
-                        {
-                            // if there's no current logout context, we need to create one
-                            // this captures necessary info from the current logged in user
-                            // before we signout and redirect away to the external IdP for signout
-                            vm.LogoutId = await _interaction.CreateLogoutContextAsync();
-                        }
+                        // if there's no current logout context, we need to create one
+                        // this captures necessary info from the current logged in user
+                        // before we signout and redirect away to the external IdP for signout
+                        vm.LogoutId ??= await _interaction.CreateLogoutContextAsync();
 
                         vm.ExternalAuthenticationScheme = idp;
                     }
