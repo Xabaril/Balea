@@ -1,9 +1,8 @@
 #!/bin/bash
 
-SdkVersion="3.1.404"
+
+SdkVersion="6.0.424"
 ./dotnet-install.sh -Version $SdkVersion
-SdkVersion="5.0.101"
-./dotnet-install.sh -Version $SdkVersion
-SdkVersion="6.0.200"
+SdkVersion="8.0.303"
 ./dotnet-install.sh -Version $SdkVersion
 export PATH="$PATH:$HOME/.dotnet"

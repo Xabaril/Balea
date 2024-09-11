@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(NetCoreTargetVersion)</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <UserSecretsId>26e3db6f-1b9a-4e5f-b44c-9bebe811a125</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
     <PackageReference Include="Acheve.TestHost" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Respawn" />
     <PackageReference Include="xunit" />
@@ -47,11 +49,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
+    <PackageReference Include="Antlr4.CodeGenerator">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+    <PackageReference Include="Antlr4.Runtime" />
   </ItemGroup>
   <ItemGroup>
     <None Update="balea.json">
