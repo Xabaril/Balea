@@ -22,7 +22,7 @@ namespace Balea.Configuration.Store
 
         public Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
-            var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
+            var sourceRoleClaims = user.GetClaimValues(_options.ClaimTypeMap.RoleClaimType);
             var application = _configuration.Applications.GetByName(_options.ApplicationName);
 
             if (application is null)
@@ -50,14 +50,14 @@ namespace Balea.Configuration.Store
 
             if (application is null)
             {
-                return null;
+                return Task.FromResult<Policy>(null);
             }
 
             var policy = application.Policies.FirstOrDefault(p => p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 
             if (policy is null)
             {
-                return null;
+                return Task.FromResult<Policy>(null);
             }
 
             return Task.FromResult(new Policy(policy.Name, policy.Content));

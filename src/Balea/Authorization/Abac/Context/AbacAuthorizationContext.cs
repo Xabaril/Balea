@@ -28,9 +28,9 @@ namespace Balea.Authorization.Abac.Context
             }
         }
 
-        internal AbacAuthorizationContext() { }
+        public AbacAuthorizationContext() { }
 
-        internal void AddBag(IPropertyBag propertyBag)
+        public void AddBag(IPropertyBag propertyBag)
         {
             _propertyBagsHolder.TryAdd(propertyBag.Name, propertyBag);
         }

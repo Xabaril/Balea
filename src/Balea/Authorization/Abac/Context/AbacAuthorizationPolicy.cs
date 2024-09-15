@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Balea.Authorization.Abac.Context
 {
-    internal class AbacAuthorizationPolicy
+    public class AbacAuthorizationPolicy
     {
         private readonly List<AbacAuthorizationRule> _authorizationRules = new List<AbacAuthorizationRule>();
 

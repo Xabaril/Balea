@@ -17,23 +17,26 @@ namespace Balea.Authorization
         private readonly IAuthorizationService _authorization;
         private readonly IRuntimeAuthorizationServerStore _store;
         private readonly BaleaOptions _options;
-        private readonly ILogger<BaleaPolicyEvaluator> _logger;
+		private readonly BaleaWebHost _webHost;
+		private readonly ILogger<BaleaPolicyEvaluator> _logger;
 
         public BaleaPolicyEvaluator(
             IAuthorizationService authorization,
             IRuntimeAuthorizationServerStore store,
-            BaleaOptions options,
+			BaleaOptions options,
+			BaleaWebHost webHost,
             ILogger<BaleaPolicyEvaluator> logger)
         {
             _authorization = authorization;
             _store = store;
             _options = options;
+			_webHost = webHost;
             _logger = logger;
         }
 
         public async Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
-            var baleaHasSchemes = _options.Schemes.Any();
+            var baleaHasSchemes = _webHost.Schemes.Any();
 
             if (policy.AuthenticationSchemes != null && policy.AuthenticationSchemes.Count > 0)
             {
@@ -41,7 +44,7 @@ namespace Balea.Authorization
                 var baleaMatchPolicySchemes = false;
                 foreach (var scheme in policy.AuthenticationSchemes)
                 {
-                    if (_options.Schemes.Any(s => s.Equals(scheme, StringComparison.OrdinalIgnoreCase)))
+                    if (_webHost.Schemes.Any(s => s.Equals(scheme, StringComparison.OrdinalIgnoreCase)))
                     {
                         baleaMatchPolicySchemes = true;
                     }
@@ -135,11 +138,11 @@ namespace Balea.Authorization
                     _logger.NoBaleaRolesForUser(user.GetSubjectId(_options));
                 }
 
-                if (!context.Response.HasStarted && _options.UnauthorizedFallback != null)
+                if (!context.Response.HasStarted && _webHost.Events.UnauthorizedFallback != null)
                 {
                     _logger.ExecutingBaleaUnauthorizedFallback();
 
-                    await _options.UnauthorizedFallback(context);
+                    await _webHost.Events.UnauthorizedFallback(context);
                 }
                 else
                 {
@@ -151,17 +154,17 @@ namespace Balea.Authorization
 
             var roleClaims = authorization.Roles
                 .Where(role => role.Enabled)
-                .Select(role => new Claim(_options.DefaultClaimTypeMap.RoleClaimType, role.Name));
+                .Select(role => new Claim(_options.ClaimTypeMap.RoleClaimType, role.Name));
 
             var permissionClaims = authorization.Roles
                 .SelectMany(role => role.GetPermissions())
                 .Distinct()
-                .Select(permission => new Claim(_options.DefaultClaimTypeMap.PermissionClaimType, permission));
+                .Select(permission => new Claim(_options.ClaimTypeMap.PermissionClaimType, permission));
 
             var identity = new ClaimsIdentity(
                 authenticationType: "Balea",
-                nameType: _options.DefaultClaimTypeMap.NameClaimType,
-                roleType: _options.DefaultClaimTypeMap.RoleClaimType);
+                nameType: _options.ClaimTypeMap.NameClaimType,
+                roleType: _options.ClaimTypeMap.RoleClaimType);
 
             identity.AddClaims(roleClaims);
             identity.AddClaims(permissionClaims);

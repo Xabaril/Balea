@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IBaleaBuilder AddBalea(this IServiceCollection services, Action<BaleaOptions> setup)
+        public static IBaleaBuilder AddBalea(this IServiceCollection services, Action<BaleaAspNetOptions> setup)
         {
             _ = services ?? throw new ArgumentNullException(nameof(services));
             _ = setup ?? throw new ArgumentNullException(nameof(setup));
@@ -30,13 +30,14 @@ namespace Microsoft.Extensions.DependencyInjection
             //add balea required services
             services.AddAuthorization();
             services.AddHttpContextAccessor();
-            services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaOptions>>().Value);
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaAspNetOptions>>().Value.Common);
+			services.AddSingleton(sp => sp.GetRequiredService<IOptions<BaleaAspNetOptions>>().Value.WebHost);
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
 
             services.AddScoped<IPermissionEvaluator, DefaultPermissionEvaluator>();
-            services.AddScoped<IPropertyBag, UserPropertyBag>();
-            services.AddScoped<IPropertyBag, ResourcePropertyBag>();
-            services.AddScoped<IPropertyBag, ParameterPropertyBag>();
+            services.AddScoped<IAspNetPropertyBag, UserPropertyBag>();
+            services.AddScoped<IAspNetPropertyBag, ResourcePropertyBag>();
+            services.AddScoped<IAspNetPropertyBag, ParameterPropertyBag>();
             services.AddScoped<AbacAuthorizationContextFactory>();
 
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();

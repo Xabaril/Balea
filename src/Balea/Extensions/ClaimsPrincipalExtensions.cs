@@ -10,7 +10,7 @@ namespace System.Security.Claims
         {
             string sid = null;
 
-            foreach(var allowedSubjectClaimType in options.DefaultClaimTypeMap.AllowedSubjectClaimTypes)
+            foreach(var allowedSubjectClaimType in options.ClaimTypeMap.AllowedSubjectClaimTypes)
             {
                 sid = principal.FindFirstValue(allowedSubjectClaimType);
 
