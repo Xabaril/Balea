@@ -43,7 +43,7 @@ namespace Balea.Api.Store
         {
             if (_storeOptions.CacheEnabled)
             {
-                var key = $"balea:1.0:user:{user.GetSubjectId(_baleaOptions)}:application:{_baleaOptions.ApplicationName}";
+                var key = $"balea:1.1:user:{user.GetSubjectId(_baleaOptions)}:application:{_baleaOptions.ApplicationName}";
 
                 var cachedResponse = await _cache.GetOrSet(
                     key,
@@ -70,7 +70,7 @@ namespace Balea.Api.Store
         {
             if (_storeOptions.CacheEnabled)
             {
-                var key = $"balea:1.0:application:{_baleaOptions.ApplicationName}:policy:{name}";
+                var key = $"balea:1.1:application:{_baleaOptions.ApplicationName}:policy:{name}";
 
                 var cachedResponse = await _cache.GetOrSet(
                     key,
