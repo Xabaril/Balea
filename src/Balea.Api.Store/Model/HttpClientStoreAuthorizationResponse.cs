@@ -20,12 +20,9 @@ namespace Balea.Api.Store.Model
                 Roles.Select(role => new Role(
                     role.Name,
                     role.Description,
-                    role.Subjects,
-                    role.Mappings,
-                    role.Permissions,
-                    role.Enabled)),
-                Delegation is null 
-                    ? null 
+                    role.Permissions)),
+                Delegation is null
+                    ? null
                     : new Delegation(
                         Delegation.Who,
                         Delegation.Whom,

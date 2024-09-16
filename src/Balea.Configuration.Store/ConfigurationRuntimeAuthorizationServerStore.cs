@@ -27,7 +27,7 @@ namespace Balea.Configuration.Store
 
             if (application is null)
             {
-                return Task.FromResult(new AuthorizationContext(new Role[0], null));
+                return Task.FromResult(new AuthorizationContext(Array.Empty<Role>(), null));
             }
 
             var delegation = application.Delegations.GetCurrentDelegation(user.GetSubjectId(_options));

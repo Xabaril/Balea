@@ -150,7 +150,6 @@ namespace Balea.Authorization
             }
 
             var roleClaims = authorization.Roles
-                .Where(role => role.Enabled)
                 .Select(role => new Claim(_options.DefaultClaimTypeMap.RoleClaimType, role.Name));
 
             var permissionClaims = authorization.Roles

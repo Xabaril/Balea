@@ -49,10 +49,7 @@ namespace Balea.EntityFrameworkCore.Store
                 .Select(role => new Role(
                     role.Name,
                     role.Description,
-                    role.Subjects.Select(rs => rs.Subject.Sub),
-                    role.Mappings.Select(rm => rm.Mapping.Name),
-                    role.Permissions.Select(rp => rp.Permission.Name),
-                    role.Enabled
+                    role.Permissions.Select(rp => rp.Permission.Name)
                 ))
                 .ToListAsync(cancellationToken);
 
