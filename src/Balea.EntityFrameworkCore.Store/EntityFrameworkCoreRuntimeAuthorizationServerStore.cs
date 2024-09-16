@@ -26,44 +26,46 @@ namespace Balea.EntityFrameworkCore.Store
 
         public async Task<AuthorizationContext> FindAuthorizationAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
         {
+            var userSubjectId = user.GetSubjectId(_options);
             var sourceRoleClaims = user.GetClaimValues(_options.DefaultClaimTypeMap.RoleClaimType);
-            var delegation = await _context.Delegations.GetCurrentDelegation(
-                user.GetSubjectId(_options),
+
+            var delegation = await _context.Delegations.GetDelegation(
+                userSubjectId,
                 _options.ApplicationName,
                 cancellationToken);
-            var subject = GetSubject(user, delegation);
-            var roles = await _context.Roles
-                    .AsNoTracking()
-                    .Include(r => r.Application)
-                    .Include(r => r.Mappings)
-                    .ThenInclude(rm => rm.Mapping)
-                    .Include(r => r.Subjects)
-                    .ThenInclude(rs => rs.Subject)
-                    .Include(r => r.Permissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .Where(role =>
-                        role.Application.Name == _options.ApplicationName &&
-                        role.Enabled &&
-                        (role.Subjects.Any(rs => rs.Subject.Sub == subject) || role.Mappings.Any(rm => sourceRoleClaims.Contains(rm.Mapping.Name)))
-                    )
-                    .ToListAsync(cancellationToken);
 
-            return new AuthorizationContext(roles.Select(r => r.To()), delegation.To());
+            var subject = delegation?.Who ?? userSubjectId;
+
+            var roles = await _context.Roles
+                .AsNoTracking()
+                .Where(role =>
+                    role.Application.Name == _options.ApplicationName &&
+                    role.Enabled &&
+                    (
+                        role.Subjects.Any(rs => rs.Subject.Sub == subject) ||
+                        role.Mappings.Any(rm => sourceRoleClaims.Contains(rm.Mapping.Name))
+                    )
+                )
+                .Select(role => new Role(
+                    role.Name,
+                    role.Description,
+                    role.Permissions.Select(rp => rp.Permission.Name)
+                ))
+                .ToListAsync(cancellationToken);
+
+            return new AuthorizationContext(roles, delegation);
         }
 
         public async Task<Policy> GetPolicyAsync(string name, CancellationToken cancellationToken = default)
         {
             var policy = await _context
                 .Policies
-                .Include(p => p.Application)
-                .SingleOrDefaultAsync(p => p.Application.Name == _options.ApplicationName && p.Name == name);
+                .AsNoTracking()
+                .Where(p => p.Application.Name == _options.ApplicationName && p.Name == name)
+                .Select(p => new Policy(p.Name, p.Content))
+                .FirstOrDefaultAsync(cancellationToken);
 
-            return policy.To();
-        }
-
-        private string GetSubject(ClaimsPrincipal user, DelegationEntity delegation)
-        {
-            return delegation?.Who?.Sub ?? user.GetSubjectId(_options);
+            return policy;
         }
     }
 }

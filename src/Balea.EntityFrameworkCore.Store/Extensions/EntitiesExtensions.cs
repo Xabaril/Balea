@@ -19,10 +19,7 @@ namespace Balea.EntityFrameworkCore.Store.Entities
             return new Role(
                         role.Name,
                         role.Description,
-                        role.Subjects.Select(rs => rs.Subject.Sub),
-                        role.Mappings.Select(rm => rm.Mapping.Name),
-                        role.Permissions.Select(rp => rp.Permission.Name),
-                        role.Enabled
+                        role.Permissions.Select(rp => rp.Permission.Name)
                     );
         }
 
@@ -57,8 +54,32 @@ namespace Balea.EntityFrameworkCore.Store.Entities
                         d.Selected &&
                         d.From <= now && d.To >= now &&
                         d.Whom.Sub == subjectId &&
-                        d.Application.Name == applicationName, 
+                        d.Application.Name == applicationName,
                     cancellationToken);
+        }
+
+        public static Task<Delegation> GetDelegation(
+            this DbSet<DelegationEntity> delegations,
+            string subjectId,
+            string applicationName,
+            CancellationToken cancellationToken = default)
+        {
+            var now = DateTime.UtcNow;
+            return delegations
+                .AsNoTracking()
+                .Where(
+                    d =>
+                        d.Selected &&
+                        d.From <= now && d.To >= now &&
+                        d.Whom.Sub == subjectId &&
+                        d.Application.Name == applicationName)
+                .Select(
+                    d => new Delegation(
+                        d.Who.Sub,
+                        d.Whom.Sub,
+                        d.From,
+                        d.To))
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public static Policy To(this PolicyEntity policy)

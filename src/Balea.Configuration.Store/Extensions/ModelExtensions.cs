@@ -16,10 +16,7 @@ namespace Balea.Configuration.Store.Model
             return new Role(
                     role.Name,
                     role.Description,
-                    role.Subjects,
-                    role.Mappings,
-                    role.Permissions.Distinct(),
-                    role.Enabled
+                    role.Permissions.Distinct()
                 );
         }
 

@@ -43,21 +43,22 @@ namespace Balea.Api.Store
         {
             if (_storeOptions.CacheEnabled)
             {
-                var key = $"balea:1.0:user:{user.GetSubjectId(_baleaOptions)}:application:{_baleaOptions.ApplicationName}";
-                
+                var key = $"balea:1.1:user:{user.GetSubjectId(_baleaOptions)}:application:{_baleaOptions.ApplicationName}";
+
                 var cachedResponse = await _cache.GetOrSet(
                     key,
-                    miss: () => 
-                    { 
-                        Log.CacheMiss(_logger, key); 
-                        return GetAuthorizationContext(user);
+                    miss: async () =>
+                    {
+                        Log.CacheMiss(_logger, key);
+                        var response = await GetAuthorizationContext(user);
+                        return response.To();
                     },
                     hit: _ => Log.CacheHit(_logger, key),
                     _storeOptions.AbsoluteExpirationRelativeToNow,
                     _storeOptions.SlidingExpiration,
                     cancellationToken);
 
-                return cachedResponse.To();
+                return cachedResponse;
             }
 
             var response = await GetAuthorizationContext(user);
@@ -69,21 +70,22 @@ namespace Balea.Api.Store
         {
             if (_storeOptions.CacheEnabled)
             {
-                var key = $"balea:1.0:application:{_baleaOptions.ApplicationName}:policy:{name}";
+                var key = $"balea:1.1:application:{_baleaOptions.ApplicationName}:policy:{name}";
 
                 var cachedResponse = await _cache.GetOrSet(
                     key,
-                    miss: () =>
+                    miss: async () =>
                     {
                         Log.CacheMiss(_logger, key);
-                        return GetPolicy(name);
+                        var response = await GetPolicy(name);
+                        return response.To();
                     },
                     hit: _ => Log.CacheHit(_logger, key),
                     _storeOptions.AbsoluteExpirationRelativeToNow,
                     _storeOptions.SlidingExpiration,
                     cancellationToken);
 
-                return cachedResponse.To();
+                return cachedResponse;
             }
 
             var response = await GetPolicy(name);
