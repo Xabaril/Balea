@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.Caching.Distributed
 {
     public static class DistributedCacheExtensions
     {
-        public static JsonSerializerOptions _serializationOptions = new JsonSerializerOptions()
+        public static readonly JsonSerializerOptions _serializationOptions = new JsonSerializerOptions()
         {
             AllowTrailingCommas = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

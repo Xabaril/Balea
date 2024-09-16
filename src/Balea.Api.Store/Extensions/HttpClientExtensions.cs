@@ -1,11 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace System.Net.Http
 {
     public static class HttpClientExtensions
     {
-        public static JsonSerializerOptions _serializationOptions = new JsonSerializerOptions()
+        public static readonly JsonSerializerOptions _serializationOptions = new JsonSerializerOptions()
         {
             AllowTrailingCommas = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -20,8 +21,7 @@ namespace System.Net.Http
 
         public static async Task<TModel> GetJsonAsync<TModel>(this HttpClient client, string requestUri)
         {
-            string json = await client.GetStringAsync(requestUri);
-            return JsonSerializer.Deserialize<TModel>(json, _serializationOptions);
+            return await client.GetFromJsonAsync<TModel>(requestUri, _serializationOptions);
         }
     }
 }
