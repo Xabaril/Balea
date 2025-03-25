@@ -18,9 +18,12 @@
  
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Antlr4.CodeGenerator" />
-    <PackageReference Include="Antlr4.Runtime" />
+    <PackageReference Include="Antlr4BuildTasks" />
+    <PackageReference Include="Antlr4.Runtime.Standard" />
   </ItemGroup>
-      
 
+   <ItemGroup>
+     <Antlr4 Include="Authorization/Abac/Grammars/BAL/Bal.g4" />
+   </ItemGroup>
+      
 </Project>

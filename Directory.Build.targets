@@ -21,8 +21,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Update="Antlr4.Runtime" Version="4.6.6" />
-    <PackageReference Update="Antlr4.CodeGenerator" Version="4.6.6">
+    <PackageReference Update="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageReference Update="Antlr4BuildTasks" Version="12.10.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -42,8 +42,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Update="Antlr4.Runtime" Version="4.6.6" />
-		<PackageReference Update="Antlr4.CodeGenerator" Version="4.6.6">
+		<PackageReference Update="Antlr4.Runtime.Standard" Version="4.13.1" />
+		<PackageReference Update="Antlr4BuildTasks" Version="12.10.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

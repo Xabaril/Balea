@@ -49,11 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4.CodeGenerator">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Antlr4.Runtime" />
+    <PackageReference Include="Antlr4BuildTasks" />
+    <PackageReference Include="Antlr4.Runtime.Standard" />
   </ItemGroup>
   <ItemGroup>
     <None Update="balea.json">
